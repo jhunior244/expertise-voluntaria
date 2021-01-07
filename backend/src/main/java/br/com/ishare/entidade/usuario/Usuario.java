@@ -1,4 +1,4 @@
-package br.com.ishare.entidade;
+package br.com.ishare.entidade.usuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
