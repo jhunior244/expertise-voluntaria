@@ -1,4 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Domine&display=swap');
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.color-primary {
+    color: #58AF9C;
+}
+
+.background-primary {
+    background-color: #58AF9C;
+}
+
+.sombra-padrao {
+    box-shadow: #717171 0 0 7px;
+}
+
+.sombra-suave {
+    box-shadow: #717171 0 0 3px;
+}
+
+.arredondamento-padrao {
+    border-radius: 15px 15px 15px 15px;
+}
+
+.fonte-titulo {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.fonte-texto {
+    font-family: Domine, Calibri, 'Times New Roman';
+    font-size: 14px;
+}
