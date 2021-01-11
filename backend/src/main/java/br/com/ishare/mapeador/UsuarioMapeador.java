@@ -1,6 +1,7 @@
 package br.com.ishare.mapeador;
 
 import br.com.ishare.dto.usuario.UsuarioDto;
+import br.com.ishare.dto.usuario.UsuarioSaidaDto;
 import br.com.ishare.entidade.usuario.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,7 +12,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapeador {
-    UsuarioDto paraDto(Usuario obj);
+    UsuarioSaidaDto paraDto(Usuario obj);
 
     Usuario doDto(UsuarioDto obj);
 
@@ -19,7 +20,7 @@ public interface UsuarioMapeador {
 
     List<UsuarioDto> paraDto(List<Usuario> lista);
 
-    default Page<UsuarioDto> paraDto(Page<Usuario> page){
+    default Page<UsuarioSaidaDto> paraDto(Page<Usuario> page){
         return page.map(this::paraDto);
     }
 }

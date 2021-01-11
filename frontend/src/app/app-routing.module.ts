@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { configuracao } from './configuracao';
 import { TelaInicioComponent } from './tela/tela-inicio/tela-inicio.component';
+import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
 
 const routes: Routes = [
 
@@ -15,15 +16,18 @@ const routes: Routes = [
     component: TelaCadastroComponent
   }, {
     path: '**',
-    redirectTo: configuracao.rotaInicio,
+    redirectTo: configuracao.rotaHome,
     pathMatch: 'full',
   }, {
     path: '',
-    component: TelaInicioComponent
+    component: TelaPaginaInicialSiteComponent
   }, {
     path: configuracao.rotaInicio,
     component: TelaInicioComponent
-  },
+  }, {
+    path: configuracao.rotaHome,
+    component: TelaPaginaInicialSiteComponent
+  }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

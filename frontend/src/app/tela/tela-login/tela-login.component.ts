@@ -39,13 +39,13 @@ export class TelaLoginComponent implements OnInit {
   get senha(): FormControl { return this.formGroup.controls.senha as FormControl; }
 
   ngOnInit(): void {
+    this.sessaoService.deslogar();
   }
 
   logar(): void {
     const usuario = new Usuario();
     usuario.email = this.email.value;
     usuario.senha = Md5.hashStr(this.senha.value).toString();
-    console.log(usuario.senha);
     this.authService.autenticar(usuario).subscribe(resposta => {
       this.router.navigate([configuracao.rotaInicio]);
     }, (erro: HttpErrorResponse) => {

@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RequestInterceptor } from './core/auth/request.interceptor';
+import { ErroInterceptor, RequestInterceptor } from './core/auth/request.interceptor';
 import { TokenService } from './core/token/token.service';
 import { ErroService } from './core/erro/erro.service';
 import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
@@ -20,13 +20,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
+import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TelaLoginComponent,
     TelaLoginComponent,
-    TelaCadastroComponent
+    TelaCadastroComponent,
+    TelaPaginaInicialSiteComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,10 @@ import { ToastNotificationsModule } from 'ngx-toast-notifications';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
+      multi: true
+    }, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErroInterceptor,
       multi: true
     },
     AuthService,

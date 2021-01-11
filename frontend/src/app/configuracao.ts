@@ -1,7 +1,8 @@
 export const configuracao = {
-    rotaBackend: 'http://localhost:8080',
+    rotaBackend: 'http://localhost:8080/api/public',
 
-    rotaInicio: '',
+    rotaInicio: 'inicio',
+    rotaHome: 'home',
     rotaLogin: 'login',
     rotaCadastro: 'cadastro',
 
