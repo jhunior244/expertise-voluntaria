@@ -14,4 +14,7 @@ public class Estado {
 
     @Column(nullable = false, unique = true)
     private String nome;
+
+    @Column(nullable = false, unique = true)
+    private String uf;
 }

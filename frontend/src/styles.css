@@ -1,35 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Domine&display=swap');
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Domine&display=swap");
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .color-primary {
-    color: #58AF9C;
+  color: #58af9c;
 }
 
 .background-primary {
-    background-color: #58AF9C;
+  background-color: #58af9c;
 }
 
 .sombra-padrao {
-    box-shadow: #717171 0 0 7px;
+  box-shadow: #717171 0 0 7px;
 }
 
 .sombra-suave {
-    box-shadow: #717171 0 0 3px;
+  box-shadow: #717171 0 0 3px;
 }
 
 .arredondamento-padrao {
-    border-radius: 15px 15px 15px 15px;
+  border-radius: 15px 15px 15px 15px;
 }
 
 .fonte-titulo {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .fonte-texto {
-    font-family: Domine, Calibri, 'Times New Roman';
-    font-size: 14px;
+  font-family: Domine, Calibri, "Times New Roman";
+  font-size: 14px;
+}
+
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: #58af9c !important;
+}
+
+.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: #58af9c !important;
+}
+
+.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #58af9c !important;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label {
+    color: #58af9c;
+}
+
+mat-hint {
+    color: #58af9c !important; 
 }

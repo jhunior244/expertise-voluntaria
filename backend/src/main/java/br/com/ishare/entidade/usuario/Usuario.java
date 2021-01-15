@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -35,6 +36,12 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     @JsonIgnore
     private String senha;
+
+    @ManyToOne
+    private Endereco endereco;
+
+    @ManyToOne
+    private TipoUsuario tipoUsuario;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> listaPerfil = new ArrayList<Perfil>();

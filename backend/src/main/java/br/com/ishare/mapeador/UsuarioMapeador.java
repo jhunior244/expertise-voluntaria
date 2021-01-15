@@ -2,6 +2,7 @@ package br.com.ishare.mapeador;
 
 import br.com.ishare.dto.usuario.UsuarioDto;
 import br.com.ishare.dto.usuario.UsuarioSaidaDto;
+import br.com.ishare.entidade.usuario.Endereco;
 import br.com.ishare.entidade.usuario.Usuario;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -9,7 +10,12 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring",
+@Mapper(componentModel = "spring", uses = {
+  EnderecoMapeador.class,
+  TipoUsuarioMapeador.class,
+  CidadeMapeador.class,
+  EstadoMapeador.class
+},
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapeador {
     UsuarioSaidaDto paraDto(Usuario obj);

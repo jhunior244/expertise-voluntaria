@@ -11,7 +11,7 @@ import { SessaoService } from '../sessao/sessao.service';
   providedIn: 'root'
 })
 export class AuthService {
-  url = configuracao.rotaBackend + '/auth';
+  url = configuracao.rotaBackendPublico + '/auth';
   httpHeader = new HttpHeaders();
   constructor(
     private http: HttpClient,

@@ -14,10 +14,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 
+@RequestScope
 @RestController
 @RequestMapping("/api/public/auth")
-public class AutenticacaoControlador {
+public class AutenticacaoPublicoControlador {
 
     @Autowired
     private AuthenticationManager authenticationManager;

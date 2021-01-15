@@ -8,4 +8,6 @@ public class EstadoDto {
     private Long id;
 
     private String nome;
+
+    private String uf;
 }

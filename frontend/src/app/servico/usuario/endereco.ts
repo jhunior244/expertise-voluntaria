@@ -1,4 +1,6 @@
+import { EstadoService } from './estado.service';
 import { Cidade, ICidade } from './cidade';
+import { Estado } from './estado';
 
 export class IEndereco {
     id: string;
@@ -46,6 +48,30 @@ export class Endereco {
             cidade: (response.cidade) ? Cidade.doBackend(response.cidade) : null
         });
         return obj;
+    }
+
+    static integracaoParaEndereco(response: any, estadoService: EstadoService): Endereco {
+
+        if (response == null) {
+            return null;
+        }
+        console.log(response);
+
+        const cidade = new Cidade();
+
+        estadoService.obtem(response.uf).subscribe(estadoRetornado => {
+            cidade.estado = estadoRetornado;
+        });
+
+        cidade.nome = response.localidade;
+        const endereco = new Endereco();
+
+        endereco.cidade = cidade;
+        endereco.cep = response.cep;
+        endereco.rua = response.logradouro;
+        endereco.numero = response.numero;
+
+        return endereco;
     }
 
     paraBackend(): IEndereco {

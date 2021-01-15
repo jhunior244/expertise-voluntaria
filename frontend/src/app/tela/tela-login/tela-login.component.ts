@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toaster } from 'ngx-toast-notifications';
-import { EmailErrorStateMatcher } from 'src/app/ishare.validators';
+import { EmailCrossFieldErrorMatcher } from 'src/app/ishare.validators';
 import { Usuario } from 'src/app/servico/usuario/usuario';
 import { Md5 } from 'ts-md5/dist/md5';
 import { configuracao } from './../../configuracao';
@@ -19,7 +19,8 @@ import { SessaoService } from './../../core/sessao/sessao.service';
 export class TelaLoginComponent implements OnInit {
 
   public formGroup: FormGroup;
-  public emailMatcher = new EmailErrorStateMatcher();
+  public emailMatcher = new EmailCrossFieldErrorMatcher();
+  public rotasSistema = configuracao;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -27,7 +28,7 @@ export class TelaLoginComponent implements OnInit {
     private erroService: ErroService,
     private router: Router,
     private sessaoService: SessaoService,
-    private toaster: Toaster,
+    private toaster: Toaster
     ) { 
     this.formGroup = this.formBuilder.group({
       email: [null, Validators.compose([Validators.required, Validators.email])],
@@ -52,6 +53,10 @@ export class TelaLoginComponent implements OnInit {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
+  }
+
+  cadastro(){
+    this.router.navigate([configuracao.rotaCadastro]);
   }
 
 }

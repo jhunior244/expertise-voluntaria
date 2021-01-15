@@ -1,1 +1,149 @@
-<p>tela-cadastro works!</p>
+<div style="height: 100%;" class="container py-5">
+    <div style="height: 100%; background-color: #ffffff;" class="sombra-padrao arredondamento-padrao" 
+    fxLayoutAlign="center center" fxLayout="column">
+        <div style="width: 60%;" class="mb-3 teste" fxLayout="column">
+            <form  [formGroup]="formGroup" fxLayout="column">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <mat-form-field fxFlex="58" fxFlex.lt-md="100">
+                        <mat-label>Nome completo</mat-label>
+                        <input type="text" matInput [formControl]="nome" >
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="nome.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <div fxFlex="38" fxFlex.lt-md="100">
+                        <!-- <mat-label>Tipo pessoa</mat-label> -->
+                        <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true"></app-select-tipo-usuario>
+                    </div>
+                </div>
+
+                <div  class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput [formControl]="email" [errorStateMatcher]="emailMatcher"
+                            placeholder="Ex. ishare@exemplo.com">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
+                            E-mail inválido
+                        </mat-error>
+                        <mat-error *ngIf="email.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('emailsNaoCoincidem')">
+                            Emails não coincidem
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('emailJaExisteNaBase')">
+                            Este e-mail já está cadastrado
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput [formControl]="validacaoEmail" [errorStateMatcher]="emailMatcher">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="validacaoEmail.hasError('email') && !email.hasError('required')">
+                            E-mail inválido
+                        </mat-error>
+                        <mat-error *ngIf="validacaoEmail.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('emailsNaoCoincidem')">
+                            Emails não coincidem
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('emailJaExisteNaBase')">
+                            Este e-mail já está cadastrado
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <mat-form-field fxFlex="25" fxFlex.lt-md="100">
+                        <mat-label>CEP</mat-label>
+                        <input type="text" matInput [formControl]="cep">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="cep.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="55" fxFlex.lt-md="100">
+                        <mat-label>Rua</mat-label>
+                        <input type="text" matInput [formControl]="rua" >
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="rua.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="15" fxFlex.lt-md="100">
+                        <mat-label>Número</mat-label>
+                        <input type="text" matInput [formControl]="numero">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="numero.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                        <mat-label>Cidade</mat-label>
+                        <input type="text" matInput [formControl]="cidade">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="cidade.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="48" fxFlex.lt-md="100">
+                        <app-select-estado [controladorFormulario]="estado" [obrigatorio]="true"></app-select-estado>
+                    </div>
+                </div>
+
+                <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                        <mat-label>Senha</mat-label>
+                        <input type="password" matInput [formControl]="senha" [errorStateMatcher]="senhaMatcher">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="senha.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="senha.hasError('minlength')">
+                            Tamanho mínimo de senha é 8 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="senha.hasError('maxlength')">
+                            Tamanho máximo de senha é 16 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('senhasNaoCoincidem')">
+                            Senhas não coincidem
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                        <mat-label>Repita a senha</mat-label>
+                        <input type="password" matInput [formControl]="repeteSenha" [errorStateMatcher]="senhaMatcher">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="repeteSenha.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                        <mat-error *ngIf="repeteSenha.hasError('minlength')">
+                            Tamanho mínimo de senha é 8 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="repeteSenha.hasError('maxlength')">
+                            Tamanho máximo de senha é 16 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="formGroup.hasError('senhasNaoCoincidem')">
+                            Senhas não coincidem
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+            <div class="mt-1" fxLayoutAlign="center center">
+                <button (click)="cadastrar()" fxFlex="30" fxFlex.lt-sm="80" fxFlex.lt-md="50" [disabled]="!formGroup.valid" 
+                class="botao-cadastrar fonte-texto sombra-suave  background-primary" mat-button>CADASTRAR</button>
+            </div>
+        </div>
+    </div>
+</div>

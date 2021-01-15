@@ -2,12 +2,10 @@ package br.com.ishare.entidade.usuario;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
+@Entity
 public class Cidade {
 
     @Id
@@ -16,4 +14,7 @@ public class Cidade {
 
     @Column(nullable = false, unique = true)
     private String nome;
+
+    @ManyToOne
+    private Estado estado;
 }

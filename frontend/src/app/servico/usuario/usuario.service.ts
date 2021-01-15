@@ -13,7 +13,7 @@ const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
 export class UsuarioService {
 
     private usuarioSubject = new BehaviorSubject<Usuario>(null);
-    url = configuracao.rotaBackend + '/usuario';
+    url = configuracao.rotaBackendPublico + '/usuario';
     httpHeader = new HttpHeaders();
 
     constructor(

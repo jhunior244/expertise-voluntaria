@@ -1,3 +1,4 @@
+import { ITipoUsuario, TipoUsuario } from './tipo-usuario';
 import { Endereco, IEndereco } from './endereco';
 
 export class IUsuario {
@@ -6,6 +7,7 @@ export class IUsuario {
     senha: string;
     token: string;
     endereco: IEndereco;
+    tipoUsuario: ITipoUsuario;
 }
 
 export class Usuario {
@@ -14,6 +16,7 @@ export class Usuario {
     senha: string;
     token: string;
     endereco: Endereco;
+    tipoUsuario: TipoUsuario;
 
     static doBackend(response: IUsuario): Usuario | null {
         let usuario = Object.create(Usuario.prototype);
@@ -22,7 +25,8 @@ export class Usuario {
         }
 
         usuario = Object.assign(usuario, response, {
-            endereco: (response.endereco) ? Endereco.doBackend(response.endereco) : null
+            endereco: (response.endereco) ? Endereco.doBackend(response.endereco) : null,
+            tipoUsuario: (response.tipoUsuario) ? TipoUsuario.doBackend(response.tipoUsuario) : null,
         });
         return usuario;
     }
@@ -30,6 +34,7 @@ export class Usuario {
     paraBackend(): IUsuario {
         const usuario = Object.assign(Object.create(Usuario.prototype), this, {
             endereco: (this.endereco) ? this.endereco.paraBackend() : null,
+            tipoUsuario: (this.tipoUsuario) ? this.tipoUsuario.paraBackend() : null,
         });
 
         return usuario;

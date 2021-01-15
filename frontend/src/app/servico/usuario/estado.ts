@@ -1,13 +1,14 @@
-import * as moment from 'moment';
 
 export class IEstado {
     id: number;
     nome: string;
+    uf: string;
 }
 
 export class Estado {
     id: number;
     nome: string;
+    uf: string;
 
     static listaDoBackend(response: IEstado[]): Estado[] {
         const lista: Estado[] = [];

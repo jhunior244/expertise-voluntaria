@@ -1,5 +1,6 @@
 export const configuracao = {
-    rotaBackend: 'http://localhost:8080/api/public',
+    rotaBackendPublico: 'http://localhost:8080/api/public',
+    rotaBackendPrivado: 'http://localhost:8080/api/private',
 
     rotaInicio: 'inicio',
     rotaHome: 'home',
@@ -9,6 +10,8 @@ export const configuracao = {
     parametroId: 'id',
     parametroToken: 'token',
     parametroEmail: 'email',
+    parametroNome: 'nome',
+    parametroUf: 'uf',
 
     tipoUsuario: {
         PESSOA_FISICA: 1,
