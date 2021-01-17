@@ -1,11 +1,13 @@
 import { EstadoService } from './estado.service';
 import { Cidade, ICidade } from './cidade';
 import { Estado } from './estado';
+import { CidadeService } from './cidade.service';
 
 export class IEndereco {
     id: string;
     rua: string;
     cep: string;
+    bairro: string;
     numero: string;
     cidade: ICidade;
 }
@@ -14,6 +16,7 @@ export class Endereco {
     id: string;
     rua: string;
     cep: string;
+    bairro: string;
     numero: string;
     cidade: Cidade;
 
@@ -50,23 +53,14 @@ export class Endereco {
         return obj;
     }
 
-    static integracaoParaEndereco(response: any, estadoService: EstadoService): Endereco {
+    static integracaoParaEndereco(response: any, cidade: Cidade): Endereco {
 
-        if (response == null) {
+        if (response == null || cidade == null) {
             return null;
         }
-        console.log(response);
-
-        const cidade = new Cidade();
-
-        estadoService.obtem(response.uf).subscribe(estadoRetornado => {
-            cidade.estado = estadoRetornado;
-        });
-
-        cidade.nome = response.localidade;
         const endereco = new Endereco();
-
         endereco.cidade = cidade;
+        endereco.bairro = response.bairro;
         endereco.cep = response.cep;
         endereco.rua = response.logradouro;
         endereco.numero = response.numero;

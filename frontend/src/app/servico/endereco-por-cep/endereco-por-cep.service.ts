@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Endereco } from './../usuario/endereco';
-import { EstadoService } from './../usuario/estado.service';
+import { CidadeService } from '../usuario/cidade.service';
 
 @Injectable({ providedIn: 'root' })
 export class EnderecoPorCepService {
@@ -11,16 +9,14 @@ export class EnderecoPorCepService {
 
     constructor(
         private httpClient: HttpClient,
-        private estadoService: EstadoService
+        private cidadeService: CidadeService
     ) {
         this.httpHeader = this.httpHeader.append('Content-Type', 'application/json');
     }
 
-    public obtemEndereco(cep: string): Observable<Endereco> {
+    public obtemEndereco(cep: string): Observable<any> {
         const url = 'http://viacep.com.br/ws/' + cep + '/json/';
-        return this.httpClient.get<any>(url).pipe(map(
-            (endereco => Endereco.integracaoParaEndereco(endereco, this.estadoService))
-        ));
+        return this.httpClient.get<any>(url);
 
     }
 }

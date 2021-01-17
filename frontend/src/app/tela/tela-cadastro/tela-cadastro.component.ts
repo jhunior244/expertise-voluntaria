@@ -1,3 +1,4 @@
+import { CidadeService } from './../../servico/usuario/cidade.service';
 import { SenhaCrosFieldValidator, emailsNaoCoincidem } from './../../ishare.validators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -26,6 +27,7 @@ export class TelaCadastroComponent implements OnInit {
   public emailMatcher = new EmailCrossFieldErrorMatcher();
   public senhaMatcher = new SenhaCrosFieldValidator();
   private usuario: Usuario;
+  private endereco: Endereco;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,7 +36,8 @@ export class TelaCadastroComponent implements OnInit {
     private erroService: ErroService,
     private router: Router,
     private toaster: Toaster,
-    private enderecoPorCepService: EnderecoPorCepService
+    private enderecoPorCepService: EnderecoPorCepService,
+    private cidadeService: CidadeService
   ) {
     this.formGroup = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -44,6 +47,7 @@ export class TelaCadastroComponent implements OnInit {
       rua: [null, Validators.required],
       cep: [null, Validators.required],
       numero: [null, Validators.required],
+      bairro: [null, Validators.required],
       cidade: [null, Validators.required],
       estado: [null, Validators.required],
       senha: [null, Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(16)])],
@@ -67,6 +71,7 @@ export class TelaCadastroComponent implements OnInit {
   get cep(): FormControl { return this.formGroup.controls.cep as FormControl; }
   get rua(): FormControl { return this.formGroup.controls.rua as FormControl; }
   get numero(): FormControl { return this.formGroup.controls.numero as FormControl; }
+  get bairro(): FormControl { return this.formGroup.controls.bairro as FormControl; }
   get cidade(): FormControl { return this.formGroup.controls.cidade as FormControl; }
   get estado(): FormControl { return this.formGroup.controls.estado as FormControl; }
   get senha(): FormControl { return this.formGroup.controls.senha as FormControl; }
@@ -75,14 +80,33 @@ export class TelaCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.cep.valueChanges.subscribe((cepEscrito: string) => {
       if (cepEscrito.length === 8) {
-        this.enderecoPorCepService.obtemEndereco(this.cep.value).subscribe(endereco => {
-          console.log(endereco);
+        this.enderecoPorCepService.obtemEndereco(this.cep.value).subscribe(enderecoRetornado => {
+          if (enderecoRetornado?.localidade) {
+            this.cidadeService.obtem(enderecoRetornado.localidade, enderecoRetornado.uf).subscribe(cidadeRetornada => {
+              this.endereco = Endereco.integracaoParaEndereco(enderecoRetornado, cidadeRetornada);
+              this.enderecoIntegracaoParaFormulario(this.endereco);
+            }, (erro: HttpErrorResponse) => {
+              console.log(erro);
+              this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
+            });
+          }
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     });
+  }
+
+  enderecoIntegracaoParaFormulario(endereco: Endereco) {
+    this.rua.setValue(endereco?.rua);
+    this.bairro.setValue(endereco?.bairro);
+    this.cidade.setValue(endereco?.cidade?.nome);
+    this.estado.setValue(endereco?.cidade?.estado);
+    this.rua.disable();
+    this.bairro.disable();
+    this.cidade.disable();
+    this.estado.disable();
   }
 
   formularioParaEntidade(): void {
@@ -93,8 +117,10 @@ export class TelaCadastroComponent implements OnInit {
     this.usuario.tipoUsuario = this.tipoUsuario.value;
     this.usuario.email = this.email.value;
     this.usuario.endereco.rua = this.rua.value;
+    this.usuario.endereco.bairro = this.bairro.value;
     this.usuario.endereco.cep = this.cep.value;
     this.usuario.endereco.numero = this.numero.value;
+    this.usuario.endereco.cidade.id = this.endereco?.cidade?.id;
     this.usuario.endereco.cidade.nome = this.cidade.value;
     this.usuario.endereco.cidade.estado = this.estado.value;
     this.usuario.senha = Md5.hashStr(this.senha.value).toString();
@@ -104,6 +130,7 @@ export class TelaCadastroComponent implements OnInit {
     this.formularioParaEntidade();
 
     this.usuarioService.cria(this.usuario).subscribe(() => {
+      this.erroService.exibeMensagemSucesso('Usuário criado com sucesso.', this.toaster);
       this.authService.autenticar(this.usuario).subscribe(() => {
         this.router.navigate([configuracao.rotaInicio]);
       }, (erro: HttpErrorResponse) => {

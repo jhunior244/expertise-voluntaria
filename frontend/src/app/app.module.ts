@@ -19,6 +19,7 @@ import { ErroService } from './core/erro/erro.service';
 import { SessaoService } from './core/sessao/sessao.service';
 import { TokenService } from './core/token/token.service';
 import { EnderecoPorCepService } from './servico/endereco-por-cep/endereco-por-cep.service';
+import { CidadeService } from './servico/usuario/cidade.service';
 import { EstadoService } from './servico/usuario/estado.service';
 import { TipoUsuarioService } from './servico/usuario/tipo-usuario.service';
 import { UsuarioService } from './servico/usuario/usuario.service';
@@ -70,7 +71,8 @@ import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/
     UsuarioService,
     SessaoService,
     TipoUsuarioService,
-    EnderecoPorCepService
+    EnderecoPorCepService,
+    CidadeService
   ],
   bootstrap: [AppComponent]
 })

@@ -88,7 +88,16 @@
                 </div>
 
                 <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <mat-form-field fxFlex="48" fxFlex.lt-md="100">
+                    <mat-form-field fxFlex="32" fxFlex.lt-md="100">
+                        <mat-label>Bairro</mat-label>
+                        <input type="text" matInput [formControl]="bairro">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="bairro.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="32" fxFlex.lt-md="100">
                         <mat-label>Cidade</mat-label>
                         <input type="text" matInput [formControl]="cidade">
                         <mat-hint>Campo obrigatório</mat-hint>
@@ -97,7 +106,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <div fxFlex="48" fxFlex.lt-md="100">
+                    <div fxFlex="32" fxFlex.lt-md="100">
                         <app-select-estado [controladorFormulario]="estado" [obrigatorio]="true"></app-select-estado>
                     </div>
                 </div>

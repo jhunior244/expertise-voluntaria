@@ -15,5 +15,7 @@ public class EnderecoDto {
 
     private String numero;
 
+    private String bairro;
+
     private CidadeDto cidade;
 }
