@@ -1,3 +1,4 @@
+import { SessaoService } from './../../core/sessao/sessao.service';
 import { CidadeService } from './../../servico/usuario/cidade.service';
 import { SenhaCrosFieldValidator, emailsNaoCoincidem } from './../../ishare.validators';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -37,7 +38,8 @@ export class TelaCadastroComponent implements OnInit {
     private router: Router,
     private toaster: Toaster,
     private enderecoPorCepService: EnderecoPorCepService,
-    private cidadeService: CidadeService
+    private cidadeService: CidadeService,
+    private sessaoService: SessaoService
   ) {
     this.formGroup = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -78,6 +80,7 @@ export class TelaCadastroComponent implements OnInit {
   get repeteSenha(): FormControl { return this.formGroup.controls.repeteSenha as FormControl; }
 
   ngOnInit(): void {
+    this.sessaoService.deslogar();
     this.cep.valueChanges.subscribe((cepEscrito: string) => {
       if (cepEscrito.length === 8) {
         this.enderecoPorCepService.obtemEndereco(this.cep.value).subscribe(enderecoRetornado => {
@@ -89,7 +92,10 @@ export class TelaCadastroComponent implements OnInit {
               console.log(erro);
               this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
             });
+          } else {
+            this.limpaCamposCep();
           }
+
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
@@ -107,6 +113,17 @@ export class TelaCadastroComponent implements OnInit {
     this.bairro.disable();
     this.cidade.disable();
     this.estado.disable();
+  }
+
+  limpaCamposCep(): void {
+    this.rua.setValue(null);
+    this.bairro.setValue(null);
+    this.cidade.setValue(null);
+    this.estado.setValue(null);
+    this.rua.enable();
+    this.bairro.enable();
+    this.cidade.enable();
+    this.estado.enable();
   }
 
   formularioParaEntidade(): void {
