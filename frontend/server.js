@@ -8,7 +8,7 @@ const port = 3000;
 
 app.use(express.static(__dirname + '/dist/frontend'));
 
-app.get('/*', (req, res) => res.sendFile(path.join(__dirname)));
+app.get('/*', (req, res) => res.sendFile(__dirname + '/dist/frontend/index.html'));
 
 const server = http.createServer(app);
 
