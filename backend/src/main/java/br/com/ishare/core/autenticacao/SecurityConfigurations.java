@@ -1,6 +1,6 @@
 package br.com.ishare.core.autenticacao;
 
-import br.com.ishare.repositorio.UsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

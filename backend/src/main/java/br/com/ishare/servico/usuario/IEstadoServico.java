@@ -1,4 +1,4 @@
-package br.com.ishare.servico;
+package br.com.ishare.servico.usuario;
 
 import br.com.ishare.entidade.usuario.Estado;
 import br.com.ishare.entidade.usuario.TipoUsuario;

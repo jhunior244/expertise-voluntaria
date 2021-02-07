@@ -1,7 +1,7 @@
-package br.com.ishare.servico;
+package br.com.ishare.servico.usuario;
 
 import br.com.ishare.entidade.usuario.Cidade;
-import br.com.ishare.repositorio.CidadeJpaRepository;
+import br.com.ishare.repositorio.usuario.CidadeJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

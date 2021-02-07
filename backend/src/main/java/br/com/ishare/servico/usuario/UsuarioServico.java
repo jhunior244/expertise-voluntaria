@@ -1,4 +1,4 @@
-package br.com.ishare.servico;
+package br.com.ishare.servico.usuario;
 
 import br.com.ishare.core.validacao.IShareExcessao;
 import br.com.ishare.dto.usuario.UsuarioDto;
@@ -7,10 +7,10 @@ import br.com.ishare.entidade.usuario.Endereco;
 import br.com.ishare.entidade.usuario.TipoUsuario;
 import br.com.ishare.entidade.usuario.Usuario;
 import br.com.ishare.mapeador.UsuarioMapeador;
-import br.com.ishare.repositorio.CidadeJpaRepository;
-import br.com.ishare.repositorio.EnderecoJpaRepository;
-import br.com.ishare.repositorio.TipoUsuarioJpaRepository;
-import br.com.ishare.repositorio.UsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.CidadeJpaRepository;
+import br.com.ishare.repositorio.usuario.EnderecoJpaRepository;
+import br.com.ishare.repositorio.usuario.TipoUsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,6 +45,11 @@ public class UsuarioServico implements IUsuarioServico {
         Usuario usuario = usuarioJpaRepository.findByEmail(email);
 
         return usuario != null ? true : false;
+    }
+
+    @Override
+    public Usuario obtemPorToken(String token){
+        return usuarioJpaRepository.findByToken(token);
     }
 
     @Override

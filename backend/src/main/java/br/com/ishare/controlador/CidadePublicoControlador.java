@@ -2,7 +2,7 @@ package br.com.ishare.controlador;
 
 import br.com.ishare.dto.usuario.CidadeDto;
 import br.com.ishare.mapeador.CidadeMapeador;
-import br.com.ishare.servico.ICidadeServico;
+import br.com.ishare.servico.usuario.ICidadeServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

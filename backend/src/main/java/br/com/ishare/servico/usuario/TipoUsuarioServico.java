@@ -1,7 +1,7 @@
-package br.com.ishare.servico;
+package br.com.ishare.servico.usuario;
 
 import br.com.ishare.entidade.usuario.TipoUsuario;
-import br.com.ishare.repositorio.TipoUsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.TipoUsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

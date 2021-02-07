@@ -2,7 +2,7 @@ package br.com.ishare.controlador;
 
 import br.com.ishare.dto.usuario.TipoUsuarioDto;
 import br.com.ishare.mapeador.TipoUsuarioMapeador;
-import br.com.ishare.servico.ITipoUsuarioServico;
+import br.com.ishare.servico.usuario.ITipoUsuarioServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

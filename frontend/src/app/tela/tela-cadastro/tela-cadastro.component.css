@@ -1,10 +1,13 @@
 .botao-cadastrar {
   color: #ffffff;
-  border-radius: 3em;
+  border-radius: 1em;
   border: 1px solid white;
   margin-top: 1em;
 }
 .botao-cadastrar:focus {
   outline: none;
+}
+.botao-cadastrar:disabled {
+  background-color: darkgrey;
 }
 

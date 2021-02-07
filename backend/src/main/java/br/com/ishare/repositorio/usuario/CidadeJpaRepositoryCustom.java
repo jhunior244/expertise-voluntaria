@@ -1,4 +1,4 @@
-package br.com.ishare.repositorio;
+package br.com.ishare.repositorio.usuario;
 
 import br.com.ishare.entidade.usuario.Cidade;
 

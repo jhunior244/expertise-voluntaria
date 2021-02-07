@@ -14,11 +14,13 @@ const routes: Routes = [
   }, {
     path: configuracao.rotaCadastro,
     component: TelaCadastroComponent
-  }, {
-    path: '**',
-    redirectTo: configuracao.rotaHome,
-    pathMatch: 'full',
-  }, {
+  },
+  //  {
+  //   path: '**',
+  //   redirectTo: configuracao.rotaHome,
+  //   pathMatch: 'full',
+  // }, 
+  {
     path: '',
     component: TelaPaginaInicialSiteComponent
   }, {

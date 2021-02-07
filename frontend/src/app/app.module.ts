@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NovaPublicacaoComponent } from './componente/nova-publicacao/nova-publicacao.component';
 import { SelectEstadoComponent } from './componente/select-estado/select-estado.component';
 import { SelectTipoUsuarioComponent } from './componente/select-tipo-usuario/select-tipo-usuario.component';
 import { AuthService } from './core/auth/auth.service';
@@ -24,19 +25,28 @@ import { EstadoService } from './servico/usuario/estado.service';
 import { TipoUsuarioService } from './servico/usuario/tipo-usuario.service';
 import { UsuarioService } from './servico/usuario/usuario.service';
 import { TelaCadastroComponent } from './tela/tela-cadastro/tela-cadastro.component';
+import { TelaInicioComponent } from './tela/tela-inicio/tela-inicio.component';
 import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
+import {MatSliderModule} from '@angular/material/slider';
 import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
+import {MatIconModule} from '@angular/material/icon';
+import { UploadArquivoService } from './servico/upload-arquivo/upload-arquivo.service';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ImagemService } from './servico/imagem/imagem.service';
+import { PublicacaoService } from './servico/publicacao/publicacao.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TelaLoginComponent,
+    NovaPublicacaoComponent,
     TelaLoginComponent,
+    TelaInicioComponent,
     TelaCadastroComponent,
     TelaPaginaInicialSiteComponent,
     SelectTipoUsuarioComponent,
-    SelectEstadoComponent
+    SelectEstadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +61,10 @@ import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/
     ReactiveFormsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule
-
+    MatSelectModule,
+    MatSliderModule,
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [
     {
@@ -72,7 +84,10 @@ import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/
     SessaoService,
     TipoUsuarioService,
     EnderecoPorCepService,
-    CidadeService
+    CidadeService,
+    UploadArquivoService,
+    ImagemService,
+    PublicacaoService
   ],
   bootstrap: [AppComponent]
 })

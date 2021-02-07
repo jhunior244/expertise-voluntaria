@@ -5,7 +5,7 @@ import br.com.ishare.core.validacao.IShareExcessao;
 import br.com.ishare.dto.usuario.UsuarioDto;
 import br.com.ishare.dto.usuario.UsuarioSaidaDto;
 import br.com.ishare.entidade.usuario.Usuario;
-import br.com.ishare.repositorio.UsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
