@@ -1,11 +1,14 @@
 package br.com.ishare.servico.publicacao;
 
+import br.com.ishare.dto.publicacao.ImagemDto;
 import br.com.ishare.entidade.publicacao.Imagem;
 import br.com.ishare.entidade.publicacao.Publicacao;
 import br.com.ishare.entidade.usuario.Usuario;
 import br.com.ishare.repositorio.publicacao.ImagemJpaRepository;
 import br.com.ishare.repositorio.publicacao.PublicacaoJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -42,5 +45,10 @@ public class PublicacaoServico implements IPublicacaoServico {
     public Publicacao obtem(UUID id){
         Optional<Publicacao> optionalPublicacao = publicacaoJpaRepository.findById(id);
         return optionalPublicacao.orElse(null);
+    }
+
+    @Override
+    public Page<Publicacao> lista(Usuario usuario, Pageable pagina){
+        return publicacaoJpaRepository.findByUsuarioId(usuario.getId(), pagina);
     }
 }

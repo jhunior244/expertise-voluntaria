@@ -87,7 +87,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-        System.out.println("passou aqui");
         return source;
     }
 

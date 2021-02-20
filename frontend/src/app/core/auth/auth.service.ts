@@ -29,4 +29,8 @@ export class AuthService {
         this.sessaoService.setUsuarioLogadoSistema(usuarioRetornado.nome);
       }));
   }
+
+  autenticado(): Observable<boolean>{
+    return this.http.get<boolean>(this.url + '/autenticado');
+  }
 }

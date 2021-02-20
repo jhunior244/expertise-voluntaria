@@ -1,0 +1,17 @@
+<mat-card class="mb-2"> 
+    <mat-card-header>
+        <mat-card-title>{{publicacao.titulo}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <span style=" white-space: pre-wrap;">{{publicacao.descricao}}</span>
+        <div *ngIf="publicacao.listaImagem">
+            <div *ngFor="let imagem of publicacao.listaImagem">
+                <img width="100%" [src]="imagem.conteudo">
+            </div>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <button class="background-primary" fxFlex="50" mat-button>Enviar mensagem</button>
+        <button class="background-primary" fxFlex="50" mat-button>Enviar e-mail</button>
+    </mat-card-actions>
+</mat-card>

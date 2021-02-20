@@ -1,15 +1,14 @@
-import { PublicacaoService } from './../../servico/publicacao/publicacao.service';
-import { Publicacao } from './../../servico/publicacao/publicacao';
-import { HttpErrorResponse, HttpResponseBase } from '@angular/common/http';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Toaster } from 'ngx-toast-notifications';
-import { Imagem } from 'src/app/servico/imagem/imagem';
-import { ErroService } from './../../core/erro/erro.service';
-import { ImagemService } from './../../servico/imagem/imagem.service';
-import { Usuario } from 'src/app/servico/usuario/usuario';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Toaster } from 'ngx-toast-notifications';
+import { ErroService } from 'src/app/core/erro/erro.service';
+import { Imagem } from 'src/app/servico/imagem/imagem';
+import { ImagemService } from 'src/app/servico/imagem/imagem.service';
+import { Publicacao } from 'src/app/servico/publicacao/publicacao';
+import { PublicacaoService } from 'src/app/servico/publicacao/publicacao.service';
 
 @Component({
   selector: 'app-nova-publicacao',
@@ -61,7 +60,7 @@ export class NovaPublicacaoComponent implements OnInit {
     this.publicacao.descricao = this.descricao.value;
     this.publicacao.raioAlcance = this.raioAlcance.value;
     this.publicacao.listaImagem = new Array();
-    if(this.imagemCarregada){
+    if (this.imagemCarregada) {
       this.publicacao.listaImagem.push(this.imagemCarregada);
     }
   }
@@ -84,12 +83,13 @@ export class NovaPublicacaoComponent implements OnInit {
 
   carregaImagem(event: any): void {
     if (event?.target?.files[0]?.size > 1048576) {
-      this.erroService.exibeMensagemErro('Arquivo muito grande', this.toaster);
+      this.erroService.exibeMensagemErro('Arquivo muito grande. Tamanho máximo permitido: 1 megabyte', this.toaster);
       return;
     }
 
     this.imagemService.uploadoImagem(event.target.files[0]).subscribe(imagem => {
       this.imagemCarregada = imagem;
+      console.log(this.imagemCarregada);
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error?.erro, this.toaster);

@@ -1,5 +1,5 @@
 import { Publicacao, IPublicacao } from './publicacao';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { configuracao } from './../../configuracao';
 import { map } from 'rxjs/operators';
 import { IPagina } from '../pagina/pagina';
@@ -22,6 +22,13 @@ export class PublicacaoService {
             publicacao.paraBackend(), { headers: this.httpHeader })
             .pipe(map(pagina => Publicacao.doBackend(pagina)));
 
+    }
+
+    public lista(): Observable<IPagina<IPublicacao, Publicacao>> {
+        let httpParams = new HttpParams();
+
+        return this.httpCliente.get<IPagina<IPublicacao, Publicacao>>(this.url + '/lista', { params: httpParams })
+            .pipe(map((pagina => this.obtemPagina(pagina))));
     }
 
     private obtemPagina(pagina: IPagina<IPublicacao, Publicacao>): IPagina<IPublicacao, Publicacao> {

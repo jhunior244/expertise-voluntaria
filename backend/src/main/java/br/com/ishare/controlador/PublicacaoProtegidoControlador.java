@@ -7,6 +7,9 @@ import br.com.ishare.servico.publicacao.IPublicacaoServico;
 import br.com.ishare.servico.usuario.IUsuarioServico;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -34,5 +37,22 @@ public class PublicacaoProtegidoControlador {
     @GetMapping(path = "/obtem")
     public PublicacaoDto obtem(UUID id){
         return publicacaoMapeador.paraDto(publicacaoServico.obtem(id));
+    }
+
+    @GetMapping(path = "/lista")
+    public Page<PublicacaoDto> lista(@RequestHeader(name="Authorization") String token, Long numeroPagina, Long tamanhoPagina){
+
+        Usuario usuario = usuarioServico.obtemPorToken(token);
+
+        if(numeroPagina == null || tamanhoPagina == null){
+            numeroPagina = 0L;
+            tamanhoPagina = 10L;
+        }
+
+        Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
+
+        Page<PublicacaoDto> page = publicacaoMapeador.paraDto(publicacaoServico.lista(usuario, pagina));
+
+        return page;
     }
 }

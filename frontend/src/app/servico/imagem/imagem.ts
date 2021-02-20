@@ -41,14 +41,14 @@ export class Imagem {
         if (response == null) {
             return null;
         }
-        
+
         imagem = Object.assign(imagem, response, {
             conteudo: (response.conteudoBase64) ? 'data:image/jpg;base64,'.concat(this.retiraAspas(response.conteudoBase64)) : null,
-            conteudoBase64: null
+            // conteudoBase64: null
         });
         return imagem;
     }
-    
+
     private static retiraAspas(conteudo: string): string {
         if (conteudo == null) {
             return '';

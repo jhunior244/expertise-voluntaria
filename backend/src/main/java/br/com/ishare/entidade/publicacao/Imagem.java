@@ -49,7 +49,11 @@ public class Imagem {
             }
             outputStream.close();
         } catch (IOException ioe) {
+            System.out.println(ioe.getMessage());
         } catch (DataFormatException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
         return outputStream.toByteArray();
     }

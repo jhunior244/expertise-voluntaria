@@ -1,6 +1,9 @@
-<div fxLayout="column"  class="container py-5" style="height: 80%;">
+<div fxLayout="column"  class="container py-2" style="height: 80%;" fxLayoutGap="10px">
     <div  fxLayoutAlign="center start">
         <button mat-raised-button (click)="novaPublicacao()">Nova publicação</button>
+    </div>
+    <div fxFlex fxLayoutAlign="center">
+        <app-lista-publicacao fxFlex="60"></app-lista-publicacao>
     </div>
 </div>
  

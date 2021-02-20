@@ -19,11 +19,18 @@ export class RequestInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent
         | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
 
-        if (req.url.startsWith(configuracao.rotaBackendPrivado) && this.tokenService.hasToken()) {
+        if ((req.url.startsWith(configuracao.rotaBackendPrivado) || req.url.startsWith(configuracao.rotaBackendPublico))
+            && this.tokenService.hasToken()) {
             const token = this.tokenService.getToken();
             req = req.clone({
                 setHeaders: {
                     Authorization: token
+                }
+            });
+        } else if (req.url.startsWith(configuracao.rotaBackendPrivado) || req.url.startsWith(configuracao.rotaBackendPublico)) {
+            req = req.clone({
+                setHeaders: {
+                    Authorization: ""
                 }
             });
         }
