@@ -21,6 +21,7 @@ export class ListaPublicacaoComponent implements OnInit {
   ) {
     this.publicacaoService.lista().subscribe(pagina => {
       this.listaPublicacao = pagina.conteudo;
+      console.log(this.listaPublicacao);
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);

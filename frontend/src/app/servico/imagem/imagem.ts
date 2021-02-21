@@ -1,7 +1,7 @@
 import * as moment from 'moment';
 
 export class IImagem {
-    id: number;
+    id: string;
     nome: string;
     tipo: string;
     conteudoBase64: string;
@@ -9,7 +9,7 @@ export class IImagem {
 }
 
 export class Imagem {
-    id: number;
+    id: string;
     nome: string;
     tipo: string;
     conteudoBase64: string;
@@ -41,7 +41,6 @@ export class Imagem {
         if (response == null) {
             return null;
         }
-
         imagem = Object.assign(imagem, response, {
             conteudo: (response.conteudoBase64) ? 'data:image/jpg;base64,'.concat(this.retiraAspas(response.conteudoBase64)) : null,
             // conteudoBase64: null

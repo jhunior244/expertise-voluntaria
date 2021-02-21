@@ -4,7 +4,7 @@
         <div style="width: 60%;" class="mb-3" fxLayout="column">
             <form  [formGroup]="formGroup" fxLayout="column">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <mat-form-field fxFlex="58" fxFlex.lt-md="100">
+                    <mat-form-field fxFlex>
                         <mat-label>Nome completo</mat-label>
                         <input type="text" matInput [formControl]="nome" >
                         <mat-hint>Campo obrigatório</mat-hint>
@@ -12,10 +12,17 @@
                             Campo obrigatório
                         </mat-error>
                     </mat-form-field>
-    
-                    <div fxFlex="38" fxFlex.lt-md="100">
-                        <!-- <mat-label>Tipo pessoa</mat-label> -->
+                </div>
+                
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="18" fxFlex.lt-md="100">
                         <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true"></app-select-tipo-usuario>
+                    </div>
+                    <div fxFlex="38" fxFlex.lt-md="100">
+                        <app-select-setor-empresa [multiplo]="true" [controladorFormulario]="setorEmpresa"></app-select-setor-empresa>
+                    </div>
+                    <div fxFlex="38" fxFlex.lt-md="100">
+                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao"></app-select-area-atuacao>
                     </div>
                 </div>
 

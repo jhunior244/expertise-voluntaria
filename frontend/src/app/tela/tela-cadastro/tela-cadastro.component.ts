@@ -44,6 +44,8 @@ export class TelaCadastroComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       nome: [null, Validators.required],
       tipoUsuario: [null, Validators.required],
+      setorEmpresa: [null, Validators.required],
+      areaAtuacao: [null, Validators.required],
       email: [null, Validators.compose([Validators.required, Validators.email])],
       validacaoEmail: [null, Validators.compose([Validators.required, Validators.email])],
       rua: [null, Validators.required],
@@ -70,6 +72,8 @@ export class TelaCadastroComponent implements OnInit {
   get validacaoEmail(): FormControl { return this.formGroup.controls.validacaoEmail as FormControl; }
   get nome(): FormControl { return this.formGroup.controls.nome as FormControl; }
   get tipoUsuario(): FormControl { return this.formGroup.controls.tipoUsuario as FormControl; }
+  get setorEmpresa(): FormControl { return this.formGroup.controls.setorEmpresa as FormControl; }
+  get areaAtuacao(): FormControl { return this.formGroup.controls.areaAtuacao as FormControl; }
   get cep(): FormControl { return this.formGroup.controls.cep as FormControl; }
   get rua(): FormControl { return this.formGroup.controls.rua as FormControl; }
   get numero(): FormControl { return this.formGroup.controls.numero as FormControl; }

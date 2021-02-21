@@ -38,6 +38,9 @@ import { ListaPublicacaoComponent } from './componente/publicacao/lista-publicac
 import { NovaPublicacaoComponent } from './componente/publicacao/nova-publicacao/nova-publicacao.component';
 import {MatCardModule} from '@angular/material/card';
 import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/select-setor-empresa.component';
+import { SelectAreaAtuacaoComponent } from './componente/select-area-atuacao/select-area-atuacao.component';
+import { AreaAtuacaoService } from './servico/area-atuacao/area-atuacao.service';
+import { SetorEmpresaService } from './servico/setor-atuacao/setor-empresa.service';
 
 
 @NgModule({
@@ -54,6 +57,7 @@ import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/s
     ListaPublicacaoComponent,
     CardPublicacaoComponent,
     SelectSetorEmpresaComponent,
+    SelectAreaAtuacaoComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,7 +100,9 @@ import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/s
     UploadArquivoService,
     ImagemService,
     PublicacaoService,
-    AuthGuardTelaInicio
+    AuthGuardTelaInicio,
+    AreaAtuacaoService,
+    SetorEmpresaService
   ],
   bootstrap: [AppComponent]
 })

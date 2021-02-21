@@ -16,10 +16,8 @@ export class AuthGuardTelaInicio implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return this.authService.autenticado().pipe(map(autenticado => {
       if (autenticado) {
-        console.log('authenticated');
         return true;
       } else {
-        console.log('not authenticated');
         this.router.navigate([configuracao.rotaLogin]);
         return false;
       }

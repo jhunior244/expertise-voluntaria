@@ -25,7 +25,7 @@ export class ErroService {
     }
 
     exibeMensagemErro(mensagem: string, toaster: Toaster): void {
-        mensagem = mensagem != null && typeof mensagem === 'string' ? mensagem : 'OcorreuErroInesperado';
+        mensagem = mensagem != null && typeof mensagem === 'string' ? mensagem : 'Ocorreu um erro inesperado';
         toaster.open({
             text: mensagem,
             type: 'danger',
