@@ -62,28 +62,4 @@ export class Imagem {
         });
         return imagem;
     }
-
-
-    private toUint8Array(arquivo: string): Uint8Array {
-        const byteCharacters = atob(arquivo.substring(23));
-
-        const byteNumbers = new Array(byteCharacters.length);
-        for (let i = 0; i < byteCharacters.length; i++) {
-            byteNumbers[i] = byteCharacters.charCodeAt(i);
-        }
-
-        const byteArray = new Uint8Array(byteNumbers);
-        return byteArray;
-    }
-
-    base64ToArrayBuffer(base64: string): ArrayBufferLike {
-
-        const binaryString = window.atob(base64);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
-        return bytes.buffer;
-    }
 }
