@@ -37,7 +37,7 @@ import { CardPublicacaoComponent } from './componente/publicacao/card-publicacao
 import { ListaPublicacaoComponent } from './componente/publicacao/lista-publicacao/lista-publicacao.component';
 import { NovaPublicacaoComponent } from './componente/publicacao/nova-publicacao/nova-publicacao.component';
 import {MatCardModule} from '@angular/material/card';
-import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/select-setor-empresa.component';
+// import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/select-setor-empresa.component';
 
 
 @NgModule({
@@ -53,7 +53,7 @@ import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/s
     SelectEstadoComponent,
     ListaPublicacaoComponent,
     CardPublicacaoComponent,
-    SelectSetorEmpresaComponent,
+    // SelectSetorEmpresaComponent,
   ],
   imports: [
     BrowserModule,

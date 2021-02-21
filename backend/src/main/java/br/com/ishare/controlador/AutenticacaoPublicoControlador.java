@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
@@ -48,5 +49,14 @@ public class AutenticacaoPublicoControlador {
         } catch (AuthenticationException e){
             throw new IShareExcessao("Dados inválidos", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(path = "/autenticado")
+    public boolean autenticado(@RequestHeader(name="Authorization") String token){
+        if(!StringUtils.hasLength(token) || !tokenService.isTokenValido(token.substring(7))){
+            return false;
+        }
+
+        return true;
     }
 }

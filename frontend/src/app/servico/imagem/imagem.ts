@@ -44,7 +44,7 @@ export class Imagem {
 
         imagem = Object.assign(imagem, response, {
             conteudo: (response.conteudoBase64) ? 'data:image/jpg;base64,'.concat(this.retiraAspas(response.conteudoBase64)) : null,
-            // conteudoBase64: null
+            conteudoBase64: null
         });
         return imagem;
     }
