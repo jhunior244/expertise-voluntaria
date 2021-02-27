@@ -40,7 +40,17 @@ body {
   font-size: 14px;
 }
 
+/*estilo campo selecionado mat-option*/
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #58af9c !important;
+}
 
+.mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+  background: #58af9c !important;
+}
+
+
+/*estilo mat-form-field inicio*/
 .mat-focused .mat-form-field-label {
   /*change color of label*/
   color: #58af9c !important;
@@ -63,6 +73,7 @@ body {
 mat-hint {
     color: #58af9c !important; 
 }
+/*estilo mat-form-field fim*/
 
 /*estilo mat button inicio*/
 .mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {

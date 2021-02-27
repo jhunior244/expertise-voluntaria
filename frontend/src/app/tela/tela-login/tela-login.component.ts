@@ -48,7 +48,7 @@ export class TelaLoginComponent implements OnInit {
     usuario.email = this.email.value;
     usuario.senha = Md5.hashStr(this.senha.value).toString();
     this.authService.autenticar(usuario).subscribe(resposta => {
-      this.router.navigate([configuracao.rotaInicio]);
+      this.router.navigate([configuracao.rotaInterno]);
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.message, this.toaster);

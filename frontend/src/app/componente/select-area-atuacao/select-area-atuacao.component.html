@@ -1,7 +1,7 @@
 <mat-form-field  style="width:100%;">
-    <mat-select style="width:100%;" id="{{idSelect}}" placeholder="Suas áreas de atuação"
+    <mat-select style="width:100%;" id="{{idSelect}}" [placeholder]="calculaPlaceholder()"
         [formControl]="controladorFormulario" [compareWith]="compara" multiple={{multiplo}}
-        [errorStateMatcher]="exibeErro" >
+        [errorStateMatcher]="exibeErro" matTooltip="{{calculaTooltip()}}">
         <mat-option *ngFor=" let tipo of lista" [value]="tipo">
             {{tipo.nome}}</mat-option>
     </mat-select>

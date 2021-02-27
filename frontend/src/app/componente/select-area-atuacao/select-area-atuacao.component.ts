@@ -1,3 +1,5 @@
+import { configuracao } from './../../configuracao';
+import { TipoUsuario } from './../../servico/usuario/tipo-usuario';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -20,6 +22,7 @@ export class SelectAreaAtuacaoComponent implements OnInit {
   @Input() reservadorEspaco: string;
   @Input() exibeErro: ErrorStateMatcher;
   @Input() idSelect: string;
+  @Input() tipoUsuario: TipoUsuario;
 
   public lista: AreaAtuacao[] = [];
 
@@ -40,6 +43,26 @@ export class SelectAreaAtuacaoComponent implements OnInit {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error?.message, this.toaster);
     });
+  }
+
+  calculaPlaceholder() {
+    if (this.reservadorEspaco) {
+      return this.reservadorEspaco;
+    } if (this.tipoUsuario == null || this.tipoUsuario.ehPessoaFisica() || this.tipoUsuario.ehPessoaJuridica()) {
+      return 'Áreas de atuação';
+    }
+    return 'Áreas possíveis para atuação de voluntários';
+  }
+
+  calculaTooltip(): string {
+    if (this.tipoUsuario == null || this.tipoUsuario.ehPessoaFisica()) {
+      return 'Selecione as possíveis áreas de atuação que você pode auxiliar as instituições.';
+    } else if (this.tipoUsuario.ehPessoaJuridica()) {
+      return 'Selecione as possíveis áreas de atuação que sua empresa pode auxiliar as instituições.';
+    } else {
+      return 'Selecione as áreas possíveis para atuação de voluntários. Pode ser os setores existentes na instituição ou a principal atividade exercida pela instituição.';
+    }
+
   }
 
   compara(obj1: AreaAtuacao, obj2: AreaAtuacao): boolean {

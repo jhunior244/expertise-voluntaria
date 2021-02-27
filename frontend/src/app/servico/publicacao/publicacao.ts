@@ -1,3 +1,4 @@
+import { AreaAtuacao, IAreaAtuacao } from './../area-atuacao/area-atuacao';
 import { IImagem, Imagem } from '../imagem/imagem';
 import { IUsuario, Usuario } from '../usuario/usuario';
 import { ITipoPublicacao, TipoPublicacao } from './tipo-publicacao';
@@ -10,6 +11,7 @@ export class IPublicacao {
     usuario: IUsuario;
     listaImagem: IImagem[];
     tipoPublicacao: ITipoPublicacao;
+    listaAreaAtuacao: IAreaAtuacao[];
 }
 
 export class Publicacao {
@@ -20,6 +22,7 @@ export class Publicacao {
     usuario: Usuario;
     listaImagem: Imagem[];
     tipoPublicacao: TipoPublicacao;
+    listaAreaAtuacao: AreaAtuacao[];
 
     static listaDoBackend(response: IPublicacao[]): Publicacao[] {
         const lista: Publicacao[] = [];
@@ -40,6 +43,7 @@ export class Publicacao {
             usuario: (response.usuario) ? Usuario.doBackend(response.usuario) : null,
             listaImagem: (response.listaImagem) ? Imagem.listaDoBackend(response.listaImagem) : null,
             tipoPublicacao: (response.tipoPublicacao) ? TipoPublicacao.doBackend(response.tipoPublicacao) : null,
+            listaAreaAtuacao: (response.listaAreaAtuacao) ? AreaAtuacao.listaDoBackend(response.listaAreaAtuacao) : null,
         });
         return usuario;
     }
@@ -49,6 +53,7 @@ export class Publicacao {
             usuario: (this.usuario) ? this.usuario.paraBackend() : null,
             listaImagem: (this.listaImagem) ? Imagem.listaParaBackend(this.listaImagem) : null,
             tipoPublicacao: (this.tipoPublicacao) ? this.tipoPublicacao.paraBackend() : null,
+            listaAreaAtuacao: (this.listaAreaAtuacao) ? AreaAtuacao.listaParaBackend(this.listaAreaAtuacao) : null,
         });
         return publicacao;
     }

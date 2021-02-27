@@ -1,5 +1,5 @@
 import { Estado } from './../../servico/usuario/estado';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { EstadoService } from 'src/app/servico/usuario/estado.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
@@ -13,7 +13,7 @@ import { TipoUsuario } from 'src/app/servico/usuario/tipo-usuario';
   templateUrl: './select-estado.component.html',
   styleUrls: ['./select-estado.component.css']
 })
-export class SelectEstadoComponent implements OnInit {
+export class SelectEstadoComponent implements OnInit, OnChanges {
 
   @Input() controladorFormulario: FormControl;
   @Input() obrigatorio = false;
@@ -21,6 +21,8 @@ export class SelectEstadoComponent implements OnInit {
   @Input() reservadorEspaco: string;
   @Input() exibeErro: ErrorStateMatcher;
   @Input() idSelect: string;
+  @Input() exibeApenasUf = false;
+  @Input() ufPrePreenchida: string;
 
   public lista: Estado[] = [];
 
@@ -36,10 +38,26 @@ export class SelectEstadoComponent implements OnInit {
   ngOnInit(): void {
     this.estadoService.lista().subscribe(lista => {
       this.lista = lista;
+      this.selecionaUfPrePreenchida();
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
+  }
+
+  ngOnChanges(): void {
+    if (this.ufPrePreenchida) {
+      this.selecionaUfPrePreenchida();
+    }
+  }
+
+  selecionaUfPrePreenchida(): void {
+    if (this.lista) {
+      const index = this.lista.findIndex(
+        e => e.uf === this.ufPrePreenchida
+      );
+      this.controladorFormulario.setValue(this.lista[index]);
+    }
   }
 
   compara(obj1: TipoUsuario, obj2: TipoUsuario): boolean {

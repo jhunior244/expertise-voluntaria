@@ -21,7 +21,6 @@ public class UsuarioPublicoControlador {
 
     @PostMapping(path = "/cria")
     public void cria(@RequestBody UsuarioDto usuarioDto) throws Exception {
-
         usuarioServico.cria(usuarioDto);
     }
 }

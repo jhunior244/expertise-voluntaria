@@ -30,9 +30,7 @@ public class ImagemServico implements IImagemServico{
         imagem.setNome(file.getOriginalFilename());
         imagem.setTipo(file.getContentType());
         imagem.setConteudo(ImagemDto.comprimeBytes(file.getBytes()));
-
-        Imagem imagemBanco = imagemJpaRepository.save(imagem);
-        return imagemBanco;
+        return imagemJpaRepository.save(imagem);
     }
 
 }

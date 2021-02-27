@@ -43,6 +43,18 @@ public class Usuario implements UserDetails {
     @ManyToOne
     private TipoUsuario tipoUsuario;
 
+    @ManyToMany
+    @JoinTable(
+            name = "usuarioListaAtuacao",
+            joinColumns = {
+                    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "area_atuacao_id", nullable = false, referencedColumnName = "id")
+            }
+    )
+    private List<AreaAtuacao> listaAreaAtuacao;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> listaPerfil = new ArrayList<Perfil>();
 
@@ -79,5 +91,12 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUf() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null || this.getEndereco().getCidade().getEstado() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getEstado().getUf();
     }
 }

@@ -1,3 +1,4 @@
+import { AreaAtuacao } from './../../servico/area-atuacao/area-atuacao';
 import { SessaoService } from './../../core/sessao/sessao.service';
 import { CidadeService } from './../../servico/usuario/cidade.service';
 import { SenhaCrosFieldValidator, emailsNaoCoincidem } from './../../ishare.validators';
@@ -44,8 +45,7 @@ export class TelaCadastroComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       nome: [null, Validators.required],
       tipoUsuario: [null, Validators.required],
-      setorEmpresa: [null, Validators.required],
-      areaAtuacao: [null, Validators.required],
+      areaAtuacao: [null],
       email: [null, Validators.compose([Validators.required, Validators.email])],
       validacaoEmail: [null, Validators.compose([Validators.required, Validators.email])],
       rua: [null, Validators.required],
@@ -82,6 +82,10 @@ export class TelaCadastroComponent implements OnInit {
   get estado(): FormControl { return this.formGroup.controls.estado as FormControl; }
   get senha(): FormControl { return this.formGroup.controls.senha as FormControl; }
   get repeteSenha(): FormControl { return this.formGroup.controls.repeteSenha as FormControl; }
+
+  get pessoaFisicaSelecionado(): boolean { return this.tipoUsuario.value?.id === configuracao.tipoUsuario.PESSOA_FISICA; }
+  get pessoaJuridicaSelecionado(): boolean { return this.tipoUsuario.value?.id === configuracao.tipoUsuario.PESSOA_JURIDICA; }
+  get ongOscSelecionado(): boolean { return this.tipoUsuario.value?.id === configuracao.tipoUsuario.ONG_OSC; }
 
   ngOnInit(): void {
     this.sessaoService.deslogar();
@@ -144,6 +148,12 @@ export class TelaCadastroComponent implements OnInit {
     this.usuario.endereco.cidade.id = this.endereco?.cidade?.id;
     this.usuario.endereco.cidade.nome = this.cidade.value;
     this.usuario.endereco.cidade.estado = this.estado.value;
+    if (this.areaAtuacao.value?.length > 0) {
+      this.usuario.listaAreaAtuacao = new Array();
+      this.areaAtuacao.value.forEach((area: AreaAtuacao) => {
+        this.usuario.listaAreaAtuacao.push(area);
+      });
+    }
     this.usuario.senha = Md5.hashStr(this.senha.value).toString();
   }
 

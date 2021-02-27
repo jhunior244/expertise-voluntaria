@@ -6,6 +6,8 @@ export const configuracao = {
     rotaHome: 'home',
     rotaLogin: 'login',
     rotaCadastro: 'cadastro',
+    rotaListaPublicacao: 'publicacoes',
+    rotaInterno: 'interno',
 
     parametroId: 'id',
     parametroToken: 'token',
@@ -16,5 +18,6 @@ export const configuracao = {
     tipoUsuario: {
         PESSOA_FISICA: 1,
         PESSOA_JURIDICA: 2,
+        ONG_OSC: 3
     },
 };

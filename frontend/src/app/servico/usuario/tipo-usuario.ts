@@ -1,3 +1,4 @@
+import { configuracao } from './../../configuracao';
 import * as moment from 'moment';
 
 export class ITipoUsuario {
@@ -36,5 +37,13 @@ export class TipoUsuario {
         });
 
         return tipoUsuario;
+    }
+
+    public ehPessoaFisica(): boolean {
+        return this.id === configuracao.tipoUsuario.PESSOA_FISICA;
+    }
+
+    public ehPessoaJuridica(): boolean {
+        return this.id === configuracao.tipoUsuario.PESSOA_JURIDICA;
     }
 }

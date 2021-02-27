@@ -2,9 +2,11 @@ package br.com.ishare.mapeador;
 
 import br.com.ishare.dto.usuario.UsuarioDto;
 import br.com.ishare.dto.usuario.UsuarioSaidaDto;
+import br.com.ishare.dto.usuario.UsuarioSimplesDto;
 import br.com.ishare.entidade.usuario.Endereco;
 import br.com.ishare.entidade.usuario.Usuario;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.data.domain.Page;
 
@@ -18,6 +20,8 @@ import java.util.List;
 },
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UsuarioMapeador {
+
+    @Mapping(target = "uf", source = "obj.endereco.cidade.estado.uf")
     UsuarioSaidaDto paraDto(Usuario obj);
 
     Usuario doDto(UsuarioDto obj);

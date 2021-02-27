@@ -1,11 +1,10 @@
 package br.com.ishare.servico.usuario;
 
 import br.com.ishare.core.validacao.IShareExcessao;
+import br.com.ishare.dto.usuario.AreaAtuacaoDto;
 import br.com.ishare.dto.usuario.UsuarioDto;
-import br.com.ishare.entidade.usuario.Cidade;
-import br.com.ishare.entidade.usuario.Endereco;
-import br.com.ishare.entidade.usuario.TipoUsuario;
-import br.com.ishare.entidade.usuario.Usuario;
+import br.com.ishare.entidade.usuario.*;
+import br.com.ishare.mapeador.AreaAtuacaoMapeador;
 import br.com.ishare.mapeador.UsuarioMapeador;
 import br.com.ishare.repositorio.usuario.CidadeJpaRepository;
 import br.com.ishare.repositorio.usuario.EnderecoJpaRepository;
@@ -15,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -39,6 +40,9 @@ public class UsuarioServico implements IUsuarioServico {
 
     @Autowired
     private EnderecoJpaRepository enderecoJpaRepository;
+
+    @Autowired
+    private AreaAtuacaoMapeador areaAtuacaoMapeador;
 
     @Override
     public boolean existeUsuarioCadastradoComEmail(String email){
@@ -81,6 +85,13 @@ public class UsuarioServico implements IUsuarioServico {
             }
         }
         Endereco enderecoBanco = enderecoJpaRepository.save(endereco);
+
+        if(!CollectionUtils.isEmpty(usuarioDto.getListaAreaAtuacao())){
+            usuario.setListaAreaAtuacao(new ArrayList<>());
+            for (AreaAtuacaoDto areaAtuacao : usuarioDto.getListaAreaAtuacao()){
+                usuario.getListaAreaAtuacao().add(areaAtuacaoMapeador.doDto(areaAtuacao));
+            }
+        }
         usuario.setEndereco(enderecoBanco);
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuarioDto.getSenha()));
         usuarioJpaRepository.save(usuario);

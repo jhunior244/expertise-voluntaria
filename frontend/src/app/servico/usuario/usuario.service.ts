@@ -8,6 +8,7 @@ import { Usuario } from './usuario';
 
 const usuarioLogadoSistema = 'usuarioLogadoSistema';
 const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
+const ufChave = 'uf_user';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
@@ -27,6 +28,14 @@ export class UsuarioService {
 
     setToken(token: string): void {
         this.tokenService.setToken(token);
+    }
+
+    setUf(uf: string): void {
+        window.localStorage.setItem(ufChave, uf);
+    }
+
+    getUf(): string {
+        return window.localStorage.getItem(ufChave);
     }
 
     setUsuarioLogadoSistema(nome: string): void {

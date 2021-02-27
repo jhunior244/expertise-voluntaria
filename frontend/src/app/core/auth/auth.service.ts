@@ -27,6 +27,8 @@ export class AuthService {
       .pipe(tap(usuarioRetornado => {
         this.sessaoService.setToken(usuarioRetornado.token);
         this.sessaoService.setUsuarioLogadoSistema(usuarioRetornado.nome);
+        this.sessaoService.setUf(usuarioRetornado.uf);
+        console.log(usuarioRetornado);
       }));
   }
 

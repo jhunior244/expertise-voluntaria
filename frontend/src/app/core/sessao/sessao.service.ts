@@ -13,6 +13,14 @@ export class SessaoService {
     ) {
     }
 
+    setUf(uf: string): void {
+        this.usuarioService.setUf(uf);
+    }
+
+    getUf(): string {
+        return this.usuarioService.getUf();
+    }
+
     setToken(token: string): void {
         this.usuarioService.setToken(token);
     }

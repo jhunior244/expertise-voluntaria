@@ -34,8 +34,9 @@ public class PublicacaoServico implements IPublicacaoServico {
 
         if(!CollectionUtils.isEmpty(publicacao.getListaImagem())){
             for (Imagem imagem : publicacao.getListaImagem()){
-                imagem.setPublicacao(publicacaoBanco);
-                imagemJpaRepository.save(imagem);
+                Imagem imagemBanco = imagemJpaRepository.findById(imagem.getId()).get();
+                imagemBanco.setPublicacao(publicacaoBanco);
+                imagemJpaRepository.save(imagemBanco);
             }
         }
         return publicacaoBanco;

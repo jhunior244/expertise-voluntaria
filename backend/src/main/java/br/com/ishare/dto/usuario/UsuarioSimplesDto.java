@@ -8,4 +8,8 @@ public class UsuarioSimplesDto {
     private String nome;
 
     private String email;
+
+    private String cidade;
+
+    private String uf;
 }

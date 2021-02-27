@@ -1,17 +1,19 @@
 <mat-card class="mb-2"> 
-    <mat-card-header>
-        <mat-card-title>{{publicacao.titulo}}</mat-card-title>
-    </mat-card-header>
+    <div>
+        <mat-card-title>{{publicacao?.usuario?.nome}}, &nbsp;{{publicacao?.usuario?.cidade}}, &nbsp;{{publicacao?.usuario?.uf}}</mat-card-title>
+    </div>
     <mat-card-content>
-        <span style=" white-space: pre-wrap;">{{publicacao.descricao}}</span>
+        <div class="mb-1">
+            <span style=" white-space: pre-wrap;">{{publicacao.descricao}}</span>
+        </div>
         <div *ngIf="publicacao.listaImagem">
             <div *ngFor="let imagem of publicacao.listaImagem">
                 <img width="100%" [src]="imagem.conteudo">
             </div>
         </div>
     </mat-card-content>
-    <mat-card-actions>
-        <button class="background-primary" fxFlex="50" mat-button>Enviar mensagem</button>
-        <button class="background-primary" fxFlex="50" mat-button>Enviar e-mail</button>
-    </mat-card-actions>
+    <div fxLayoutAlign="space-between center">
+        <button style="color: white;" class="background-primary" fxFlex="48" mat-button>Enviar mensagem</button>
+        <button style="color: white;" class="background-primary" fxFlex="48" mat-button>Enviar e-mail</button>
+    </div>
 </mat-card>

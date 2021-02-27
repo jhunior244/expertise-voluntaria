@@ -3,14 +3,22 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule, FlexModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CardPublicacaoComponent } from './componente/publicacao/card-publicacao/card-publicacao.component';
+import { ListaPublicacaoComponent } from './componente/publicacao/lista-publicacao/lista-publicacao.component';
+import { NovaPublicacaoComponent } from './componente/publicacao/nova-publicacao/nova-publicacao.component';
+import { SelectAreaAtuacaoComponent } from './componente/select-area-atuacao/select-area-atuacao.component';
 import { SelectEstadoComponent } from './componente/select-estado/select-estado.component';
 import { SelectTipoUsuarioComponent } from './componente/select-tipo-usuario/select-tipo-usuario.component';
 import { AuthService } from './core/auth/auth.service';
@@ -18,7 +26,11 @@ import { ErroInterceptor, RequestInterceptor } from './core/auth/request.interce
 import { ErroService } from './core/erro/erro.service';
 import { SessaoService } from './core/sessao/sessao.service';
 import { TokenService } from './core/token/token.service';
+import { AreaAtuacaoService } from './servico/area-atuacao/area-atuacao.service';
 import { EnderecoPorCepService } from './servico/endereco-por-cep/endereco-por-cep.service';
+import { ImagemService } from './servico/imagem/imagem.service';
+import { PublicacaoService } from './servico/publicacao/publicacao.service';
+import { UploadArquivoService } from './servico/upload-arquivo/upload-arquivo.service';
 import { CidadeService } from './servico/usuario/cidade.service';
 import { EstadoService } from './servico/usuario/estado.service';
 import { TipoUsuarioService } from './servico/usuario/tipo-usuario.service';
@@ -26,22 +38,14 @@ import { UsuarioService } from './servico/usuario/usuario.service';
 import { TelaCadastroComponent } from './tela/tela-cadastro/tela-cadastro.component';
 import { AuthGuardTelaInicio, TelaInicioComponent } from './tela/tela-inicio/tela-inicio.component';
 import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
-import { MatSliderModule } from '@angular/material/slider';
 import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
-import { MatIconModule } from '@angular/material/icon';
-import { UploadArquivoService } from './servico/upload-arquivo/upload-arquivo.service';
-import { MatDialogModule } from '@angular/material/dialog';
-import { ImagemService } from './servico/imagem/imagem.service';
-import { PublicacaoService } from './servico/publicacao/publicacao.service';
-import { CardPublicacaoComponent } from './componente/publicacao/card-publicacao/card-publicacao.component';
-import { ListaPublicacaoComponent } from './componente/publicacao/lista-publicacao/lista-publicacao.component';
-import { NovaPublicacaoComponent } from './componente/publicacao/nova-publicacao/nova-publicacao.component';
-import {MatCardModule} from '@angular/material/card';
-import { SelectSetorEmpresaComponent } from './componente/select-setor-empresa/select-setor-empresa.component';
-import { SelectAreaAtuacaoComponent } from './componente/select-area-atuacao/select-area-atuacao.component';
-import { AreaAtuacaoService } from './servico/area-atuacao/area-atuacao.service';
-import { SetorEmpresaService } from './servico/setor-atuacao/setor-empresa.service';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { TelaListaPublicacaoComponent } from './tela/tela-lista-publicacao/tela-lista-publicacao.component';
+import { SelectCidadeComponent } from './componente/select-cidade/select-cidade.component';
+import { SelectTipoPublicacaoComponent } from './componente/select-tipo-publicacao/select-tipo-publicacao.component';
+import { TipoPublicacaoService } from './servico/publicacao/tipo-publicacao.service';
+import { TelaListaContatosComponent } from './tela/tela-lista-contatos/tela-lista-contatos.component';
+import { TelaUsuarioService } from './tela/tela-inicio/tela-inicio.service';
 
 @NgModule({
   declarations: [
@@ -56,8 +60,11 @@ import { SetorEmpresaService } from './servico/setor-atuacao/setor-empresa.servi
     SelectEstadoComponent,
     ListaPublicacaoComponent,
     CardPublicacaoComponent,
-    SelectSetorEmpresaComponent,
     SelectAreaAtuacaoComponent,
+    TelaListaPublicacaoComponent,
+    SelectCidadeComponent,
+    SelectTipoPublicacaoComponent,
+    TelaListaContatosComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +83,8 @@ import { SetorEmpresaService } from './servico/setor-atuacao/setor-empresa.servi
     MatSliderModule,
     MatIconModule,
     MatDialogModule,
-    MatCardModule
+    MatCardModule,
+    MatTooltipModule
   ],
   providers: [
     {
@@ -102,7 +110,8 @@ import { SetorEmpresaService } from './servico/setor-atuacao/setor-empresa.servi
     PublicacaoService,
     AuthGuardTelaInicio,
     AreaAtuacaoService,
-    SetorEmpresaService
+    TipoPublicacaoService,
+    TelaUsuarioService
   ],
   bootstrap: [AppComponent]
 })

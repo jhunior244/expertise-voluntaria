@@ -1,5 +1,6 @@
 package br.com.ishare.entidade.publicacao;
 
+import br.com.ishare.entidade.usuario.AreaAtuacao;
 import br.com.ishare.entidade.usuario.Usuario;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,16 +19,25 @@ public class Publicacao {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column
-    private String titulo;
-
     @Column(length = 2000)
     private String descricao;
+
+    @ManyToOne
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "publicacao")
     private List<Imagem> listaImagem;
 
-    @ManyToOne
-    private Usuario usuario;
+    @ManyToMany
+    @JoinTable(
+            name = "publicacaoListaAreaAtuacao",
+            joinColumns = {
+                    @JoinColumn(name = "publicacao_id", nullable = false, referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "area_atuacao_id", nullable = false, referencedColumnName = "id")
+            }
+    )
+    private List<AreaAtuacao> listaAreaAtuacao;
 
 }

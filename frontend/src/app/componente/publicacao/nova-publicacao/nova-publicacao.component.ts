@@ -1,6 +1,7 @@
+import { AreaAtuacao } from './../../../servico/area-atuacao/area-atuacao';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Toaster } from 'ngx-toast-notifications';
@@ -34,15 +35,16 @@ export class NovaPublicacaoComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) {
     this.formGroup = this.formBuilder.group({
-      titulo: [null],
-      descricao: [null],
-      raioAlcance: [25]
+      descricao: [null, Validators.required],
+      tipoPublicacao: [null, Validators.required],
+      // raioAlcance: [25],
+      listaAreaAtuacao: [null]
     });
   }
-  get titulo(): FormControl { return this.formGroup.controls.titulo as FormControl; }
   get descricao(): FormControl { return this.formGroup.controls.descricao as FormControl; }
-  get raioAlcance(): FormControl { return this.formGroup.controls.raioAlcance as FormControl; }
-  get habilitaCadastrar(): boolean { return this.titulo.value !== null && this.titulo.value !== ''; }
+  // get raioAlcance(): FormControl { return this.formGroup.controls.raioAlcance as FormControl; }
+  get listaAreaAtuacao(): FormControl { return this.formGroup.controls.listaAreaAtuacao as FormControl; }
+  get tipoPublicacao(): FormControl { return this.formGroup.controls.tipoPublicacao as FormControl; }
 
   ngOnInit(): void {
   }
@@ -56,12 +58,17 @@ export class NovaPublicacaoComponent implements OnInit {
   }
 
   formularioParaEntidade(): void {
-    this.publicacao.titulo = this.titulo.value;
     this.publicacao.descricao = this.descricao.value;
-    this.publicacao.raioAlcance = this.raioAlcance.value;
+    // this.publicacao.raioAlcance = this.raioAlcance.value;
     this.publicacao.listaImagem = new Array();
     if (this.imagemCarregada) {
       this.publicacao.listaImagem.push(this.imagemCarregada);
+    }
+    if (this.listaAreaAtuacao.value?.length > 0) {
+      this.publicacao.listaAreaAtuacao = new Array();
+      this.listaAreaAtuacao.value.forEach((area: AreaAtuacao) => {
+        this.publicacao.listaAreaAtuacao.push(area);
+      });
     }
   }
 
@@ -89,7 +96,6 @@ export class NovaPublicacaoComponent implements OnInit {
 
     this.imagemService.uploadoImagem(event.target.files[0]).subscribe(imagem => {
       this.imagemCarregada = imagem;
-      console.log(this.imagemCarregada);
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error?.erro, this.toaster);

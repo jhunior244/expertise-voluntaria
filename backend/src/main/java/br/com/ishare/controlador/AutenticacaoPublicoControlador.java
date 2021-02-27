@@ -44,6 +44,7 @@ public class AutenticacaoPublicoControlador {
             usuario.setEmail(usuarioLogado.getEmail());
             usuarioSaidaDto.setToken("Bearer " + token);
             usuarioLogado.setToken("Bearer " + token);
+            usuarioSaidaDto.setUf(usuarioLogado.getUf());
             usuarioJpaRepository.save(usuarioLogado);
             return ResponseEntity.ok(usuarioSaidaDto);
         } catch (AuthenticationException e){
@@ -53,7 +54,7 @@ public class AutenticacaoPublicoControlador {
 
     @GetMapping(path = "/autenticado")
     public boolean autenticado(@RequestHeader(name="Authorization") String token){
-        if(!StringUtils.hasLength(token) || !tokenService.isTokenValido(token.substring(7))){
+        if(!StringUtils.hasLength(token) || token.length() < 7 || !tokenService.isTokenValido(token.substring(7))){
             return false;
         }
 

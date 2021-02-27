@@ -1,5 +1,6 @@
 package br.com.ishare.dto.publicacao;
 
+import br.com.ishare.dto.usuario.AreaAtuacaoDto;
 import br.com.ishare.dto.usuario.UsuarioSimplesDto;
 import lombok.Data;
 
@@ -11,11 +12,11 @@ public class PublicacaoDto {
 
     private UUID id;
 
-    private String titulo;
-
     private String descricao;
 
     private List<ImagemDto> listaImagem;
 
     private UsuarioSimplesDto usuario;
+
+    private List<AreaAtuacaoDto> listaAreaAtuacao;
 }

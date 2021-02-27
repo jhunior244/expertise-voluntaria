@@ -1,9 +1,27 @@
-<div fxLayout="column"  class="container py-2" style="height: 80%;" fxLayoutGap="10px">
-    <div  fxLayoutAlign="center start">
-        <button mat-raised-button (click)="novaPublicacao()">Nova publicação</button>
+<div style="height: 94vh;" fxLayoutAlign="space-between">
+    <div fxFlex="15" fxLayout="column" style="margin-top: 4rem; " fxLayoutGap="10px">
+        <button class="background-primary botao-menu-lateral" mat-raised-button>Publicações</button>
+        <button class="background-primary botao-menu-lateral" mat-raised-button>Contatos</button>
+        <button class="background-primary botao-menu-lateral" mat-raised-button>Certificados</button>
     </div>
-    <div fxFlex fxLayoutAlign="center">
-        <app-lista-publicacao fxFlex="60"></app-lista-publicacao>
+
+    <router-outlet></router-outlet>
+
+    <div fxFlex="15" style="margin-top: 4rem;" class="px-1">
+        <div style="width: 100%; height: 100%;" fxLayout="column">
+            <app-select-estado 
+            [exibeApenasUf]="false" 
+            [controladorFormulario]="uf" 
+            [ufPrePreenchida]="estado"></app-select-estado>
+            
+            <app-select-cidade [controladorFormulario]="cidade" [estado]="estado"></app-select-cidade>
+            
+            <!-- <mat-slider thumbLabel min="1" max="50" step="1" class="cdk-focused" [value]="25">
+            </mat-slider>
+            <mat-label class="color-primary">Filtrar em um raio de:</mat-label> -->
+
+            <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="expertiseNecessaria">
+            </app-select-area-atuacao>
+        </div>
     </div>
 </div>
- 

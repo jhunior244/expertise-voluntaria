@@ -1,34 +1,35 @@
 <div style="height: 100%;" class="container py-5">
-    <div style="height: 100%; background-color: #ffffff;" class="sombra-padrao arredondamento-padrao" 
-    fxLayoutAlign="center center" fxLayout="column">
+    <div style="height: 100%; background-color: #ffffff;" class="sombra-padrao arredondamento-padrao"
+        fxLayoutAlign="center center" fxLayout="column">
         <div style="width: 60%;" class="mb-3" fxLayout="column">
-            <form  [formGroup]="formGroup" fxLayout="column">
+            <form [formGroup]="formGroup" fxLayout="column">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
                     <mat-form-field fxFlex>
-                        <mat-label>Nome completo</mat-label>
-                        <input type="text" matInput [formControl]="nome" >
+                        <mat-label *ngIf="tipoUsuario.value == null || tipoUsuario.value == ''">Nome completo / Razão social</mat-label>
+                        <mat-label *ngIf="pessoaFisicaSelecionado">Nome completo</mat-label>
+                        <mat-label *ngIf="pessoaJuridicaSelecionado || ongOscSelecionado">Razão social</mat-label>
+                        <input type="text" matInput [formControl]="nome">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="nome.hasError('required')">
                             Campo obrigatório
                         </mat-error>
                     </mat-form-field>
                 </div>
-                
+
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <div fxFlex="18" fxFlex.lt-md="100">
-                        <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true"></app-select-tipo-usuario>
+                    <div fxFlex="48" fxFlex.lt-md="100">
+                        <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true">
+                        </app-select-tipo-usuario>
                     </div>
-                    <div fxFlex="38" fxFlex.lt-md="100">
-                        <app-select-setor-empresa [multiplo]="true" [controladorFormulario]="setorEmpresa"></app-select-setor-empresa>
-                    </div>
-                    <div fxFlex="38" fxFlex.lt-md="100">
-                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao"></app-select-area-atuacao>
+                    <div fxFlex="48" fxFlex.lt-md="100">
+                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao" [tipoUsuario]="tipoUsuario.value">
+                        </app-select-area-atuacao>
                     </div>
                 </div>
 
-                <div  class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
                     <mat-form-field fxFlex="48" fxFlex.lt-md="100">
-                        <mat-label>Email</mat-label>
+                        <mat-label>E-mail</mat-label>
                         <input type="email" matInput [formControl]="email" [errorStateMatcher]="emailMatcher"
                             placeholder="Ex. ishare@exemplo.com">
                         <mat-hint>Campo obrigatório</mat-hint>
@@ -47,7 +48,7 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48" fxFlex.lt-md="100">
-                        <mat-label>Email</mat-label>
+                        <mat-label>Repita o e-mail</mat-label>
                         <input type="email" matInput [formControl]="validacaoEmail" [errorStateMatcher]="emailMatcher">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="validacaoEmail.hasError('email') && !email.hasError('required')">
@@ -77,7 +78,7 @@
 
                     <mat-form-field fxFlex="55" fxFlex.lt-md="100">
                         <mat-label>Rua</mat-label>
-                        <input type="text" matInput [formControl]="rua" >
+                        <input type="text" matInput [formControl]="rua">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="rua.hasError('required')">
                             Campo obrigatório
@@ -157,8 +158,9 @@
                 </div>
             </form>
             <div class="mt-1" fxLayoutAlign="center center">
-                <button (click)="cadastrar()" fxFlex="30" fxFlex.lt-sm="80" fxFlex.lt-md="50" [disabled]="!formGroup.valid" 
-                class="botao-cadastrar fonte-texto sombra-suave  background-primary" mat-button>CADASTRAR</button>
+                <button (click)="cadastrar()" fxFlex="30" fxFlex.lt-sm="80" fxFlex.lt-md="50"
+                    [disabled]="!formGroup.valid" class="botao-cadastrar fonte-texto sombra-suave  background-primary"
+                    mat-button>CADASTRAR</button>
             </div>
         </div>
     </div>

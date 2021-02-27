@@ -1,3 +1,4 @@
+import { TelaListaPublicacaoComponent } from './tela/tela-lista-publicacao/tela-lista-publicacao.component';
 import { TelaCadastroComponent } from './tela/tela-cadastro/tela-cadastro.component';
 import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
 import { NgModule } from '@angular/core';
@@ -16,9 +17,19 @@ const routes: Routes = [
     component: TelaCadastroComponent
   },
   {
-    path: configuracao.rotaInicio,
+    path: configuracao.rotaInterno,
     component: TelaInicioComponent,
-    canActivate: [AuthGuardTelaInicio]
+    canActivate: [AuthGuardTelaInicio],
+    children: [
+      {
+        path: '',
+        redirectTo: configuracao.rotaListaPublicacao,
+        pathMatch: 'full'
+      }, {
+        path: configuracao.rotaListaPublicacao,
+        component: TelaListaPublicacaoComponent
+      }
+    ]
   }, {
     path: configuracao.rotaHome,
     component: TelaPaginaInicialSiteComponent
