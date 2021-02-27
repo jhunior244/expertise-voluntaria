@@ -1,3 +1,4 @@
+import { configuracao } from './configuracao';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -7,6 +8,6 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  title = 'frontend';
+  public configuracao = configuracao;
+  title = 'IShare';
 }
