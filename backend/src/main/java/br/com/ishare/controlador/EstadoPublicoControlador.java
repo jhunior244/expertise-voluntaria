@@ -23,8 +23,8 @@ public class EstadoPublicoControlador {
     private EstadoMapeador estadoMapeador;
 
     @GetMapping(path = "/lista")
-    public List<EstadoDto> lista(){
-        return estadoMapeador.paraDto(estadoServico.lista());
+    public List<EstadoDto> lista(String uf){
+        return estadoMapeador.paraDto(estadoServico.lista(uf));
     }
 
     @GetMapping(path = "/obtem")

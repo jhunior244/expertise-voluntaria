@@ -1,3 +1,5 @@
+import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certificados.component';
+import { TelaListaContatosComponent } from './tela/tela-lista-contatos/tela-lista-contatos.component';
 import { TelaListaPublicacaoComponent } from './tela/tela-lista-publicacao/tela-lista-publicacao.component';
 import { TelaCadastroComponent } from './tela/tela-cadastro/tela-cadastro.component';
 import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
@@ -28,6 +30,12 @@ const routes: Routes = [
       }, {
         path: configuracao.rotaListaPublicacao,
         component: TelaListaPublicacaoComponent
+      }, {
+        path: configuracao.rotaListaContatos,
+        component: TelaListaContatosComponent
+      }, {
+        path: configuracao.rotaCertificados,
+        component: TelaCertificadosComponent
       }
     ]
   }, {

@@ -5,7 +5,6 @@
         <mat-option *ngFor=" let estado of lista" [value]="estado">
             <span *ngIf="!exibeApenasUf; else uf;">{{estado.nome}}</span>
             <ng-template #uf>{{estado.uf}}</ng-template>
-            
         </mat-option>
     </mat-select>
     <mat-hint *ngIf="obrigatorio">Campo obrigátorio</mat-hint>

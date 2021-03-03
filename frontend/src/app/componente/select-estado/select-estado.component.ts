@@ -1,3 +1,4 @@
+import { TelaInicioService } from './../../tela/tela-inicio/tela-inicio.service';
 import { Estado } from './../../servico/usuario/estado';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { EstadoService } from 'src/app/servico/usuario/estado.service';
@@ -29,38 +30,30 @@ export class SelectEstadoComponent implements OnInit, OnChanges {
   constructor(
     private estadoService: EstadoService,
     private erroService: ErroService,
-    private toaster: Toaster) { }
+    private toaster: Toaster,
+    private telaInicioService: TelaInicioService) { }
 
   get possuiReservadorEspaco(): boolean {
     return this.reservadorEspaco && this.reservadorEspaco !== '';
   }
 
   ngOnInit(): void {
-    this.estadoService.lista().subscribe(lista => {
+    this.estadoService.lista(null).subscribe(lista => {
       this.lista = lista;
-      this.selecionaUfPrePreenchida();
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
+
+    this.controladorFormulario.valueChanges.subscribe((cidade: Estado[]) => {
+      this.telaInicioService.anunciaListaEstado(cidade);
+    });
   }
 
   ngOnChanges(): void {
-    if (this.ufPrePreenchida) {
-      this.selecionaUfPrePreenchida();
-    }
   }
 
-  selecionaUfPrePreenchida(): void {
-    if (this.lista) {
-      const index = this.lista.findIndex(
-        e => e.uf === this.ufPrePreenchida
-      );
-      this.controladorFormulario.setValue(this.lista[index]);
-    }
-  }
-
-  compara(obj1: TipoUsuario, obj2: TipoUsuario): boolean {
+  compara(obj1: Estado, obj2: Estado): boolean {
     return obj1 && obj2 && obj1.id === obj2.id;
   }
 

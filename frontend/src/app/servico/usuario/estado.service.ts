@@ -16,9 +16,15 @@ export class EstadoService {
         this.httpHeader = this.httpHeader.append('Content-Type', 'application/json');
     }
 
-    public lista(): Observable<Estado[]> {
-        return this.httpClient.get<IEstado[]>(this.url + '/lista').pipe(map((lista => Estado.listaDoBackend(lista))));
+    public lista(uf: string): Observable<Estado[]> {
 
+        let httpParams = new HttpParams();
+
+        if (uf) {
+            httpParams = httpParams.append(configuracao.parametroUf, uf);
+        }
+
+        return this.httpClient.get<IEstado[]>(this.url + '/lista', {params: httpParams}).pipe(map((lista => Estado.listaDoBackend(lista))));
     }
 
     public obtem(uf: string): Observable<Estado> {

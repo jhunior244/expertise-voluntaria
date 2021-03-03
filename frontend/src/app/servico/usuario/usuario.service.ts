@@ -9,6 +9,7 @@ import { Usuario } from './usuario';
 const usuarioLogadoSistema = 'usuarioLogadoSistema';
 const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
 const ufChave = 'uf_user';
+const cidadeChave = 'city_user';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
@@ -34,8 +35,16 @@ export class UsuarioService {
         window.localStorage.setItem(ufChave, uf);
     }
 
+    setCidade(cidade: string): void {
+        window.localStorage.setItem(cidadeChave, cidade);
+    }
+
     getUf(): string {
         return window.localStorage.getItem(ufChave);
+    }
+
+    getCidade(): string {
+        return window.localStorage.getItem(cidadeChave);
     }
 
     setUsuarioLogadoSistema(nome: string): void {

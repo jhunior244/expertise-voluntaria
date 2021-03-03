@@ -1,14 +1,17 @@
-import { SessaoService } from './../../core/sessao/sessao.service';
-import { Estado } from './../../servico/usuario/estado';
-import { configuracao } from './../../configuracao';
-import { Observable } from 'rxjs';
-import { AuthService } from './../../core/auth/auth.service';
-import { Component, OnInit, Injectable } from '@angular/core';
+import { TelaInicioService } from './tela-inicio.service';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { NovaPublicacaoComponent } from 'src/app/componente/publicacao/nova-publicacao/nova-publicacao.component';
+import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { configuracao } from 'src/app/configuracao';
+import { DialogoAguardeComponent } from './../../componente/dialogo-aguarde/dialogo-aguarde.component';
+import { AuthService } from './../../core/auth/auth.service';
+import { SessaoService } from './../../core/sessao/sessao.service';
+import { CidadeService } from './../../servico/usuario/cidade.service';
+import { EstadoService } from './../../servico/usuario/estado.service';
+import { Cidade } from 'src/app/servico/usuario/cidade';
 
 @Injectable()
 export class AuthGuardTelaInicio implements CanActivate {
@@ -36,12 +39,17 @@ export class AuthGuardTelaInicio implements CanActivate {
 export class TelaInicioComponent implements OnInit {
 
   public formGroup: FormGroup;
-  public estado: string;
+  public ufUsuarioLogado: string;
+  public cidadeUsuarioLogado: string;
+  public configuracao = configuracao;
 
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private sessaoService: SessaoService
+    private sessaoService: SessaoService,
+    private estadoService: EstadoService,
+    private cidadeService: CidadeService,
+    private telaInicioService: TelaInicioService
   ) {
     this.formGroup = this.formBuilder.group({
       expertiseNecessaria: [null],
@@ -49,7 +57,8 @@ export class TelaInicioComponent implements OnInit {
       cidade: [null]
     });
 
-    this.estado = this.sessaoService.getUf();
+    this.ufUsuarioLogado = this.sessaoService.getUf();
+    this.cidadeUsuarioLogado = this.sessaoService.getCidade();
   }
 
   get expertiseNecessaria(): FormControl { return this.formGroup.controls.expertiseNecessaria as FormControl; }
@@ -57,11 +66,23 @@ export class TelaInicioComponent implements OnInit {
   get cidade(): FormControl { return this.formGroup.controls.cidade as FormControl; }
 
   ngOnInit(): void {
-    this.uf.valueChanges.subscribe((estado: Estado) => {
-      if (estado) {
-        this.estado = estado.uf;
-      }
+    this.dialog.open(DialogoAguardeComponent, DialogoAguardeComponent.configProgressSpinner);
+    const estado$ = this.estadoService.lista(this.ufUsuarioLogado);
+    const cidade$ = this.cidadeService.obtem(this.cidadeUsuarioLogado, this.ufUsuarioLogado);
+    forkJoin([estado$, cidade$]).subscribe(resultado => {
+      const listaCidade: Cidade[] =[];
+      listaCidade.push(resultado[1]);
+      this.uf.setValue(resultado[0]);
+      this.cidade.setValue(listaCidade);
+      this.telaInicioService.anunciaListaEstado(resultado[0]);
+      this.telaInicioService.anunciaListaCidade(listaCidade);
+      this.anunciaClickPesquisar();
+      this.dialog.closeAll();
     });
+
+  }
+  anunciaClickPesquisar(): void {
+    this.telaInicioService.anunciaNovaPesquisa(true);
   }
 }
 

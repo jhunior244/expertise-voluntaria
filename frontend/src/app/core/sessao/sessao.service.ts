@@ -17,8 +17,16 @@ export class SessaoService {
         this.usuarioService.setUf(uf);
     }
 
+    setCidade(cidade: string): void {
+        this.usuarioService.setCidade(cidade);
+    }
+
     getUf(): string {
         return this.usuarioService.getUf();
+    }
+
+    getCidade(): string {
+        return this.usuarioService.getCidade();
     }
 
     setToken(token: string): void {

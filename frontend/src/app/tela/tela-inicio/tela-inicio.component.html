@@ -1,7 +1,7 @@
 <div style="height: 94vh;" fxLayoutAlign="space-between">
     <div fxFlex="15" fxLayout="column" style="margin-top: 4rem; " fxLayoutGap="10px">
-        <button class="background-primary botao-menu-lateral" mat-raised-button>Publicações</button>
-        <button class="background-primary botao-menu-lateral" mat-raised-button>Contatos</button>
+        <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaPublicacao">Publicações</button>
+        <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaContatos">Contatos</button>
         <button class="background-primary botao-menu-lateral" mat-raised-button>Certificados</button>
     </div>
 
@@ -12,9 +12,9 @@
             <app-select-estado 
             [exibeApenasUf]="false" 
             [controladorFormulario]="uf" 
-            [ufPrePreenchida]="estado"></app-select-estado>
+            [multiplo]="true"></app-select-estado>
             
-            <app-select-cidade [controladorFormulario]="cidade" [estado]="estado"></app-select-cidade>
+            <app-select-cidade [controladorFormulario]="cidade" [estado]="ufUsuarioLogado" [multiplo]="true"></app-select-cidade>
             
             <!-- <mat-slider thumbLabel min="1" max="50" step="1" class="cdk-focused" [value]="25">
             </mat-slider>
@@ -22,6 +22,8 @@
 
             <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="expertiseNecessaria">
             </app-select-area-atuacao>
+
+            <button class="background-primary botao-pesquisar" (click)="anunciaClickPesquisar()" mat-raised-button>Pesquisar</button>
         </div>
     </div>
 </div>

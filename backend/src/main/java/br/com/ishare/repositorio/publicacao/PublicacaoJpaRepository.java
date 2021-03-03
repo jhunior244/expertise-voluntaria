@@ -10,4 +10,6 @@ import java.util.UUID;
 
 public interface PublicacaoJpaRepository extends JpaRepository<Publicacao, UUID>, PublicacaoJpaRepositoryCustom, PagingAndSortingRepository<Publicacao, UUID> {
     Page<Publicacao> findByUsuarioId(UUID id, Pageable pagina);
+
+    Page<Publicacao> findAll(Pageable pageable);
 }

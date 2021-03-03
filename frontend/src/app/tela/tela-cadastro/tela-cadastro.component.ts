@@ -163,7 +163,7 @@ export class TelaCadastroComponent implements OnInit {
     this.usuarioService.cria(this.usuario).subscribe(() => {
       this.erroService.exibeMensagemSucesso('Usuário criado com sucesso.', this.toaster);
       this.authService.autenticar(this.usuario).subscribe(() => {
-        this.router.navigate([configuracao.rotaInicio]);
+        this.router.navigate([configuracao.rotaInterno]);
       }, (erro: HttpErrorResponse) => {
         console.log(erro);
         this.erroService.exibeMensagemErro(erro.error.message, this.toaster);

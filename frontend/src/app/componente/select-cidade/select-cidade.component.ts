@@ -1,3 +1,4 @@
+import { TelaInicioService } from './../../tela/tela-inicio/tela-inicio.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -29,7 +30,8 @@ export class SelectCidadeComponent implements OnInit, OnChanges {
   constructor(
     private cidadeService: CidadeService,
     private erroService: ErroService,
-    private toaster: Toaster
+    private toaster: Toaster,
+    private telaInicioService: TelaInicioService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class SelectCidadeComponent implements OnInit, OnChanges {
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+    });
+
+    this.controladorFormulario.valueChanges.subscribe((lista: Cidade[]) => {
+      this.telaInicioService.anunciaListaCidade(lista);
     });
   }
 

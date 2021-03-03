@@ -1,8 +1,5 @@
 .botao-entrar {
     border-radius: 0.5em;
-    margin-top: 1em;
     background-color: #ffffff61;
-}
-.botao-entrar:focus {
-    outline: none;
+    max-height: 80%;
 }

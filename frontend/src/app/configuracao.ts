@@ -7,7 +7,9 @@ export const configuracao = {
     rotaLogin: 'login',
     rotaCadastro: 'cadastro',
     rotaListaPublicacao: 'publicacoes',
-    rotaInterno: 'interno',
+    rotaListaContatos: 'contatos',
+    rotaCertificados: 'certificados',
+    rotaInterno: 'meu-perfil',
 
     parametroId: 'id',
     parametroToken: 'token',

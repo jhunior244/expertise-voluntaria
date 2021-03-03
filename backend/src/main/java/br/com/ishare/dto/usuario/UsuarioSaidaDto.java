@@ -17,4 +17,6 @@ public class UsuarioSaidaDto implements Serializable {
     private String token;
 
     private String uf;
+
+    private String cidade;
 }

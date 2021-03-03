@@ -45,6 +45,7 @@ public class AutenticacaoPublicoControlador {
             usuarioSaidaDto.setToken("Bearer " + token);
             usuarioLogado.setToken("Bearer " + token);
             usuarioSaidaDto.setUf(usuarioLogado.getUf());
+            usuarioSaidaDto.setCidade(usuarioLogado.getCidade());
             usuarioJpaRepository.save(usuarioLogado);
             return ResponseEntity.ok(usuarioSaidaDto);
         } catch (AuthenticationException e){

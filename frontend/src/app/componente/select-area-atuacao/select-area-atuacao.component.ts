@@ -8,6 +8,7 @@ import { Toaster } from 'ngx-toast-notifications';
 import { ErroService } from 'src/app/core/erro/erro.service';
 import { AreaAtuacao } from 'src/app/servico/area-atuacao/area-atuacao';
 import { AreaAtuacaoService } from './../../servico/area-atuacao/area-atuacao.service';
+import { TelaInicioService } from 'src/app/tela/tela-inicio/tela-inicio.service';
 
 @Component({
   selector: 'app-select-area-atuacao',
@@ -29,7 +30,8 @@ export class SelectAreaAtuacaoComponent implements OnInit {
   constructor(
     private areaAtuacaoService: AreaAtuacaoService,
     private erroService: ErroService,
-    private toaster: Toaster
+    private toaster: Toaster,
+    private telaInicioService: TelaInicioService
   ) { }
 
   get possuiReservadorEspaco(): boolean {
@@ -43,9 +45,13 @@ export class SelectAreaAtuacaoComponent implements OnInit {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error?.message, this.toaster);
     });
+
+    this.controladorFormulario.valueChanges.subscribe((lista: AreaAtuacao[]) => {
+      this.telaInicioService.anunciaListaAreaAtuacao(lista);
+    });
   }
 
-  calculaPlaceholder() {
+  calculaPlaceholder(): string {
     if (this.reservadorEspaco) {
       return this.reservadorEspaco;
     } if (this.tipoUsuario == null || this.tipoUsuario.ehPessoaFisica() || this.tipoUsuario.ehPessoaJuridica()) {

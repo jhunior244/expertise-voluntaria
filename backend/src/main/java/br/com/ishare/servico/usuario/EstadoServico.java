@@ -16,8 +16,8 @@ public class EstadoServico implements IEstadoServico{
     private EstadoJpaRepository estadoJpaRepository;
 
     @Override
-    public List<Estado> lista(){
-        return estadoJpaRepository.findAll();
+    public List<Estado> lista(String uf){
+        return estadoJpaRepository.lista(uf);
     }
     @Override
     public Estado obtem(String uf){

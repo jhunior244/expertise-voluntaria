@@ -99,4 +99,11 @@ public class Usuario implements UserDetails {
         }
         return this.getEndereco().getCidade().getEstado().getUf();
     }
+
+    public String getCidade() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getNome();
+    }
 }

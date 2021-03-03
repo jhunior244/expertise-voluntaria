@@ -2,6 +2,7 @@ package br.com.ishare.entidade.publicacao;
 
 import br.com.ishare.entidade.usuario.AreaAtuacao;
 import br.com.ishare.entidade.usuario.Usuario;
+import com.querydsl.core.annotations.QueryInit;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -23,6 +24,7 @@ public class Publicacao {
     private String descricao;
 
     @ManyToOne
+    @QueryInit("endereco.cidade.estado")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "publicacao")

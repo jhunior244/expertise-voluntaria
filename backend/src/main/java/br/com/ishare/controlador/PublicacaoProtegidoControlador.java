@@ -10,9 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/private/publicacao")
@@ -40,7 +46,12 @@ public class PublicacaoProtegidoControlador {
     }
 
     @GetMapping(path = "/lista")
-    public Page<PublicacaoDto> lista(@RequestHeader(name="Authorization") String token, Long numeroPagina, Long tamanhoPagina){
+    public Page<PublicacaoDto> lista(@RequestHeader(name="Authorization") String token,
+                                     Long[] listaIdEstado,
+                                     Long[] listaIdCidade,
+                                     String[] listaIdAreaAtuacao,
+                                     Long numeroPagina,
+                                     Long tamanhoPagina){
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
 
@@ -48,10 +59,14 @@ public class PublicacaoProtegidoControlador {
             numeroPagina = 0L;
             tamanhoPagina = 10L;
         }
+        List<UUID> lista = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
+            lista = Arrays.stream(listaIdAreaAtuacao).map(id -> UUID.fromString(id)).collect(Collectors.toList());
+        }
 
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
 
-        Page<PublicacaoDto> page = publicacaoMapeador.paraDto(publicacaoServico.lista(usuario, pagina));
+        Page<PublicacaoDto> page = publicacaoMapeador.paraDto(publicacaoServico.lista(listaIdEstado, listaIdCidade, lista, pagina));
 
         return page;
     }

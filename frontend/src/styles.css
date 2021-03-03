@@ -122,3 +122,13 @@ mat-hint {
   width: 100%;
 }
 /*estilo mat-slide fim*/
+
+/* tirar cor do fundo dialogo */
+.dialogo-aguarde .mat-dialog-container {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+button:focus {
+  outline: none;
+}
