@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,7 +25,12 @@ public class Publicacao {
     private String descricao;
 
     @ManyToOne
-    @QueryInit("endereco.cidade.estado")
+    private TipoPublicacao tipoPublicacao;
+
+    private ZonedDateTime data;
+
+    @ManyToOne
+    @QueryInit({"endereco.cidade.estado", "tipoUsuario"})
     private Usuario usuario;
 
     @OneToMany(mappedBy = "publicacao")

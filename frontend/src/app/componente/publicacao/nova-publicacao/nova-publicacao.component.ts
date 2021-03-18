@@ -70,6 +70,7 @@ export class NovaPublicacaoComponent implements OnInit {
         this.publicacao.listaAreaAtuacao.push(area);
       });
     }
+    this.publicacao.tipoPublicacao = this.tipoPublicacao.value;
   }
 
   enviaPublicacao(): void {

@@ -1,3 +1,6 @@
+import { configuracao } from './../../../configuracao';
+import { Router } from '@angular/router';
+import { UsuarioService } from './../../../servico/usuario/usuario.service';
 import { Publicacao } from './../../../servico/publicacao/publicacao';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
@@ -9,13 +12,28 @@ import { Component, Input, OnChanges, OnInit } from '@angular/core';
 export class CardPublicacaoComponent implements OnInit, OnChanges {
 
   @Input() publicacao: Publicacao;
+  public usuarioEhContato = false;
+  private emailUsuarioLogado;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private usuarioService: UsuarioService
+  ) { 
+    this.emailUsuarioLogado = this.usuarioService.getEmail();
+  }
+
+  get publicacaoPertenceUsuarioLogado(): boolean { return this.emailUsuarioLogado === this.publicacao?.usuario?.email; }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(){
   }
+
+  entrarEmContato(id: string){
+    this.router.navigate([configuracao.rotaInterno + '/' + configuracao.rotaVisualizaContato, id]);
+  }
+
+
 
 }

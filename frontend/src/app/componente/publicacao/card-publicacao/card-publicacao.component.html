@@ -1,9 +1,23 @@
-<mat-card class="mb-2"> 
-    <div>
-        <mat-card-title>{{publicacao?.usuario?.nome}}, &nbsp;{{publicacao?.usuario?.cidade}}, &nbsp;{{publicacao?.usuario?.uf}}</mat-card-title>
+<mat-card class="mb-2">
+    <div fxLayoutAlign="space-between center" fxLayout="row wrap">
+        <div>
+            <mat-card-title style="font-size: 18px;">{{publicacao?.usuario?.nome}}, &nbsp;{{publicacao?.usuario?.cidade}},
+                &nbsp;{{publicacao?.usuario?.uf}}
+            </mat-card-title>
+            <span>{{publicacao.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+        </div>
+        <div fxFlex fxLayout="row wrap" fxLayoutAlign="end center">
+            <mat-chip-list *ngIf="publicacao?.tipoPublicacao">
+                <mat-chip
+                    [ngClass]="{ 'azul': publicacao.tipoPublicacao.id === 1, 'vermelho' : publicacao.tipoPublicacao.id === 2 }">
+                    {{publicacao?.tipoPublicacao?.nome}}
+                </mat-chip>
+            </mat-chip-list>
+            
+        </div>
     </div>
     <mat-card-content>
-        <div class="mb-1">
+        <div class="my-2">
             <span style=" white-space: pre-wrap;">{{publicacao.descricao}}</span>
         </div>
         <div *ngIf="publicacao.listaImagem">
@@ -12,8 +26,19 @@
             </div>
         </div>
     </mat-card-content>
-    <div fxLayoutAlign="space-between center">
-        <button style="color: white;" class="background-primary" fxFlex="48" mat-button>Enviar mensagem</button>
-        <button style="color: white;" class="background-primary" fxFlex="48" mat-button>Enviar e-mail</button>
+    <div *ngIf="!publicacaoPertenceUsuarioLogado">
+        <mat-divider></mat-divider>
+        <div fxLayoutAlign="space-around center" style="padding-top: 1rem;">
+            <!-- <button class="botao-enviar" fxFlex="46" mat-button>
+                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">message
+                </mat-icon>
+                Enviar mensagem
+            </button> -->
+            <button class="botao-enviar" fxFlex="92" mat-button fxLayoutAlign="center center" (click)="entrarEmContato(publicacao?.usuario?.id)">
+                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">how_to_reg
+                </mat-icon>
+                <span>Entrar em contato</span>
+            </button>
+        </div>
     </div>
 </mat-card>

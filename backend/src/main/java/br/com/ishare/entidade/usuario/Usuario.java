@@ -1,6 +1,7 @@
 package br.com.ishare.entidade.usuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryInit;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -38,10 +39,17 @@ public class Usuario implements UserDetails {
     private String senha;
 
     @ManyToOne
+    @QueryInit("cidade.estado")
     private Endereco endereco;
 
     @ManyToOne
     private TipoUsuario tipoUsuario;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Avaliacao> listaAvaliacao;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Certificado> listaCertificado;
 
     @ManyToMany
     @JoinTable(
@@ -54,6 +62,18 @@ public class Usuario implements UserDetails {
             }
     )
     private List<AreaAtuacao> listaAreaAtuacao;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuarioListaContato",
+            joinColumns = {
+                    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "contato_id", nullable = false, referencedColumnName = "id")
+            }
+    )
+    private List<Usuario> listaContato;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> listaPerfil = new ArrayList<Perfil>();
@@ -105,5 +125,12 @@ public class Usuario implements UserDetails {
             return null;
         }
         return this.getEndereco().getCidade().getNome();
+    }
+
+    public String getEstado() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null || this.getEndereco().getCidade().getEstado() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getEstado().getNome();
     }
 }

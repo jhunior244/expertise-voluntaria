@@ -20,7 +20,7 @@ public class PublicacaoJpaRepositoryCustomImpl implements PublicacaoJpaRepositor
     private JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Pageable pagina){
+    public Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, Long mostrarApenasMinhasPublicacoes, UUID idUsuarioLogado, Pageable pagina){
 
         QPublicacao publicacao = QPublicacao.publicacao;
 
@@ -38,6 +38,18 @@ public class PublicacaoJpaRepositoryCustomImpl implements PublicacaoJpaRepositor
 
         if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
             predicado = predicado.and(publicacao.listaAreaAtuacao.any().id.in(listaIdAreaAtuacao));
+        }
+
+        if(!ObjectUtils.isEmpty(listaIdTipoUsuario)){
+            predicado = predicado.and(publicacao.usuario.tipoUsuario.id.in(listaIdTipoUsuario));
+        }
+
+        if(!ObjectUtils.isEmpty(mostrarApenasMinhasPublicacoes)){
+            if(mostrarApenasMinhasPublicacoes == 1L){
+                predicado = predicado.and(publicacao.usuario.id.eq(idUsuarioLogado));
+            } else if(mostrarApenasMinhasPublicacoes == 0L) {
+                predicado = predicado.and(publicacao.usuario.id.ne(idUsuarioLogado));
+            }
         }
 
         query.where(predicado);

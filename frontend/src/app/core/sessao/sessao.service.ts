@@ -21,6 +21,10 @@ export class SessaoService {
         this.usuarioService.setCidade(cidade);
     }
 
+    setEmail(email: string): void {
+        this.usuarioService.setEmail(email);
+    }
+
     getUf(): string {
         return this.usuarioService.getUf();
     }

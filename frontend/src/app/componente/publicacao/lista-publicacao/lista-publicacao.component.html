@@ -1,3 +1,5 @@
-<div *ngFor="let publicacao of listaPublicacao">
-    <app-card-publicacao [publicacao]="publicacao"></app-card-publicacao>
+<div *ngIf="listaPublicacao?.length > 0"  style="overflow-y: auto;">
+    <div *ngFor="let publicacao of listaPublicacao">
+        <app-card-publicacao [publicacao]="publicacao"></app-card-publicacao>
+    </div>
 </div>

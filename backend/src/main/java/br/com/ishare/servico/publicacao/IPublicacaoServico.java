@@ -15,5 +15,5 @@ public interface IPublicacaoServico {
 
     Page<Publicacao> lista(Usuario usuario, Pageable pagina);
 
-    Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Pageable pagina);
+    Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, Long mostrarApenasMinhasPublicacoes, UUID idUsuarioLogado, Pageable pagina);
 }

@@ -1,21 +1,27 @@
+import { Estado } from './estado';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { configuracao } from 'src/app/configuracao';
 import { TokenService } from 'src/app/core/token/token.service';
-import { Usuario } from './usuario';
+import { AreaAtuacao } from '../area-atuacao/area-atuacao';
+import { IPagina } from '../pagina/pagina';
+import { IUsuario, Usuario } from './usuario';
+import { Cidade } from './cidade';
 
 const usuarioLogadoSistema = 'usuarioLogadoSistema';
 const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
 const ufChave = 'uf_user';
 const cidadeChave = 'city_user';
+const emailChave = 'email_user';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
 
     private usuarioSubject = new BehaviorSubject<Usuario>(null);
-    url = configuracao.rotaBackendPublico + '/usuario';
+    urlPublica = configuracao.rotaBackendPublico + '/usuario';
+    urlPrivada = configuracao.rotaBackendPrivado + '/usuario';
     httpHeader = new HttpHeaders();
 
     constructor(
@@ -39,12 +45,20 @@ export class UsuarioService {
         window.localStorage.setItem(cidadeChave, cidade);
     }
 
+    setEmail(email: string): void {
+        window.localStorage.setItem(emailChave, email);
+    }
+
     getUf(): string {
         return window.localStorage.getItem(ufChave);
     }
 
     getCidade(): string {
         return window.localStorage.getItem(cidadeChave);
+    }
+
+    getEmail(): string {
+        return window.localStorage.getItem(emailChave);
     }
 
     setUsuarioLogadoSistema(nome: string): void {
@@ -85,10 +99,76 @@ export class UsuarioService {
         }
     }
 
-    public cria(usuario: Usuario): Observable<Usuario> {
-        return this.httpCliente.post<Usuario>(this.url + '/cria', usuario.paraBackend(), { headers: this.httpHeader })
+    public adicionaContato(usuario: Usuario): Observable<Usuario> {
+        return this.httpCliente.patch<Usuario>(this.urlPublica + '/adicionaContato', usuario.paraBackend(), { headers: this.httpHeader })
             .pipe(map(usuarioCriado => Usuario.doBackend(usuarioCriado) as Usuario));
 
+    }
+
+    public cria(usuario: Usuario): Observable<Usuario> {
+        return this.httpCliente.post<Usuario>(this.urlPublica + '/cria', usuario.paraBackend(), { headers: this.httpHeader })
+            .pipe(map(usuarioCriado => Usuario.doBackend(usuarioCriado) as Usuario));
+
+    }
+
+    public obtem(id: string): Observable<Usuario> {
+
+        let httpParams = new HttpParams();
+
+        httpParams = httpParams.append(configuracao.parametroId, id);
+
+        return this.httpCliente.get<Usuario>(this.urlPrivada + '/obtem', { params: httpParams })
+            .pipe(map((usuario => Usuario.doBackend(usuario))));
+    }
+
+    public lista(
+        listaEstado: Estado[],
+        listaCidade: Cidade[],
+        listaAreaAtuacao: AreaAtuacao[],
+        nomeUsuario: string
+    ): Observable<IPagina<IUsuario, Usuario>> {
+        let httpParams = new HttpParams();
+        const listaIdEstado = new Array<string>();
+        if (listaEstado) {
+            for (const estado of listaEstado) {
+                listaIdEstado.push(estado.id.toString());
+            }
+        }
+        for (const idEstado of listaIdEstado) {
+            httpParams = httpParams.append(configuracao.parametroListaIdEstado, idEstado);
+        }
+
+        const listaIdCidade = new Array<string>();
+        if (listaCidade) {
+            for (const cidade of listaCidade) {
+                listaIdCidade.push(cidade.id.toString());
+            }
+        }
+        for (const idCidade of listaIdCidade) {
+            httpParams = httpParams.append(configuracao.parametroListaIdCidade, idCidade);
+        }
+
+        const listaIdAreaAtuacao = new Array<string>();
+        if (listaAreaAtuacao) {
+            for (const area of listaAreaAtuacao) {
+                listaIdAreaAtuacao.push(area.id.toString());
+            }
+        }
+        for (const idArea of listaIdAreaAtuacao) {
+            httpParams = httpParams.append(configuracao.parametroListaIdAreaAtuacao, idArea);
+        }
+
+        if (nomeUsuario) {
+            httpParams = httpParams.append(configuracao.parametroNome, nomeUsuario);
+        }
+
+        return this.httpCliente.get<IPagina<IUsuario, Usuario>>(this.urlPublica + '/lista', { params: httpParams })
+            .pipe(map((pagina => this.obtemPagina(pagina))));
+    }
+
+    private obtemPagina(pagina: IPagina<IUsuario, Usuario>): IPagina<IUsuario, Usuario> {
+        pagina.conteudo = Usuario.listaDoBackend(pagina.content);
+        return pagina;
     }
 
     public existeUsuarioCadastradoComEmail(email: string): Observable<boolean> {
@@ -99,7 +179,7 @@ export class UsuarioService {
             httpParams = httpParams.append(configuracao.parametroEmail, email.toString());
         }
 
-        return this.httpCliente.get<boolean>(this.url + '/existeUsuarioCadastradoComEmail', { params: httpParams });
+        return this.httpCliente.get<boolean>(this.urlPublica + '/existeUsuarioCadastradoComEmail', { params: httpParams });
     }
 
 }

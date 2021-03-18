@@ -132,3 +132,8 @@ mat-hint {
 button:focus {
   outline: none;
 }
+
+/* cor do spinner */
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #58af9c;
+}

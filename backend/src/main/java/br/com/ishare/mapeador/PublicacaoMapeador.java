@@ -16,6 +16,7 @@ public interface PublicacaoMapeador {
 
     @Mapping(target = "usuario.cidade", source = "obj.usuario.endereco.cidade.nome")
     @Mapping(target = "usuario.uf", source = "obj.usuario.endereco.cidade.estado.uf")
+    @Mapping(target = "usuario.listaContato", ignore = true)
     PublicacaoDto paraDto(Publicacao obj);
 
     Publicacao doDto(PublicacaoDto obj);

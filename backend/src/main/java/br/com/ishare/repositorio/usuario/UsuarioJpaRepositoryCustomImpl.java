@@ -1,13 +1,17 @@
 package br.com.ishare.repositorio.usuario;
 
-import br.com.ishare.entidade.publicacao.Publicacao;
 import br.com.ishare.entidade.usuario.QUsuario;
 import br.com.ishare.entidade.usuario.Usuario;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,5 +39,65 @@ public class UsuarioJpaRepositoryCustomImpl implements UsuarioJpaRepositoryCusto
 
         query.where(predicado);
         return query.fetch();
+    }
+
+    @Override
+    public Page<Usuario> lista(boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
+
+        QUsuario usuario = QUsuario.usuario;
+
+        JPQLQuery<Usuario> query = jpaQueryFactory.selectFrom(usuario);
+
+        BooleanExpression predicado = usuario.id.isNotNull();
+
+        if(ignoraUsuarioLogado && StringUtils.hasLength(emailUsuarioLogado)){
+            predicado = predicado.and(usuario.email.ne(emailUsuarioLogado));
+        }
+
+        if(!ObjectUtils.isEmpty(listaIdEstado)){
+            predicado = predicado.and(usuario.endereco.cidade.estado.id.in(listaIdEstado));
+        }
+
+        if(!ObjectUtils.isEmpty(listaIdCidade)){
+            predicado = predicado.and(usuario.endereco.cidade.id.in(listaIdCidade));
+        }
+
+        if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
+            predicado = predicado.and(usuario.listaAreaAtuacao.any().id.in(listaIdAreaAtuacao));
+        }
+
+        if(StringUtils.hasLength(nome)){
+            predicado = predicado.and(usuario.nome.containsIgnoreCase(nome));
+        }
+
+        query.where(predicado);
+
+        query.limit(pagina.getPageSize());
+
+        query.offset(pagina.getOffset());
+
+        return new PageImpl<>(query.fetch(), pagina, query.fetchCount());
+    }
+
+    @Override
+    public Boolean usuarioEhContato(UUID usuario, UUID possivelContato){
+
+        if(usuario == null || possivelContato == null){
+            return false;
+        }
+
+        QUsuario qUsuario = QUsuario.usuario;
+
+        JPQLQuery<Usuario> query = jpaQueryFactory.selectFrom(qUsuario);
+
+        BooleanExpression predicado = qUsuario.id.isNotNull();
+
+        predicado = predicado.and(qUsuario.id.eq(usuario).and(qUsuario.listaContato.any().id.eq(possivelContato)));
+
+        query.where(predicado);
+
+        Usuario usuario1 = query.fetchFirst();
+
+        return usuario1 != null;
     }
 }

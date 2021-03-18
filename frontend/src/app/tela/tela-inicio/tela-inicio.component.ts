@@ -3,7 +3,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { configuracao } from 'src/app/configuracao';
 import { DialogoAguardeComponent } from './../../componente/dialogo-aguarde/dialogo-aguarde.component';
@@ -42,6 +42,9 @@ export class TelaInicioComponent implements OnInit {
   public ufUsuarioLogado: string;
   public cidadeUsuarioLogado: string;
   public configuracao = configuracao;
+  public exibeFiltro = true;
+  public exibeTodosUsuario = false;
+  private subscricao = new Subscription();
 
   constructor(
     public dialog: MatDialog,
@@ -54,7 +57,9 @@ export class TelaInicioComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       expertiseNecessaria: [null],
       uf: [null],
-      cidade: [null]
+      cidade: [null],
+      tipoPessoa: [null],
+      todosUsuarios: [0]
     });
 
     this.ufUsuarioLogado = this.sessaoService.getUf();
@@ -64,6 +69,8 @@ export class TelaInicioComponent implements OnInit {
   get expertiseNecessaria(): FormControl { return this.formGroup.controls.expertiseNecessaria as FormControl; }
   get uf(): FormControl { return this.formGroup.controls.uf as FormControl; }
   get cidade(): FormControl { return this.formGroup.controls.cidade as FormControl; }
+  get tipoPessoa(): FormControl { return this.formGroup.controls.tipoPessoa as FormControl; }
+  get todosUsuarios(): FormControl { return this.formGroup.controls.todosUsuarios as FormControl; }
 
   ngOnInit(): void {
     this.dialog.open(DialogoAguardeComponent, DialogoAguardeComponent.configProgressSpinner);
@@ -80,7 +87,24 @@ export class TelaInicioComponent implements OnInit {
       this.dialog.closeAll();
     });
 
+    this.telaInicioService.exibeFiltroAnunciado$.subscribe(exibe => {
+      this.exibeFiltro = exibe;
+    });
+
+    this.telaInicioService.exibeFiltroTodasPublicacoes$.subscribe(exibe => {
+      this.exibeTodosUsuario = exibe;
+    });
+
+    this.subscricao.add(this.tipoPessoa.valueChanges.subscribe(() => {
+      this.telaInicioService.anunciaListaTipoPessoa(this.tipoPessoa.value);
+    }));
+
+    this.subscricao.add(this.todosUsuarios.valueChanges.subscribe((value) => {
+      this.telaInicioService.alteraListarApenasMinhasPublicacoes(value);
+    }));
+
   }
+
   anunciaClickPesquisar(): void {
     this.telaInicioService.anunciaNovaPesquisa(true);
   }

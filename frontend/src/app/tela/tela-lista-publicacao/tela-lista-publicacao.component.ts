@@ -1,8 +1,8 @@
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { TelaInicioService } from './../tela-inicio/tela-inicio.service';
 import { ErroService } from './../../core/erro/erro.service';
 import { PublicacaoService } from './../../servico/publicacao/publicacao.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NovaPublicacaoComponent } from 'src/app/componente/publicacao/nova-publicacao/nova-publicacao.component';
 import { Publicacao } from 'src/app/servico/publicacao/publicacao';
@@ -15,26 +15,33 @@ import { DialogoAguardeComponent } from 'src/app/componente/dialogo-aguarde/dial
   templateUrl: './tela-lista-publicacao.component.html',
   styleUrls: ['./tela-lista-publicacao.component.css']
 })
-export class TelaListaPublicacaoComponent implements OnInit {
+export class TelaListaPublicacaoComponent implements OnInit, OnDestroy {
 
   public listaPublicacao: Publicacao[] = [];
+
+  private subscricao = new Subscription();
 
   constructor(
     public dialog: MatDialog,
     private publicacaoService: PublicacaoService,
     private erroService: ErroService,
     private toaster: Toaster,
-    private telaInicioService: TelaInicioService) { }
+    private telaInicioService: TelaInicioService) {
+      this.telaInicioService.anunciaexibeFiltro(true);
+      this.telaInicioService.anunciaExibeFiltroTodasPublicacoes(true);
+     }
 
   ngOnInit(): void {
 
-    this.telaInicioService.botaoPesquisarClicado$.subscribe(busca => {
+    this.subscricao.add(this.telaInicioService.botaoPesquisarClicado$.subscribe(busca => {
       this.dialog.open(DialogoAguardeComponent, DialogoAguardeComponent.configProgressSpinner);
       if (busca) {
         this.publicacaoService.lista(
           this.telaInicioService.listaEstado,
           this.telaInicioService.listaCidade,
-          this.telaInicioService.listaAreaAtuacao
+          this.telaInicioService.listaAreaAtuacao,
+          this.telaInicioService.listaTipoPessoa,
+          this.telaInicioService.listarApenasMinhasPublicacoes
         ).subscribe(pagina => {
           this.listaPublicacao = pagina.conteudo;
           this.dialog.closeAll();
@@ -44,7 +51,11 @@ export class TelaListaPublicacaoComponent implements OnInit {
           this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
         });
       }
-    });
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscricao.unsubscribe();
   }
 
   novaPublicacao(): void {
@@ -60,7 +71,9 @@ export class TelaListaPublicacaoComponent implements OnInit {
       this.publicacaoService.lista(
         this.telaInicioService.listaEstado,
         this.telaInicioService.listaCidade,
-        this.telaInicioService.listaAreaAtuacao
+        this.telaInicioService.listaAreaAtuacao,
+        this.telaInicioService.listaTipoPessoa,
+        this.telaInicioService.listarApenasMinhasPublicacoes
       ).subscribe(pagina => {
         this.listaPublicacao = pagina.conteudo;
         this.dialog.closeAll();

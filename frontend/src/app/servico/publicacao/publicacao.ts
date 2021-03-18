@@ -2,12 +2,14 @@ import { AreaAtuacao, IAreaAtuacao } from './../area-atuacao/area-atuacao';
 import { IImagem, Imagem } from '../imagem/imagem';
 import { IUsuario, Usuario } from '../usuario/usuario';
 import { ITipoPublicacao, TipoPublicacao } from './tipo-publicacao';
+import * as moment from 'moment';
 
 export class IPublicacao {
     id: string;
     titulo: string;
     descricao: string;
     raioAlcance: number;
+    data: moment.Moment;
     usuario: IUsuario;
     listaImagem: IImagem[];
     tipoPublicacao: ITipoPublicacao;
@@ -19,6 +21,7 @@ export class Publicacao {
     titulo: string;
     descricao: string;
     raioAlcance: number;
+    data: moment.Moment;
     usuario: Usuario;
     listaImagem: Imagem[];
     tipoPublicacao: TipoPublicacao;
@@ -40,6 +43,7 @@ export class Publicacao {
         }
 
         usuario = Object.assign(usuario, response, {
+            data: (response.data) ? moment(response.data) : null,
             usuario: (response.usuario) ? Usuario.doBackend(response.usuario) : null,
             listaImagem: (response.listaImagem) ? Imagem.listaDoBackend(response.listaImagem) : null,
             tipoPublicacao: (response.tipoPublicacao) ? TipoPublicacao.doBackend(response.tipoPublicacao) : null,
@@ -50,6 +54,7 @@ export class Publicacao {
 
     paraBackend(): IPublicacao {
         const publicacao = Object.assign(Object.create(Publicacao.prototype), this, {
+            data: (this.data) ? moment(this.data).toDate().toISOString() : null,
             usuario: (this.usuario) ? this.usuario.paraBackend() : null,
             listaImagem: (this.listaImagem) ? Imagem.listaParaBackend(this.listaImagem) : null,
             tipoPublicacao: (this.tipoPublicacao) ? this.tipoPublicacao.paraBackend() : null,

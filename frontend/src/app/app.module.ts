@@ -48,9 +48,13 @@ import { TelaLoginComponent } from './tela/tela-login/tela-login.component';
 import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
 import { DialogoAguardeComponent } from './componente/dialogo-aguarde/dialogo-aguarde.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { TelaContatosComponent } from './tela/tela-contatos/tela-contatos.component';
 import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certificados.component';
-
+import { CardContatoComponent } from './componente/card-contato/card-contato.component';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatChipsModule} from '@angular/material/chips';
+import { TelaVisualizaPerfilUsuarioComponent } from './tela/tela-visualiza-perfil-usuario/tela-visualiza-perfil-usuario.component';
+import { MomentModule } from 'ngx-moment';
+import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-nao.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -70,8 +74,10 @@ import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certifi
     SelectTipoPublicacaoComponent,
     TelaListaContatosComponent,
     DialogoAguardeComponent,
-    TelaContatosComponent,
-    TelaCertificadosComponent
+    TelaCertificadosComponent,
+    CardContatoComponent,
+    TelaVisualizaPerfilUsuarioComponent,
+    SelectSimNaoComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +98,10 @@ import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certifi
     MatDialogModule,
     MatCardModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDividerModule,
+    MatChipsModule,
+    MomentModule
   ],
   providers: [
     {

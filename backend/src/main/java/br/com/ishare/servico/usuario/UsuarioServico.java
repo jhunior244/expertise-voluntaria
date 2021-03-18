@@ -10,16 +10,24 @@ import br.com.ishare.repositorio.usuario.CidadeJpaRepository;
 import br.com.ishare.repositorio.usuario.EnderecoJpaRepository;
 import br.com.ishare.repositorio.usuario.TipoUsuarioJpaRepository;
 import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
@@ -97,5 +105,77 @@ public class UsuarioServico implements IUsuarioServico {
         usuarioJpaRepository.save(usuario);
     }
 
+    @Override
+    public Page<Usuario> lista(boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
+        return usuarioJpaRepository.lista(ignoraUsuarioLogado, emailUsuarioLogado, listaIdEstado, listaIdCidade, listaIdAreaAtuacao, nome, pagina);
+    }
+
+    @Override
+    public Page<UsuarioTelaContatoDto> paraUsuarioTelaConsultaDto(Page<Usuario> paginaConteudo, Usuario usuarioLogado){
+        if(ObjectUtils.isEmpty(paginaConteudo) || CollectionUtils.isEmpty(paginaConteudo.getContent()) || ObjectUtils.isEmpty(usuarioLogado)){
+            Pageable pagina = PageRequest.of(0, 10);
+            return new PageImpl<>(new ArrayList<>(), pagina, 0);
+        }
+
+        List<UsuarioTelaContatoDto> lista = new ArrayList<>();
+
+        for(Usuario usuario : paginaConteudo.getContent()){
+            lista.add(paraUsuarioTelaConsultaDto(usuario, usuarioLogado));
+        }
+
+        Pageable pagina = PageRequest.of(paginaConteudo.getNumber(), (int)paginaConteudo.getTotalElements());
+
+        return new PageImpl<>(lista, pagina, lista.size());
+    }
+
+    @Override
+    public UsuarioTelaContatoDto paraUsuarioTelaConsultaDto(@NotNull Usuario usuario, @NotNull Usuario usuarioLogado){
+
+        UsuarioTelaContatoDto usuarioTelaContatoDto = new UsuarioTelaContatoDto();
+
+        usuarioTelaContatoDto.setNome(usuario.getNome());
+        usuarioTelaContatoDto.setEmail(usuario.getEmail());
+        usuarioTelaContatoDto.setBairro(usuario.getEndereco().getBairro());
+        usuarioTelaContatoDto.setCidade(usuario.getCidade());
+        usuarioTelaContatoDto.setEstado(usuario.getEstado());
+        usuarioTelaContatoDto.setTipoUsuarioNome(usuario.getTipoUsuario().getNome());
+        usuarioTelaContatoDto.setEhContatoAdicionado(usuarioJpaRepository.usuarioEhContato(usuarioLogado.getId(), usuario.getId()));
+        usuarioTelaContatoDto.setListaAreaAtuacao(areaAtuacaoMapeador.paraDto(usuario.getListaAreaAtuacao()));
+
+        return usuarioTelaContatoDto;
+    }
+
+    @Override
+    public UsuarioTelaContatoDto adicionaContato(UsuarioTelaContatoDto usuarioTelaContatoDto, Usuario usuarioLogado){
+        if(ObjectUtils.isEmpty(usuarioTelaContatoDto) || !StringUtils.hasLength(usuarioTelaContatoDto.getEmail()) || ObjectUtils.isEmpty(usuarioLogado)){
+            return null;
+        }
+        Usuario novoContato = usuarioJpaRepository.findByEmail(usuarioTelaContatoDto.getEmail());
+
+        if(ObjectUtils.isEmpty(novoContato)){
+            return null;
+        }
+
+        if(CollectionUtils.isEmpty(usuarioLogado.getListaContato())){
+            usuarioLogado.setListaContato(new ArrayList<>());
+        }
+
+        usuarioLogado.getListaContato().add(novoContato);
+
+        usuarioLogado = usuarioJpaRepository.save(usuarioLogado);
+
+        return paraUsuarioTelaConsultaDto(novoContato, usuarioLogado);
+    }
+
+    @Override
+    public Usuario obtem(UUID id){
+        Optional<Usuario> opUsuario = usuarioJpaRepository.findById(id);
+
+        if(opUsuario.isPresent()){
+            return opUsuario.get();
+        }
+
+        return null;
+    }
 
 }

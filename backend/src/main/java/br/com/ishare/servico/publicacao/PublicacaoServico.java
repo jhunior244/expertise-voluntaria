@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,6 +31,7 @@ public class PublicacaoServico implements IPublicacaoServico {
     public Publicacao cria(Publicacao publicacao, Usuario usuario){
 
         publicacao.setUsuario(usuario);
+        publicacao.setData(ZonedDateTime.now());
         Publicacao publicacaoBanco = publicacaoJpaRepository.save(publicacao);
 
         if(!CollectionUtils.isEmpty(publicacao.getListaImagem())){
@@ -54,7 +56,7 @@ public class PublicacaoServico implements IPublicacaoServico {
     }
 
     @Override
-    public Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Pageable pagina){
-        return publicacaoJpaRepository.lista(listaIdEstado, listaIdCidade, listaIdAreaAtuacao, pagina);
+    public Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, Long mostrarApenasMinhasPublicacoes, UUID idUsuarioLogado, Pageable pagina){
+        return publicacaoJpaRepository.lista(listaIdEstado, listaIdCidade, listaIdAreaAtuacao, listaIdTipoUsuario, mostrarApenasMinhasPublicacoes, idUsuarioLogado, pagina);
     }
 }

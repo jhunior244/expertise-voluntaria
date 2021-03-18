@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { configuracao } from './configuracao';
 import { AuthGuardTelaInicio, TelaInicioComponent } from './tela/tela-inicio/tela-inicio.component';
 import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
+import { TelaVisualizaPerfilUsuarioComponent } from './tela/tela-visualiza-perfil-usuario/tela-visualiza-perfil-usuario.component';
 
 const routes: Routes = [
 
@@ -33,6 +34,9 @@ const routes: Routes = [
       }, {
         path: configuracao.rotaListaContatos,
         component: TelaListaContatosComponent
+      }, {
+        path: configuracao.rotaVisualizaContato + '/:' + configuracao.parametroId,
+        component: TelaVisualizaPerfilUsuarioComponent
       }, {
         path: configuracao.rotaCertificados,
         component: TelaCertificadosComponent

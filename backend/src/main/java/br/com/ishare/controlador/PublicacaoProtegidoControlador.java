@@ -50,10 +50,16 @@ public class PublicacaoProtegidoControlador {
                                      Long[] listaIdEstado,
                                      Long[] listaIdCidade,
                                      String[] listaIdAreaAtuacao,
+                                     Long[] listaIdTipoUsuario,
+                                     Long mostrarApenasMinhasPublicacoes,
                                      Long numeroPagina,
                                      Long tamanhoPagina){
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
+
+        if(ObjectUtils.isEmpty(usuario)){
+            return null;
+        }
 
         if(numeroPagina == null || tamanhoPagina == null){
             numeroPagina = 0L;
@@ -66,7 +72,7 @@ public class PublicacaoProtegidoControlador {
 
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
 
-        Page<PublicacaoDto> page = publicacaoMapeador.paraDto(publicacaoServico.lista(listaIdEstado, listaIdCidade, lista, pagina));
+        Page<PublicacaoDto> page = publicacaoMapeador.paraDto(publicacaoServico.lista(listaIdEstado, listaIdCidade, lista, listaIdTipoUsuario, mostrarApenasMinhasPublicacoes, usuario.getId(), pagina));
 
         return page;
     }
