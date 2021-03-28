@@ -1,0 +1,55 @@
+/* #ng-chat {
+    position: relative !important;
+    z-index: 999;
+    left: 0;
+    bottom: 0;
+    box-sizing: initial;
+    font-size: 11pt;
+    text-align: left;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.ng-chat-window
+{
+    left: 260px;
+    height: 360px;
+    z-index: 999;
+    bottom: 0;
+    width: 300px;
+    position: fixed;
+    border-width: 1px;
+    border-style: solid;
+    border-bottom: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,.25);
+}
+
+#ng-chat-people {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
+    border-width: 1px;
+    border-style: solid;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 25%);
+    border-bottom: 0;
+}
+
+ng-chat-friends-list {
+    height: 100%;
+} */
+
+#ng-chat {
+    position: absolute !important;
+    z-index: 999;
+    /* right: 0; */
+    bottom: 0;
+    box-sizing: initial;
+    font-size: 11pt;
+    text-align: left;
+}
+
+#ng-chat-people {
+    margin-right: 0;
+}

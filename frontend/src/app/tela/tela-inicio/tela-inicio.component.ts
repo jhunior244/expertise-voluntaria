@@ -1,4 +1,3 @@
-import { TelaInicioService } from './tela-inicio.service';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,12 +5,14 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { forkJoin, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { configuracao } from 'src/app/configuracao';
+import { Cidade } from 'src/app/servico/usuario/cidade';
 import { DialogoAguardeComponent } from './../../componente/dialogo-aguarde/dialogo-aguarde.component';
 import { AuthService } from './../../core/auth/auth.service';
 import { SessaoService } from './../../core/sessao/sessao.service';
 import { CidadeService } from './../../servico/usuario/cidade.service';
 import { EstadoService } from './../../servico/usuario/estado.service';
-import { Cidade } from 'src/app/servico/usuario/cidade';
+import { TelaInicioService } from './tela-inicio.service';
+
 
 @Injectable()
 export class AuthGuardTelaInicio implements CanActivate {
@@ -37,6 +38,7 @@ export class AuthGuardTelaInicio implements CanActivate {
   styleUrls: ['./tela-inicio.component.css']
 })
 export class TelaInicioComponent implements OnInit {
+
 
   public formGroup: FormGroup;
   public ufUsuarioLogado: string;
@@ -77,7 +79,7 @@ export class TelaInicioComponent implements OnInit {
     const estado$ = this.estadoService.lista(this.ufUsuarioLogado);
     const cidade$ = this.cidadeService.obtem(this.cidadeUsuarioLogado, this.ufUsuarioLogado);
     forkJoin([estado$, cidade$]).subscribe(resultado => {
-      const listaCidade: Cidade[] =[];
+      const listaCidade: Cidade[] = [];
       listaCidade.push(resultado[1]);
       this.uf.setValue(resultado[0]);
       this.cidade.setValue(listaCidade);

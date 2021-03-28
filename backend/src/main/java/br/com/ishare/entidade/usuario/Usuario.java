@@ -51,6 +51,9 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario")
     private List<Certificado> listaCertificado;
 
+    @OneToMany(mappedBy = "usuarioUm")
+    private List<Conversa> listaConversa;
+
     @ManyToMany
     @JoinTable(
             name = "usuarioListaAtuacao",
@@ -74,6 +77,7 @@ public class Usuario implements UserDetails {
             }
     )
     private List<Usuario> listaContato;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> listaPerfil = new ArrayList<Perfil>();

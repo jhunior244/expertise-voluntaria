@@ -22,6 +22,10 @@ export const configuracao = {
     parametroListaIdAreaAtuacao: 'listaIdAreaAtuacao',
     parametroListaIdTipoUsuario: 'listaIdTipoUsuario',
     parametroMostrarApenasMinhasPublicacoes: 'mostrarApenasMinhasPublicacoes',
+    parametroIdConversa: 'idConversa',
+    parametroIdMensagem: 'idMensagem',
+    parametroNumeroPagina: 'numeroPagina',
+    parametroTamanhoPagina: 'tamanhoPagina',
 
     tipoUsuario: {
         PESSOA_FISICA: 1,

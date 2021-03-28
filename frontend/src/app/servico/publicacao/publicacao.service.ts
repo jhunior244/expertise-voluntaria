@@ -24,7 +24,7 @@ export class PublicacaoService {
     public cria(publicacao: Publicacao): Observable<Publicacao> {
         return this.httpCliente.post<Publicacao>(this.url + '/cria',
             publicacao.paraBackend(), { headers: this.httpHeader })
-            .pipe(map(pagina => Publicacao.doBackend(pagina)));
+            .pipe(map(publicacaoCriada => Publicacao.doBackend(publicacaoCriada)));
 
     }
 

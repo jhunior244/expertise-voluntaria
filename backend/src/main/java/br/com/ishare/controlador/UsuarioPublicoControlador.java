@@ -53,35 +53,4 @@ public class UsuarioPublicoControlador {
 
         return usuarioServico.adicionaContato(usuarioTelaContatoDto, usuario);
     }
-
-    @GetMapping(path = "/lista")
-    public Page<UsuarioTelaContatoDto> lista(@RequestHeader(name="Authorization") String token,
-                                     Long[] listaIdEstado,
-                                     Long[] listaIdCidade,
-                                     String[] listaIdAreaAtuacao,
-                                     String nome,
-                                     Long numeroPagina,
-                                     Long tamanhoPagina){
-
-        Usuario usuario = usuarioServico.obtemPorToken(token);
-
-        if(ObjectUtils.isEmpty(usuario)){
-            throw new IShareExcessao("Usuário não encontrado", HttpStatus.BAD_REQUEST);
-        }
-
-        if(numeroPagina == null || tamanhoPagina == null){
-            numeroPagina = 0L;
-            tamanhoPagina = 10L;
-        }
-        List<UUID> lista = new ArrayList<>();
-        if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
-            lista = Arrays.stream(listaIdAreaAtuacao).map(id -> UUID.fromString(id)).collect(Collectors.toList());
-        }
-
-        Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
-
-        Page<UsuarioTelaContatoDto> page = usuarioServico.paraUsuarioTelaConsultaDto(usuarioServico.lista(true, usuario.getEmail(), listaIdEstado, listaIdCidade, lista, nome, pagina), usuario);
-
-        return page;
-    }
 }

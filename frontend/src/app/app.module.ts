@@ -55,6 +55,13 @@ import {MatChipsModule} from '@angular/material/chips';
 import { TelaVisualizaPerfilUsuarioComponent } from './tela/tela-visualiza-perfil-usuario/tela-visualiza-perfil-usuario.component';
 import { MomentModule } from 'ngx-moment';
 import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-nao.component';
+import { NgChatModule } from 'ng-chat';
+import { ChatContatosComponent } from './componente/chat-contatos/chat-contatos.component';
+import { ConversaService } from './servico/usuario/conversa.service';
+import { ChatJanelasConversasComponent } from './componente/chat-janelas-conversas/chat-janelas-conversas.component';
+import { JanelaChatComponent } from './componente/janela-chat/janela-chat.component';
+import { MensagemService } from './servico/usuario/mensagem.service';
+import { ListaChatMinimizadoComponent } from './componente/lista-chat-minimizado/lista-chat-minimizado.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +84,11 @@ import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-na
     TelaCertificadosComponent,
     CardContatoComponent,
     TelaVisualizaPerfilUsuarioComponent,
-    SelectSimNaoComponent
+    SelectSimNaoComponent,
+    ChatContatosComponent,
+    ChatJanelasConversasComponent,
+    JanelaChatComponent,
+    ListaChatMinimizadoComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +112,8 @@ import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-na
     MatProgressSpinnerModule,
     MatDividerModule,
     MatChipsModule,
-    MomentModule
+    MomentModule,
+    NgChatModule
   ],
   providers: [
     {
@@ -128,7 +140,9 @@ import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-na
     AuthGuardTelaInicio,
     AreaAtuacaoService,
     TipoPublicacaoService,
-    TelaInicioService
+    TelaInicioService,
+    ConversaService,
+    MensagemService
   ],
   bootstrap: [AppComponent]
 })

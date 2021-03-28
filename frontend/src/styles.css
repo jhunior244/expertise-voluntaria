@@ -137,3 +137,8 @@ button:focus {
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: #58af9c;
 }
+
+mat-divider {
+  background-color: #58af9c;
+}
+

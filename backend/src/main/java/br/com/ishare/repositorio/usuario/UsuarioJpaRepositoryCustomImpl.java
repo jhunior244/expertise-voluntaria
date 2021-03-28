@@ -1,5 +1,7 @@
 package br.com.ishare.repositorio.usuario;
 
+import br.com.ishare.entidade.usuario.QConversa;
+import br.com.ishare.entidade.usuario.QMensagem;
 import br.com.ishare.entidade.usuario.QUsuario;
 import br.com.ishare.entidade.usuario.Usuario;
 import com.querydsl.core.types.dsl.BooleanExpression;

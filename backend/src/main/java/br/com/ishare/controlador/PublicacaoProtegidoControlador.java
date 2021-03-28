@@ -67,7 +67,7 @@ public class PublicacaoProtegidoControlador {
         }
         List<UUID> lista = new ArrayList<>();
         if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
-            lista = Arrays.stream(listaIdAreaAtuacao).map(id -> UUID.fromString(id)).collect(Collectors.toList());
+            lista = Arrays.stream(listaIdAreaAtuacao).map(UUID::fromString).collect(Collectors.toList());
         }
 
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());

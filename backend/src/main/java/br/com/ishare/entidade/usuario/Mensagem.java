@@ -25,8 +25,8 @@ public class Mensagem {
     private ZonedDateTime data;
 
     @ManyToOne(optional = false)
-    private Usuario usuarioRemetente;
+    private Usuario usuario;
 
     @ManyToOne(optional = false)
-    private Usuario usuarioDestinatario;
+    private Conversa conversa;
 }

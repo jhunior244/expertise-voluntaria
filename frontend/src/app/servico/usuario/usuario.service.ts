@@ -162,7 +162,25 @@ export class UsuarioService {
             httpParams = httpParams.append(configuracao.parametroNome, nomeUsuario);
         }
 
-        return this.httpCliente.get<IPagina<IUsuario, Usuario>>(this.urlPublica + '/lista', { params: httpParams })
+        return this.httpCliente.get<IPagina<IUsuario, Usuario>>(this.urlPrivada + '/lista', { params: httpParams })
+            .pipe(map((pagina => this.obtemPagina(pagina))));
+    }
+
+    public listaParaChat(
+        numeroPagina?: number,
+        tamanhoPagina?: number
+    ): Observable<IPagina<IUsuario, Usuario>> {
+        let httpParams = new HttpParams();
+
+        if (numeroPagina) {
+            httpParams = httpParams.append(configuracao.parametroNumeroPagina, numeroPagina.toString());
+        }
+
+        if (tamanhoPagina) {
+            httpParams = httpParams.append(configuracao.parametroTamanhoPagina, tamanhoPagina.toString());
+        }
+
+        return this.httpCliente.get<IPagina<IUsuario, Usuario>>(this.urlPrivada + '/listaParaChat', { params: httpParams })
             .pipe(map((pagina => this.obtemPagina(pagina))));
     }
 

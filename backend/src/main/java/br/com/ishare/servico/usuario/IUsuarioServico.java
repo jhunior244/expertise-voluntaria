@@ -28,4 +28,6 @@ public interface IUsuarioServico {
     UsuarioTelaContatoDto paraUsuarioTelaConsultaDto(@NotNull Usuario usuario, @NotNull Usuario usuarioLogado);
 
     Usuario obtem(UUID fromString);
+
+
 }
