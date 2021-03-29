@@ -1,6 +1,6 @@
 export const configuracao = {
-    rotaBackendPublico: 'http://localhost:8080/api/public',
-    rotaBackendPrivado: 'http://localhost:8080/api/private',
+    rotaBackendPublico: 'http://187.1.179.75:8080/api/public',
+    rotaBackendPrivado: 'http://187.1.179.75:8080/api/private',
 
     rotaInicio: 'inicio',
     rotaHome: 'home',
