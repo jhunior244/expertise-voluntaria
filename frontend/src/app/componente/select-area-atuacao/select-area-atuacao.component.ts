@@ -54,7 +54,8 @@ export class SelectAreaAtuacaoComponent implements OnInit {
   calculaPlaceholder(): string {
     if (this.reservadorEspaco) {
       return this.reservadorEspaco;
-    } if (this.tipoUsuario == null || this.tipoUsuario.ehPessoaFisica() || this.tipoUsuario.ehPessoaJuridica()) {
+    }
+    if (this.tipoUsuario == null || this.tipoUsuario.ehPessoaFisica() || this.tipoUsuario.ehPessoaJuridica()) {
       return 'Áreas de atuação';
     }
     return 'Áreas possíveis para atuação de voluntários';

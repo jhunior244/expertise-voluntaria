@@ -133,6 +133,7 @@ public class UsuarioServico implements IUsuarioServico {
 
         UsuarioTelaContatoDto usuarioTelaContatoDto = new UsuarioTelaContatoDto();
 
+        usuarioTelaContatoDto.setId(usuario.getId().toString());
         usuarioTelaContatoDto.setNome(usuario.getNome());
         usuarioTelaContatoDto.setEmail(usuario.getEmail());
         usuarioTelaContatoDto.setBairro(usuario.getEndereco().getBairro());

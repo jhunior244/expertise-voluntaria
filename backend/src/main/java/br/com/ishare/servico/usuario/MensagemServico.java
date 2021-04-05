@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,9 @@ public class MensagemServico implements IMensagemServico{
 
     @Autowired
     private ConversaJpaRepository conversaJpaRepository;
+
+    @Autowired
+    private IConversaServico conversaServico;
 
     @Override
     public Page<Mensagem> lista(UUID idConversa, Pageable pageable){
@@ -50,7 +54,10 @@ public class MensagemServico implements IMensagemServico{
             lancaExcessaoMensagemForaEsperado();
         }
 
+        conversaServico.atualizaDataUltimaVisualizacao(conversa, usuario);
+
         mensagem.setUsuario(usuario);
+        mensagem.setData(ZonedDateTime.now());
         return mensagemJpaRepository.save(mensagem);
     }
 

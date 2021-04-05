@@ -94,8 +94,4 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
     }
-
-//    public static void main(String[] args){
-//        System.out.println(new BCryptPasswordEncoder().encode("5393f60bca16693bc4f486e1e0b3e003"));
-//    }
 }

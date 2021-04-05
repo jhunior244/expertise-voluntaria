@@ -4,6 +4,7 @@ import br.com.ishare.dto.usuario.UsuarioSimplesDto;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
@@ -23,6 +24,10 @@ public class Conversa {
     private ZonedDateTime dataCriacao;
 
     private ZonedDateTime dataUltimaModificacao;
+
+    private ZonedDateTime dataUltimaVisualizacaoUsuarioUm;
+
+    private ZonedDateTime dataUltimaVisualizacaoUsuarioDois;
 
     @ManyToOne
     private Usuario usuarioUm;
@@ -49,5 +54,19 @@ public class Conversa {
         }
 
         return usuarioSimplesDto;
+    }
+
+    public Long getNovasMensagens(UUID usuarioLogado){
+        if(usuarioLogado == null || CollectionUtils.isEmpty(getListaMensagem())){
+            return 0L;
+        }
+        try {
+            ZonedDateTime dataUltimaVisualizacaoUsuarioLogado = getUsuarioUm().getId().equals(usuarioLogado) ? getDataUltimaVisualizacaoUsuarioUm() : getDataUltimaVisualizacaoUsuarioDois();
+
+            return getListaMensagem().stream().filter(m -> dataUltimaVisualizacaoUsuarioLogado == null ||
+                                                                            !m.getUsuario().getId().equals(usuarioLogado) && m.getData().isAfter(dataUltimaVisualizacaoUsuarioLogado)).count();
+        } catch (Exception e){
+            return 0L;
+        }
     }
 }

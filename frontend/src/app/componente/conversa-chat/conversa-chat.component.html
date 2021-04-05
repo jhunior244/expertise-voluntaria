@@ -1,0 +1,17 @@
+<div class="py-2">
+    <a style="font-size: 15px; cursor: pointer; font-weight: 500; color: #8e8e8e;"
+        fxLayoutAlign="start center" (click)="abreChat(conversa)" fxLayout="row">
+        <div style="background-color: #58af9c; border-radius: 50%; width: 25px; height: 25px;"
+            fxLayoutAlign="center center">
+            <span style="font-size: 12px; color: white;">{{calculaAbreviacao(conversa)}}</span>
+        </div>
+        &nbsp;
+        <div>
+            {{conversa?.contato?.nome | slice:0:15}}<span
+                *ngIf="conversa?.contato?.nome?.length > 13">...</span>
+        </div>
+        <div *ngIf="conversa?.novasMensagems > 0" fxLayoutAlign="center center" style="position: absolute; right: 10px; background-color: #58af9c; color: white;
+        font-size: 14px;width: 18px; height: 18px; border-radius: 50%;" matTooltip="Novas mensagens: {{conversa.novasMensagems}}">{{conversa.novasMensagems}}
+        </div>
+    </a>
+</div>

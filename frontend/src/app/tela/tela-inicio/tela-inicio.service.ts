@@ -14,6 +14,7 @@ export class TelaInicioService {
     private listaCidadeSubject = new BehaviorSubject<Cidade[]>(new Array());
     private listaAreaAtuacaoSubject = new BehaviorSubject<AreaAtuacao[]>(new Array());
     private listaTipoPessoaSubject = new BehaviorSubject<TipoUsuario[]>(new Array());
+    private listaConversaChatSubject = new BehaviorSubject<Conversa[]>(new Array());
     private listaConversaAbertaSubject = new BehaviorSubject<Conversa[]>(new Array());
     private listaConversaMinimizadaSubject = new BehaviorSubject<Conversa[]>(new Array());
 
@@ -24,13 +25,16 @@ export class TelaInicioService {
 
 
     public listaEstadoAnunciado$ = this.listaEstadoSubject.asObservable();
-    public listaCidadeAnunciada$ = this.listaEstadoSubject.asObservable();
-    public listaAreaAtuacaoAnunciada$ = this.listaEstadoSubject.asObservable();
+    public listaCidadeAnunciada$ = this.listaCidadeSubject.asObservable();
+    public listaAreaAtuacaoAnunciada$ = this.listaAreaAtuacaoSubject.asObservable();
     public botaoPesquisarClicado$ = this.botaoPesquisarSubject.asObservable();
     public exibeFiltroAnunciado$ = this.exibeFiltroSubject.asObservable();
     public listaTipoPessoaAnuncioado$ = this.listaTipoPessoaSubject.asObservable();
+
+    public listaConversaChatAnuncioado$ = this.listaConversaChatSubject.asObservable();
     public listaConversaAbertaAnuncioado$ = this.listaConversaAbertaSubject.asObservable();
     public listaConversaMinimizadaAnuncioado$ = this.listaConversaMinimizadaSubject.asObservable();
+
     public todasPublicacoesAnunciado$ = this.todasPublicacoesSubject.asObservable();
     public exibeFiltroTodasPublicacoes$ = this.exibeFiltroTodasPublicacoesSubject.asObservable();
 
@@ -38,6 +42,7 @@ export class TelaInicioService {
     public listaCidade: Cidade[] = [];
     public listaAreaAtuacao: AreaAtuacao[] = [];
     public listaTipoPessoa: TipoUsuario[] = [];
+    public listaConversaChat: Conversa[] = [];
     public listaConversaAberta: Conversa[] = [];
     public listaConversaMinimizada: Conversa[] = [];
     public listarApenasMinhasPublicacoes = 0;
@@ -78,6 +83,20 @@ export class TelaInicioService {
         this.listarApenasMinhasPublicacoes = listar;
     }
 
+    public anunciaListaConversaChat(lista: Conversa[]): void {
+        this.listaConversaChat = lista;
+        this.listaConversaChatSubject.next(lista);
+    }
+
+    public atualizaConversaListaConversaChat(conversa: Conversa): void {
+        const index = this.listaConversaChat.findIndex(c => c?.id === conversa?.id);
+
+        if (index !== -1) {
+            this.listaConversaChat[index] = conversa;
+            this.anunciaListaConversaChat(this.listaConversaChat);
+        }
+    }
+
     public anunciaListaConversaAberta(lista: Conversa[]): void {
         this.listaConversaAberta = lista;
         this.listaConversaAbertaSubject.next(lista);
@@ -89,9 +108,14 @@ export class TelaInicioService {
     }
 
     public abreNovaJanelaChat(conversa: Conversa): void {
-        const index = this.listaConversaAberta.findIndex(conversaLista => conversaLista.id === conversa.id);
-        if (index !== -1) {
+        const indexConversaAberta = this.listaConversaAberta.findIndex(conversaLista => conversaLista.id === conversa.id);
+        if (indexConversaAberta !== -1) {
             return;
+        }
+
+        const indexConversaMinimizada = this.listaConversaMinimizada.findIndex(conversaLista => conversaLista.id === conversa.id);
+        if (indexConversaMinimizada !== -1) {
+            this.listaConversaMinimizada.splice(indexConversaMinimizada, 1);
         }
 
         if (this.listaConversaAberta?.length === 3) {

@@ -1,3 +1,4 @@
+import { ConversaService } from './../../servico/usuario/conversa.service';
 import { TelaInicioService } from 'src/app/tela/tela-inicio/tela-inicio.service';
 import { UsuarioService } from 'src/app/servico/usuario/usuario.service';
 import { SessaoService } from './../../core/sessao/sessao.service';
@@ -25,17 +26,20 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
   public listaMensagem: Mensagem[] = [];
   public emaillUsuarioLogado = '';
   private intervalAtualizaMensagem: any;
+  private intervalAtualizaConversa: any;
 
   public close = false;
 
   @ViewChild('historicoMensagem') historicoMensagem: ElementRef;
+
   constructor(
     public dialog: MatDialog,
     private mensagemService: MensagemService,
     private erroService: ErroService,
     private toaster: Toaster,
     private telaInicioService: TelaInicioService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private conversaService: ConversaService
   ) {
     this.emaillUsuarioLogado = this.usuarioService.getEmail();
   }
@@ -50,10 +54,31 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
         this.atualizaListaMensagem(null);
       }
     }, 5000);
+
+    this.intervalAtualizaConversa = setInterval(() => {
+      if (this.conversa != null) {
+        this.conversaService.atualizaDataUltimaVisualizacaoUsuarioLogado(this.conversa).subscribe(conversaAtualizada => {
+          this.telaInicioService.atualizaConversaListaConversaChat(conversaAtualizada);
+        }, (erro: HttpErrorResponse) => {
+          console.log(erro);
+          this.dialog.closeAll();
+          this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+        });
+      }
+    }, 5000);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.conversa.currentValue != null) {
+      this.conversaService.atualizaDataUltimaVisualizacaoUsuarioLogado(this.conversa).subscribe(conversaAtualizada => {
+        this.telaInicioService.atualizaConversaListaConversaChat(conversaAtualizada);
+      }, (erro: HttpErrorResponse) => {
+        console.log(erro);
+        this.dialog.closeAll();
+        this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      });
+
+
       this.mensagemService.listaParaChat(this.conversa.id).subscribe(page => {
         this.listaMensagem = page.conteudo;
         setTimeout(() => {
@@ -98,7 +123,6 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
     mensagem.texto = this.mensagem.value.trim();
     this.mensagem.setValue('');
     mensagem.conversa = this.conversa;
-    mensagem.data = moment();
     this.mensagemService.enviaMensagem(mensagem).subscribe(mensagemCriada => {
       this.listaMensagem.push(mensagemCriada);
       setTimeout(() => {
@@ -116,6 +140,10 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
   ngOnDestroy(): void {
     if (this.intervalAtualizaMensagem) {
       clearInterval(this.intervalAtualizaMensagem);
+    }
+
+    if (this.intervalAtualizaConversa) {
+      clearInterval(this.intervalAtualizaConversa);
     }
   }
 }

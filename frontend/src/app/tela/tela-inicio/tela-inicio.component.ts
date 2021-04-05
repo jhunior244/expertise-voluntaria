@@ -83,6 +83,7 @@ export class TelaInicioComponent implements OnInit {
       listaCidade.push(resultado[1]);
       this.uf.setValue(resultado[0]);
       this.cidade.setValue(listaCidade);
+      this.expertiseNecessaria.setValue(this.telaInicioService.listaAreaAtuacao);
       this.telaInicioService.anunciaListaEstado(resultado[0]);
       this.telaInicioService.anunciaListaCidade(listaCidade);
       this.anunciaClickPesquisar();

@@ -62,4 +62,15 @@ public class ConversaProtegidoControlador {
 
         return conversaMapeador.paraDto(conversaServico.cria(conversa, usuario), usuario.getId());
     }
+
+    @PatchMapping(path = "/atualizaDataUltimaVisualizacao")
+    public ConversaDto atualizaDataUltimaVisualizacao(@RequestHeader(name="Authorization") String token, @RequestBody ConversaDto conversa) throws JsonProcessingException {
+
+        Usuario usuario = usuarioServico.obtemPorToken(token);
+        if(ObjectUtils.isEmpty(usuario)){
+            throw new IShareExcessao("Usuário não encontrado", HttpStatus.BAD_REQUEST);
+        }
+
+        return conversaMapeador.paraDto(conversaServico.atualizaDataUltimaVisualizacao(conversaMapeador.doDto(conversa), usuario), usuario.getId());
+    }
 }

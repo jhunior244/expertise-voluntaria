@@ -62,6 +62,8 @@ import { ChatJanelasConversasComponent } from './componente/chat-janelas-convers
 import { JanelaChatComponent } from './componente/janela-chat/janela-chat.component';
 import { MensagemService } from './servico/usuario/mensagem.service';
 import { ListaChatMinimizadoComponent } from './componente/lista-chat-minimizado/lista-chat-minimizado.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { ConversaChatComponent } from './componente/conversa-chat/conversa-chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -88,7 +90,8 @@ import { ListaChatMinimizadoComponent } from './componente/lista-chat-minimizado
     ChatContatosComponent,
     ChatJanelasConversasComponent,
     JanelaChatComponent,
-    ListaChatMinimizadoComponent
+    ListaChatMinimizadoComponent,
+    ConversaChatComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +116,8 @@ import { ListaChatMinimizadoComponent } from './componente/lista-chat-minimizado
     MatDividerModule,
     MatChipsModule,
     MomentModule,
-    NgChatModule
+    NgChatModule,
+    MatBadgeModule
   ],
   providers: [
     {

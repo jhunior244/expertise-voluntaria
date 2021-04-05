@@ -5,6 +5,7 @@ export class IConversa {
     id: string;
     dataCriacao: moment.Moment;
     dataUltimaModificacao: moment.Moment;
+    novasMensagems: number;
     contato: IUsuario;
 }
 
@@ -12,6 +13,7 @@ export class Conversa {
     id: string;
     dataCriacao: moment.Moment;
     dataUltimaModificacao: moment.Moment;
+    novasMensagems: number;
     contato: Usuario;
 
     static listaDoBackend(response: IConversa[]): Conversa[] {

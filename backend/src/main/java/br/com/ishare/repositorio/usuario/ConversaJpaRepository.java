@@ -7,7 +7,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.UUID;
 
 public interface ConversaJpaRepository extends JpaRepository<Conversa, UUID>, ConversaJpaRepositoryCustom, PagingAndSortingRepository<Conversa, UUID> {
-    Conversa findByUsuarioUmId(UUID idUsuario);
-
-    Conversa findByUsuarioDoisId(UUID idUsuario);
+    Conversa findByUsuarioUmIdAndUsuarioDoisId(UUID idUsuarioUm, UUID idUsuarioDois);
 }

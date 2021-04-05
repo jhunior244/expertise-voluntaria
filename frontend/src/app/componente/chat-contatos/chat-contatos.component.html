@@ -1,24 +1,19 @@
-<div class="py-1" fxFill>
-    <mat-card  style="height: 100%;">
-        <div>
-            <mat-form-field fxFlex="grow">
-                <mat-label>Pesquisar</mat-label>
-                <div fxLayout="row">
-                    <input matInput [formControl]="nome">
-                    <mat-icon class="ml-1" style="color: #58af9c; font-size: 18px; max-width: 22px; max-height: 22px;">
-                        search
-                    </mat-icon>
-                </div>
-            </mat-form-field>
-        </div>
-        <mat-card-content>
-            <div *ngFor="let conversa of listaConversas">
-                <mat-divider></mat-divider>
-                <div class="py-2">
-                    <a style="font-size: 16px; cursor: pointer;" (click)="abreChat(conversa)">{{conversa?.contato?.nome}}</a>
-                </div>
+<mat-card class="py-1" fxLayout="column">
+    <div style="height: 4rem; position: relative;">
+        <mat-form-field fxFlex="grow">
+            <mat-label>Pesquisar</mat-label>
+            <div fxLayout="row">
+                <input placeholder="Conversas recentes" matInput [formControl]="nome">
+                <mat-icon class="ml-1" style="color: #58af9c; font-size: 18px; max-width: 22px; max-height: 22px;">
+                    search
+                </mat-icon>
             </div>
+        </mat-form-field>
+    </div>
+    <div  fxLayout="column" style="overflow-y: auto; max-height: 400px;">
+        <div *ngFor="let conversa of listaConversas">
             <mat-divider></mat-divider>
-        </mat-card-content>
-    </mat-card>
-</div>
+            <app-conversa-chat [conversa]="conversa"></app-conversa-chat>
+        </div>
+    </div>
+</mat-card>

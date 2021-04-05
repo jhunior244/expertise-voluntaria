@@ -37,7 +37,7 @@ public class ConversaJpaRepositoryCustomImpl implements ConversaJpaRepositoryCus
 
         predicado = predicado.and(conversa.usuarioUm.id.eq(usuarioLogado).or(conversa.usuarioDois.id.eq(usuarioLogado)));
 
-        query.where(predicado);
+        query.where(predicado).orderBy(conversa.dataUltimaModificacao.desc());
 
         query.limit(pagina.getPageSize());
 

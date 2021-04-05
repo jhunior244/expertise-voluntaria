@@ -13,4 +13,6 @@ public interface IConversaServico {
     Page<ConversaDto> listaParaChat(UUID usuarioLogado, Pageable pagina);
 
     Conversa cria(ConversaDto conversa, Usuario usuarioLogado);
+
+    Conversa atualizaDataUltimaVisualizacao(Conversa conversa, Usuario usuarioLogado);
 }

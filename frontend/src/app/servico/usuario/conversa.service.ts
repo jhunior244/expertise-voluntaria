@@ -47,4 +47,12 @@ export class ConversaService {
             .pipe(map(conversaCriada => Conversa.doBackend(conversaCriada)));
 
     }
+
+    
+    public atualizaDataUltimaVisualizacaoUsuarioLogado(conversa: Conversa): Observable<Conversa> {
+        return this.httpCliente.patch<Conversa>(this.urlPrivada + '/atualizaDataUltimaVisualizacao',
+            conversa.paraBackend(), { headers: this.httpHeader })
+            .pipe(map(conversaAtualizada => Conversa.doBackend(conversaAtualizada)));
+
+    }
 }

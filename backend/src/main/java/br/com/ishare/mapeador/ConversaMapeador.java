@@ -19,6 +19,7 @@ public interface ConversaMapeador {
 
     //    @Mapping(target = "contato.listaContato", ignore = true)
     @Mapping(target = "contato", expression = "java(obj.getContato(usuarioLogado))")
+    @Mapping(target = "novasMensagems", expression = "java(obj.getNovasMensagens(usuarioLogado))")
     ConversaDto paraDto(Conversa obj, UUID usuarioLogado);
 
     Conversa doDto(ConversaDto obj);

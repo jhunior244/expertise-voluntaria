@@ -10,6 +10,8 @@ import java.util.List;
 @Data
 public class UsuarioTelaContatoDto implements Serializable {
 
+    private String id;
+
     private String nome;
 
     private String email;
