@@ -100,7 +100,7 @@ export class UsuarioService {
     }
 
     public adicionaContato(usuario: Usuario): Observable<Usuario> {
-        return this.httpCliente.patch<Usuario>(this.urlPublica + '/adicionaContato', usuario.paraBackend(), { headers: this.httpHeader })
+        return this.httpCliente.patch<Usuario>(this.urlPrivada + '/adicionaContato', usuario.paraBackend(), { headers: this.httpHeader })
             .pipe(map(usuarioCriado => Usuario.doBackend(usuarioCriado) as Usuario));
 
     }
@@ -122,12 +122,18 @@ export class UsuarioService {
     }
 
     public lista(
+        somenteMeusContatos: boolean,
         listaEstado: Estado[],
         listaCidade: Cidade[],
         listaAreaAtuacao: AreaAtuacao[],
         nomeUsuario: string
     ): Observable<IPagina<IUsuario, Usuario>> {
         let httpParams = new HttpParams();
+
+        if (somenteMeusContatos != null){
+            httpParams = httpParams.append(configuracao.parametroSomenteMeusContatos, somenteMeusContatos.toString());
+        }
+
         const listaIdEstado = new Array<string>();
         if (listaEstado) {
             for (const estado of listaEstado) {

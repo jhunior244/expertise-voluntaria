@@ -1,24 +1,22 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Toaster } from 'ngx-toast-notifications';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DialogoAguardeComponent } from 'src/app/componente/dialogo-aguarde/dialogo-aguarde.component';
-import { configuracao } from 'src/app/configuracao';
 import { ErroService } from 'src/app/core/erro/erro.service';
 import { Usuario } from 'src/app/servico/usuario/usuario';
 import { UsuarioService } from 'src/app/servico/usuario/usuario.service';
 import { TelaInicioService } from '../tela-inicio/tela-inicio.service';
 
 @Component({
-  selector: 'app-tela-lista-contatos',
-  templateUrl: './tela-lista-contatos.component.html',
-  styleUrls: ['./tela-lista-contatos.component.css']
+  selector: 'app-tela-pesquisa-usuarios',
+  templateUrl: './tela-pesquisa-usuarios.component.html',
+  styleUrls: ['./tela-pesquisa-usuarios.component.css']
 })
-export class TelaListaContatosComponent implements OnInit, OnDestroy {
-
+export class TelaPesquisaUsuariosComponent implements OnInit, OnDestroy {
   public listaUsuario: Usuario[] = [];
   public nome = new FormControl(null);
 
@@ -41,7 +39,7 @@ export class TelaListaContatosComponent implements OnInit, OnDestroy {
       if (busca) {
         this.dialog.open(DialogoAguardeComponent, DialogoAguardeComponent.configProgressSpinner);
         this.usuarioService.lista(
-          true,
+          false,
           this.telaInicioService.listaEstado,
           this.telaInicioService.listaCidade,
           this.telaInicioService.listaAreaAtuacao,

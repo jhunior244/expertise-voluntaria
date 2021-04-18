@@ -1,10 +1,9 @@
 package br.com.ishare.repositorio.usuario;
 
-import br.com.ishare.entidade.usuario.QConversa;
-import br.com.ishare.entidade.usuario.QMensagem;
 import br.com.ishare.entidade.usuario.QUsuario;
 import br.com.ishare.entidade.usuario.Usuario;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +43,11 @@ public class UsuarioJpaRepositoryCustomImpl implements UsuarioJpaRepositoryCusto
     }
 
     @Override
-    public Page<Usuario> lista(boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
+    public Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
 
         QUsuario usuario = QUsuario.usuario;
+
+        QUsuario qUsuario = new QUsuario("qUsuario");
 
         JPQLQuery<Usuario> query = jpaQueryFactory.selectFrom(usuario);
 
@@ -70,6 +71,16 @@ public class UsuarioJpaRepositoryCustomImpl implements UsuarioJpaRepositoryCusto
 
         if(StringUtils.hasLength(nome)){
             predicado = predicado.and(usuario.nome.containsIgnoreCase(nome));
+        }
+
+        if (!ObjectUtils.isEmpty(somenteMeusContatos)){
+            if(somenteMeusContatos){
+                BooleanExpression ehContato = JPAExpressions.selectOne().from(qUsuario).where(qUsuario.listaContato.any().id.eq(usuario.id).and(qUsuario.email.eq(emailUsuarioLogado))).exists();
+                predicado = predicado.and(ehContato);
+            } else {
+                BooleanExpression naoEhContato = JPAExpressions.selectOne().from(qUsuario).where(qUsuario.listaContato.any().id.eq(usuario.id).and(qUsuario.email.eq(emailUsuarioLogado))).notExists();
+                predicado = predicado.and(naoEhContato);
+            }
         }
 
         query.where(predicado);

@@ -1,6 +1,6 @@
 export const configuracao = {
-    rotaBackendPublico: 'http://187.1.179.75:8080/api/public',
-    rotaBackendPrivado: 'http://187.1.179.75:8080/api/private',
+    rotaBackendPublico: 'http://localhost:8080/api/public',
+    rotaBackendPrivado: 'http://localhost:8080/api/private',
 
     rotaInicio: 'inicio',
     rotaHome: 'home',
@@ -10,13 +10,17 @@ export const configuracao = {
     rotaListaContatos: 'contatos',
     rotaVisualizaContato: 'detalhes-contato',
     rotaCertificados: 'certificados',
+    rotaListaCertificados: 'lista',
+    rotaCadastraCertificados: 'cadastra',
     rotaInterno: 'minha-conta',
+    rotaPesquisaUsuarios: 'busca-contatos',
 
     parametroId: 'id',
     parametroToken: 'token',
     parametroEmail: 'email',
     parametroNome: 'nome',
     parametroUf: 'uf',
+    parametroSomenteMeusContatos: 'somenteMeusContatos',
     parametroListaIdEstado: 'listaIdEstado',
     parametroListaIdCidade: 'listaIdCidade',
     parametroListaIdAreaAtuacao: 'listaIdAreaAtuacao',
@@ -24,6 +28,8 @@ export const configuracao = {
     parametroMostrarApenasMinhasPublicacoes: 'mostrarApenasMinhasPublicacoes',
     parametroIdConversa: 'idConversa',
     parametroIdMensagem: 'idMensagem',
+    parametroUsuarioCriador: 'usuarioCriador',
+
     parametroNumeroPagina: 'numeroPagina',
     parametroTamanhoPagina: 'tamanhoPagina',
 

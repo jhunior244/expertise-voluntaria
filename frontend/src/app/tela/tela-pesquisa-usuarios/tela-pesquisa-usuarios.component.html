@@ -1,0 +1,18 @@
+<div fxFill fxLayout="column" class="py-1">
+    <div style="min-height: 4rem;" fxLayoutAlign="start end">
+        <mat-form-field fxFlex>
+            <mat-label>Nome / Razão social</mat-label>
+            <div fxLayout="row">
+                <input matInput [formControl]="nome">
+                <mat-icon class="ml-1" style="color: #58af9c; font-size: 18px; max-width: 22px; max-height: 22px;">
+                    person_search
+                </mat-icon>
+            </div>
+        </mat-form-field>
+    </div>
+    <div fxLayout="column" style="overflow-y: auto;">
+        <div *ngFor="let usuario of listaUsuario">
+            <app-card-contato [usuario]="usuario"></app-card-contato>
+        </div>
+    </div>
+</div>

@@ -12,10 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.ArrayList;
@@ -28,7 +25,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/private/usuario")
 public class UsuarioProtegidoControlador {
-
 
     @Autowired
     private UsuarioServico usuarioServico;
@@ -48,6 +44,7 @@ public class UsuarioProtegidoControlador {
 
     @GetMapping(path = "/lista")
     public Page<UsuarioTelaContatoDto> lista(@RequestHeader(name="Authorization") String token,
+                                             Boolean somenteMeusContatos,
                                              Long[] listaIdEstado,
                                              Long[] listaIdCidade,
                                              String[] listaIdAreaAtuacao,
@@ -72,8 +69,19 @@ public class UsuarioProtegidoControlador {
 
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
 
-        Page<UsuarioTelaContatoDto> page = usuarioServico.paraUsuarioTelaConsultaDto(usuarioServico.lista(true, usuario.getEmail(), listaIdEstado, listaIdCidade, lista, nome, pagina), usuario);
+        Page<UsuarioTelaContatoDto> page = usuarioServico.paraUsuarioTelaConsultaDto(usuarioServico.lista(somenteMeusContatos,true, usuario.getEmail(), listaIdEstado, listaIdCidade, lista, nome, pagina), usuario);
 
         return page;
+    }
+
+    @PatchMapping(path = "/adicionaContato")
+    public UsuarioTelaContatoDto adicionaContato(@RequestHeader(name="Authorization") String token, @RequestBody UsuarioTelaContatoDto usuarioTelaContatoDto) throws Exception {
+        Usuario usuario = usuarioServico.obtemPorToken(token);
+
+        if(ObjectUtils.isEmpty(usuario)){
+            throw new IShareExcessao("Usuário não encontrado", HttpStatus.BAD_REQUEST);
+        }
+
+        return usuarioServico.adicionaContato(usuarioTelaContatoDto, usuario);
     }
 }

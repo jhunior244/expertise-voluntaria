@@ -1,9 +1,19 @@
 <div style="height: 94vh; width: 100%; position: relative;" fxLayoutAlign="space-between">
     <div fxFlex="17" fxLayout="column" fxLayoutGap="10px" class="py-2" style="height: 100%;" fxLayoutAlign="space-between">
         <div  fxLayout="column" fxLayoutGap="10px">
-            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaPublicacao">Publicações</button>
-            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaContatos">Contatos</button>
-            <button class="background-primary botao-menu-lateral" mat-raised-button>Certificados</button>
+            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaPublicacao" (click)="minimizaSubBotoes()">Publicações</button>
+            <button class="background-primary botao-menu-lateral" mat-raised-button (click)="calculaExibeSubBotoesRede()">
+                <div fxFlex fxLayoutAlign="space-between center">
+                    Rede
+                    <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;" *ngIf="!exibeSubBotoesRede">expand_more</mat-icon>
+                    <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;" *ngIf="exibeSubBotoesRede">expand_less</mat-icon>
+                </div>
+            </button>
+            <div class="ml-2" fxLayout="column" fxLayoutGap="5px" *ngIf="exibeSubBotoesRede">
+                <button style="color: #58af9c; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaContatos">Meus contatos</button>
+                <button style="color: #58af9c; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaPesquisaUsuarios">Buscar novos</button>
+            </div>
+            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaCertificados" (click)="minimizaSubBotoes()">Certificados</button>
         </div>
         <div>
             <app-chat-contatos></app-chat-contatos>
@@ -16,7 +26,7 @@
         <router-outlet></router-outlet>
     </div>
     
-    <div fxFlex="17" class="px-2 py-2" *ngIf="exibeFiltro"  style="" >
+    <div fxFlex="17" class="px-2 py-2" *ngIf="exibeFiltro">
         <div style="width: 100%; height: 100%;" fxLayout="column">
             <app-select-estado 
             [exibeApenasUf]="false" 
@@ -24,10 +34,6 @@
             [multiplo]="true"></app-select-estado>
             
             <app-select-cidade [controladorFormulario]="cidade" [estado]="ufUsuarioLogado" [multiplo]="true"></app-select-cidade>
-            
-            <!-- <mat-slider thumbLabel min="1" max="50" step="1" class="cdk-focused" [value]="25">
-            </mat-slider>
-            <mat-label class="color-primary">Filtrar em um raio de:</mat-label> -->
             
             <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="expertiseNecessaria">
             </app-select-area-atuacao>

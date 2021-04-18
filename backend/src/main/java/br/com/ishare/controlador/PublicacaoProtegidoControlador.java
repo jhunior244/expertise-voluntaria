@@ -1,5 +1,6 @@
 package br.com.ishare.controlador;
 
+import br.com.ishare.core.validacao.IShareExcessao;
 import br.com.ishare.dto.publicacao.PublicacaoDto;
 import br.com.ishare.entidade.usuario.Usuario;
 import br.com.ishare.mapeador.PublicacaoMapeador;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +39,10 @@ public class PublicacaoProtegidoControlador {
     public void cria(@RequestHeader(name="Authorization") String token, @RequestBody PublicacaoDto publicacao) throws JsonProcessingException {
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
+        if(ObjectUtils.isEmpty(usuario)){
+            throw new IShareExcessao("Usuário não encontrado", HttpStatus.BAD_REQUEST);
+        }
+
         publicacaoServico.cria(publicacaoMapeador.doDto(publicacao), usuario);
     }
 

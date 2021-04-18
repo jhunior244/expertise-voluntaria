@@ -137,4 +137,8 @@ public class Usuario implements UserDetails {
         }
         return this.getEndereco().getCidade().getEstado().getNome();
     }
+
+    public Boolean ehOngOsc() {
+        return getTipoUsuario() != null && getTipoUsuario().ehOngOsc();
+    }
 }

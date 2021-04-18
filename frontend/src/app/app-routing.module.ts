@@ -9,6 +9,9 @@ import { configuracao } from './configuracao';
 import { AuthGuardTelaInicio, TelaInicioComponent } from './tela/tela-inicio/tela-inicio.component';
 import { TelaPaginaInicialSiteComponent } from './tela/tela-pagina-inicial-site/tela-pagina-inicial-site.component';
 import { TelaVisualizaPerfilUsuarioComponent } from './tela/tela-visualiza-perfil-usuario/tela-visualiza-perfil-usuario.component';
+import { ListaCertificadosComponent } from './componente/certificados/lista-certificados/lista-certificados.component';
+import { CriaCertificadoComponent } from './componente/certificados/cria-certificado/cria-certificado.component';
+import { TelaPesquisaUsuariosComponent } from './tela/tela-pesquisa-usuarios/tela-pesquisa-usuarios.component';
 
 const routes: Routes = [
 
@@ -35,11 +38,27 @@ const routes: Routes = [
         path: configuracao.rotaListaContatos,
         component: TelaListaContatosComponent
       }, {
+        path: configuracao.rotaPesquisaUsuarios,
+        component: TelaPesquisaUsuariosComponent
+      }, {
         path: configuracao.rotaVisualizaContato + '/:' + configuracao.parametroId,
         component: TelaVisualizaPerfilUsuarioComponent
       }, {
         path: configuracao.rotaCertificados,
-        component: TelaCertificadosComponent
+        component: TelaCertificadosComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: configuracao.rotaListaCertificados,
+            pathMatch: 'full'
+          }, {
+            path: configuracao.rotaListaCertificados,
+            component: ListaCertificadosComponent
+          }, {
+            path: configuracao.rotaCadastraCertificados,
+            component: CriaCertificadoComponent
+          }
+        ]
       }
     ]
   }, {

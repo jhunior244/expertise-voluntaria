@@ -19,7 +19,7 @@ public interface IUsuarioServico {
 
     void cria(UsuarioDto usuario) throws Exception;
 
-    Page<Usuario> lista(boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina);
+    Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina);
 
     Page<UsuarioTelaContatoDto> paraUsuarioTelaConsultaDto(Page<Usuario> paginaConteudo, Usuario usuario);
 

@@ -64,6 +64,11 @@ import { MensagemService } from './servico/usuario/mensagem.service';
 import { ListaChatMinimizadoComponent } from './componente/lista-chat-minimizado/lista-chat-minimizado.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { ConversaChatComponent } from './componente/conversa-chat/conversa-chat.component';
+import { ListaCertificadosComponent } from './componente/certificados/lista-certificados/lista-certificados.component';
+import { CriaCertificadoComponent } from './componente/certificados/cria-certificado/cria-certificado.component';
+import { CertificadoService } from './servico/certificado/certificado.service';
+import { CardCertificadoComponent } from './componente/certificados/card-certificado/card-certificado.component';
+import { TelaPesquisaUsuariosComponent } from './tela/tela-pesquisa-usuarios/tela-pesquisa-usuarios.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -91,7 +96,11 @@ import { ConversaChatComponent } from './componente/conversa-chat/conversa-chat.
     ChatJanelasConversasComponent,
     JanelaChatComponent,
     ListaChatMinimizadoComponent,
-    ConversaChatComponent
+    ConversaChatComponent,
+    ListaCertificadosComponent,
+    CriaCertificadoComponent,
+    CardCertificadoComponent,
+    TelaPesquisaUsuariosComponent
   ],
   imports: [
     BrowserModule,
@@ -146,7 +155,8 @@ import { ConversaChatComponent } from './componente/conversa-chat/conversa-chat.
     TipoPublicacaoService,
     TelaInicioService,
     ConversaService,
-    MensagemService
+    MensagemService,
+    CertificadoService
   ],
   bootstrap: [AppComponent]
 })

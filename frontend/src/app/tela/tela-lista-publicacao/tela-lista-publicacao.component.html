@@ -7,7 +7,7 @@
     </div>
     <div fxFlex="100" fxLayoutAlign="center" style="overflow-y: auto;">
         <app-lista-publicacao  *ngIf="listaPublicacao?.length > 0" [listaPublicacao]="listaPublicacao" fxFlex></app-lista-publicacao>
-        <div *ngIf="listaPublicacao == null || listaPublicacao?.length === 0">
+        <div *ngIf="listaPublicacao && listaPublicacao.length === 0">
             <span>Nenhuma publicação encontrada</span>
         </div>
     </div>

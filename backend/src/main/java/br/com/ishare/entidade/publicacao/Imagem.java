@@ -1,5 +1,6 @@
 package br.com.ishare.entidade.publicacao;
 
+import br.com.ishare.entidade.usuario.Certificado;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -33,6 +34,9 @@ public class Imagem {
 
     @ManyToOne
     private Publicacao publicacao;
+
+    @OneToOne(mappedBy = "imagem")
+    private Certificado certificado;
 
     private byte[] descomprimeBytes() {
         if(getConteudo() == null){

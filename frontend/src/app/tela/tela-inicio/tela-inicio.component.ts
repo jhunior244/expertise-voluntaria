@@ -47,6 +47,7 @@ export class TelaInicioComponent implements OnInit {
   public exibeFiltro = true;
   public exibeTodosUsuario = false;
   private subscricao = new Subscription();
+  public exibeSubBotoesRede = false;
 
   constructor(
     public dialog: MatDialog,
@@ -110,6 +111,14 @@ export class TelaInicioComponent implements OnInit {
 
   anunciaClickPesquisar(): void {
     this.telaInicioService.anunciaNovaPesquisa(true);
+  }
+
+  calculaExibeSubBotoesRede(){
+    this.exibeSubBotoesRede = !this.exibeSubBotoesRede;
+  }
+
+  minimizaSubBotoes(){
+    this.exibeSubBotoesRede = false;
   }
 }
 

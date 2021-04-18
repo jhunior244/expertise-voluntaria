@@ -106,8 +106,8 @@ public class UsuarioServico implements IUsuarioServico {
     }
 
     @Override
-    public Page<Usuario> lista(boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
-        return usuarioJpaRepository.lista(ignoraUsuarioLogado, emailUsuarioLogado, listaIdEstado, listaIdCidade, listaIdAreaAtuacao, nome, pagina);
+    public Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
+        return usuarioJpaRepository.lista(somenteMeusContatos, ignoraUsuarioLogado, emailUsuarioLogado, listaIdEstado, listaIdCidade, listaIdAreaAtuacao, nome, pagina);
     }
 
     @Override

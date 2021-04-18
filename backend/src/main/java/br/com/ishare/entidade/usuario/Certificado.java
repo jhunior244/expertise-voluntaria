@@ -1,5 +1,6 @@
 package br.com.ishare.entidade.usuario;
 
+import br.com.ishare.entidade.publicacao.Imagem;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -19,11 +20,13 @@ public class Certificado {
     private UUID id;
 
     @Column(length = 3000, nullable = false)
-    private String conteudo;
-
+    private Integer diasTrabalho;
 
     @Column(nullable = false)
     private ZonedDateTime dataCriacao;
+
+    @OneToOne
+    private Imagem imagem;
 
     @ManyToOne(optional = false)
     private Usuario usuario;

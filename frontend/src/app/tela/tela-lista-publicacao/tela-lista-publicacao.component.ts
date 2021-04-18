@@ -1,14 +1,14 @@
-import { forkJoin, Subscription } from 'rxjs';
-import { TelaInicioService } from './../tela-inicio/tela-inicio.service';
-import { ErroService } from './../../core/erro/erro.service';
-import { PublicacaoService } from './../../servico/publicacao/publicacao.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Toaster } from 'ngx-toast-notifications';
+import { Subscription } from 'rxjs';
+import { DialogoAguardeComponent } from 'src/app/componente/dialogo-aguarde/dialogo-aguarde.component';
 import { NovaPublicacaoComponent } from 'src/app/componente/publicacao/nova-publicacao/nova-publicacao.component';
 import { Publicacao } from 'src/app/servico/publicacao/publicacao';
-import { Toast, Toaster } from 'ngx-toast-notifications';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DialogoAguardeComponent } from 'src/app/componente/dialogo-aguarde/dialogo-aguarde.component';
+import { ErroService } from './../../core/erro/erro.service';
+import { PublicacaoService } from './../../servico/publicacao/publicacao.service';
+import { TelaInicioService } from './../tela-inicio/tela-inicio.service';
 
 @Component({
   selector: 'app-tela-lista-publicacao',
@@ -17,7 +17,7 @@ import { DialogoAguardeComponent } from 'src/app/componente/dialogo-aguarde/dial
 })
 export class TelaListaPublicacaoComponent implements OnInit, OnDestroy {
 
-  public listaPublicacao: Publicacao[] = [];
+  public listaPublicacao: Publicacao[];
 
   private subscricao = new Subscription();
 
