@@ -1,0 +1,11 @@
+mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Djava.base/jdk.internal.loader=ALL-UNNAMED -Djdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED"
+
+<plugin>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-maven-plugin</artifactId>
+	<configuration>
+		<jvmArguments>
+			--add-opens java.base/jdk.internal.loader=ALL-UNNAMED --add-opens jdk.zipfs/jdk.nio.zipfs=ALL-UNNAMED
+		</jvmArguments>
+	</configuration>
+</plugin>
