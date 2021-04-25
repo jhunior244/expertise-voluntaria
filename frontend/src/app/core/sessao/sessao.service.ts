@@ -25,12 +25,20 @@ export class SessaoService {
         this.usuarioService.setEmail(email);
     }
 
+    setTipoUsuario(id: number): void {
+        this.usuarioService.setTipoUsuario(id);
+    }
+
     getUf(): string {
         return this.usuarioService.getUf();
     }
 
     getCidade(): string {
         return this.usuarioService.getCidade();
+    }
+
+    getTipoUsuario(): string {
+        return this.usuarioService.getTipoUsuario();
     }
 
     setToken(token: string): void {

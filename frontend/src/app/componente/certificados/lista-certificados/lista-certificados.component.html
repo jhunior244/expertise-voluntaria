@@ -1,9 +1,12 @@
 <div fxLayout="column" fxFill class="py-1">
     <div  fxLayoutAlign="center center" style="min-height: 4rem;">
-        <button mat-raised-button>
-            <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">add_moderator</mat-icon>
+        <button *ngIf="usuarioEhOngOsc" mat-raised-button (click)="novoCertificado()">
+            <mat-icon class="mr-1" 
+            style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;"
+            >add_moderator</mat-icon>
             Emitir certificado
         </button>
+        <share-buttons theme="modern-light"></share-buttons>
     </div>
     <div fxFlex="100" fxLayoutAlign="center" style="overflow-y: auto;">
         <div *ngIf="listaCertificado?.length > 0"  style="overflow-y: auto;">

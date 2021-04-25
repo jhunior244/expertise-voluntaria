@@ -30,6 +30,7 @@ export class AuthService {
         this.sessaoService.setUf(usuarioRetornado.uf);
         this.sessaoService.setCidade(usuarioRetornado.cidade);
         this.sessaoService.setEmail(usuarioRetornado.email);
+        this.sessaoService.setTipoUsuario(usuarioRetornado.tipoUsuario?.id);
       }));
   }
 

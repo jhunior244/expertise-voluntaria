@@ -19,11 +19,14 @@ public class Certificado {
     @Type(type = "uuid-char")
     private UUID id;
 
-    @Column(length = 3000, nullable = false)
-    private Integer diasTrabalho;
+    @Column(nullable = false)
+    private String tempoTrabalhado;
 
     @Column(nullable = false)
     private ZonedDateTime dataCriacao;
+
+    @ManyToOne(optional = false)
+    private AreaAtuacao areaAtuacao;
 
     @OneToOne
     private Imagem imagem;

@@ -15,6 +15,7 @@ const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
 const ufChave = 'uf_user';
 const cidadeChave = 'city_user';
 const emailChave = 'email_user';
+const tipoUsuario = 'type_user';
 
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
@@ -49,6 +50,10 @@ export class UsuarioService {
         window.localStorage.setItem(emailChave, email);
     }
 
+    setTipoUsuario(id: number): void {
+        window.localStorage.setItem(tipoUsuario, id.toString());
+    }
+
     getUf(): string {
         return window.localStorage.getItem(ufChave);
     }
@@ -59,6 +64,10 @@ export class UsuarioService {
 
     getEmail(): string {
         return window.localStorage.getItem(emailChave);
+    }
+
+    getTipoUsuario(): string {
+        return window.localStorage.getItem(tipoUsuario);
     }
 
     setUsuarioLogadoSistema(nome: string): void {

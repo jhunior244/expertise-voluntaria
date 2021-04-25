@@ -18,7 +18,7 @@
                     <mat-form-field style="width: 100%;">
                         <mat-label>Email</mat-label>
                         <input type="email" matInput [formControl]="email" [errorStateMatcher]="emailMatcher"
-                            placeholder="Ex. ishare@exemplo.com">
+                            placeholder="Ex: expertise.voluntaria@exemplo.com">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="email.hasError('email') && !email.hasError('required')">
                             E-mail inválido

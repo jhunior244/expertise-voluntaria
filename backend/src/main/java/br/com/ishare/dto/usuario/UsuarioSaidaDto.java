@@ -19,4 +19,6 @@ public class UsuarioSaidaDto implements Serializable {
     private String uf;
 
     private String cidade;
+
+    private TipoUsuarioDto tipoUsuario;
 }

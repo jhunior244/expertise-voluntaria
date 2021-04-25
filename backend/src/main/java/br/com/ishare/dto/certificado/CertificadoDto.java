@@ -1,6 +1,7 @@
 package br.com.ishare.dto.certificado;
 
 import br.com.ishare.dto.publicacao.ImagemDto;
+import br.com.ishare.dto.usuario.AreaAtuacaoDto;
 import br.com.ishare.dto.usuario.UsuarioSimplesDto;
 import lombok.Data;
 
@@ -15,13 +16,15 @@ public class CertificadoDto implements Serializable {
 
     private String conteudo;
 
-    private Integer diasTrabalho;
+    private String tempoTrabalhado;
 
     private ZonedDateTime dataCriacao;
 
     private UsuarioSimplesDto usuario;
 
     private UsuarioSimplesDto usuarioResponsavelCriacao;
+
+    private AreaAtuacaoDto areaAtuacao;
 
     private ImagemDto imagem;
 }

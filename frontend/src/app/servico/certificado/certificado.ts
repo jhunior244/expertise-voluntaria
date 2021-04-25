@@ -1,11 +1,13 @@
+import { AreaAtuacao, IAreaAtuacao } from './../area-atuacao/area-atuacao';
 import * as moment from 'moment';
 import { IImagem, Imagem } from '../imagem/imagem';
 import { IUsuario, Usuario } from '../usuario/usuario';
 
 export class ICertificado {
     id: string;
-    diasTrabalho: number;
+    tempoTrabalhado: string;
     dataCriacao: moment.Moment;
+    areaAtuacao: IAreaAtuacao;
     imagem: IImagem;
     usuario: IUsuario;
     usuarioResponsavelCriacao: IUsuario;
@@ -13,8 +15,9 @@ export class ICertificado {
 
 export class Certificado {
     id: string;
-    diasTrabalho: number;
+    tempoTrabalhado: string;
     dataCriacao: moment.Moment;
+    areaAtuacao: AreaAtuacao;
     imagem: Imagem;
     usuario: Usuario;
     usuarioResponsavelCriacao: Usuario;
@@ -36,6 +39,7 @@ export class Certificado {
 
         usuario = Object.assign(usuario, response, {
             dataCriacao: (response.dataCriacao) ? moment(response.dataCriacao) : null,
+            areaAtuacao: (response.areaAtuacao) ? AreaAtuacao.doBackend(response.areaAtuacao) : null,
             imagem: (response.imagem) ? Imagem.doBackend(response.imagem) : null,
             usuario: (response.usuario) ? Usuario.doBackend(response.usuario) : null,
             usuarioResponsavelCriacao: (response.usuarioResponsavelCriacao) ? Usuario.doBackend(response.usuarioResponsavelCriacao) : null,
@@ -46,6 +50,7 @@ export class Certificado {
     paraBackend(): ICertificado {
         const certificado = Object.assign(Object.create(Certificado.prototype), this, {
             dataCriacao: (this.dataCriacao) ? moment(this.dataCriacao).toDate().toISOString() : null,
+            areaAtuacao: (this.areaAtuacao) ? this.areaAtuacao.paraBackend() : null,
             imagem: (this.imagem) ? this.imagem.paraBackend() : null,
             usuario: (this.usuario) ? this.usuario.paraBackend() : null,
             usuarioResponsavelCriacao: (this.usuarioResponsavelCriacao) ? this.usuarioResponsavelCriacao.paraBackend() : null,

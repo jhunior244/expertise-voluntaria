@@ -47,6 +47,7 @@ public class CertificadoServico implements ICertificadoServico {
 
     @Override
     public Certificado cria(Certificado certificado, Usuario usuarioLogado) throws IOException, OfficeException {
+
         Usuario usuarioVoluntario = usuarioServico.obtem(certificado.getUsuario().getId());
 
         certificado.setUsuarioResponsavelCriacao(usuarioLogado);
@@ -56,9 +57,8 @@ public class CertificadoServico implements ICertificadoServico {
         Certificado certificadoBanco =  certificadoJpaRepository.save(certificado);
 
         String nome = UUID.randomUUID().toString() + ".png";
-        byte[] content = criaCertificado(usuarioLogado.getNome(), usuarioVoluntario.getNome(), certificado.getDiasTrabalho().toString(), certificadoBanco.getId().toString());
-        MultipartFile result = new MockMultipartFile(nome,
-                nome, "image/png", content);
+        byte[] content = criaCertificado(usuarioLogado.getNome(), usuarioVoluntario.getNome(), certificado.getTempoTrabalhado(), certificadoBanco.getId().toString(), certificado.getAreaAtuacao().getNome());
+        MultipartFile result = new MockMultipartFile(nome, nome, "image/png", content);
 
         Imagem imagemBanco = imagemServico.cria(result);
         certificadoBanco.setImagem(imagemBanco);
@@ -67,11 +67,16 @@ public class CertificadoServico implements ICertificadoServico {
     }
 
     @Override
+    public Certificado obtem(UUID id) {
+        return certificadoJpaRepository.getOne(id);
+    }
+
+    @Override
     public Page<Certificado> lista(Boolean ehOngOsc, String usuarioCriador, Usuario usuarioLogado, Pageable pagina){
         return certificadoJpaRepository.lista(ehOngOsc, usuarioCriador, usuarioLogado, pagina);
     }
 
-    private byte[] criaCertificado(String instituicao, String nomeSolidario, String numeroDias, String idCertificado) throws IOException, OfficeException {
+    private byte[] criaCertificado(String instituicao, String nomeSolidario, String numeroDias, String idCertificado, String expertise) throws IOException, OfficeException {
         String nomeTemplate = "templates/template_certificado.docx";
 
         InputStream certificadoInputStream = new ClassPathResource(nomeTemplate).getInputStream();
@@ -85,6 +90,7 @@ public class CertificadoServico implements ICertificadoServico {
         params.put("nome_solidario", nomeSolidario);
         params.put("numero_dias", numeroDias);
         params.put("id_certificado", idCertificado);
+        params.put("expertise", expertise);
         DocxTemplater docxTemplater = new DocxTemplater(testeFile);
 
         String caminhoArquivo = "/tmp" + "/certificado_" + UUID.randomUUID().toString() + ".docx";

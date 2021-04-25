@@ -23,7 +23,6 @@ export class NovaPublicacaoComponent implements OnInit {
   public formGroup: FormGroup;
   public alcance = 25;
   @ViewChild('inputArquivo') inputArquivo: ElementRef;
-  public teste: any;
 
   constructor(
     public dialogRef: MatDialogRef<NovaPublicacaoComponent>,
@@ -31,18 +30,15 @@ export class NovaPublicacaoComponent implements OnInit {
     private erroService: ErroService,
     private imagemService: ImagemService,
     private toaster: Toaster,
-    private publicacaoService: PublicacaoService,
-    private sanitizer: DomSanitizer
+    private publicacaoService: PublicacaoService
   ) {
     this.formGroup = this.formBuilder.group({
       descricao: [null, Validators.required],
       tipoPublicacao: [null, Validators.required],
-      // raioAlcance: [25],
       listaAreaAtuacao: [null]
     });
   }
   get descricao(): FormControl { return this.formGroup.controls.descricao as FormControl; }
-  // get raioAlcance(): FormControl { return this.formGroup.controls.raioAlcance as FormControl; }
   get listaAreaAtuacao(): FormControl { return this.formGroup.controls.listaAreaAtuacao as FormControl; }
   get tipoPublicacao(): FormControl { return this.formGroup.controls.tipoPublicacao as FormControl; }
 
@@ -59,7 +55,6 @@ export class NovaPublicacaoComponent implements OnInit {
 
   formularioParaEntidade(): void {
     this.publicacao.descricao = this.descricao.value;
-    // this.publicacao.raioAlcance = this.raioAlcance.value;
     this.publicacao.listaImagem = new Array();
     if (this.imagemCarregada) {
       this.publicacao.listaImagem.push(this.imagemCarregada);

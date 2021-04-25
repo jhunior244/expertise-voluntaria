@@ -1,1 +1,31 @@
-<p>cria-certificado works!</p>
+<div fxFill fxLayout="column" style="position: relative;">
+    <div style="position: relative;">
+        <span class="color-primary" mat-dialog-title>Emissão de certificado</span>
+        <button (click)="fechar()" class="botao-fechar"
+            style="top: 5px; right: 0; position: absolute; border: none; background-color: transparent;"
+            aria-label="Cancelar">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div mat-dialog-content>
+        <div>
+            <form [formGroup]="formGroup" fxLayout="column" style="height: 100%;" fxLayoutGap="15px">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Tempo trabalhado</mat-label>
+                    <input type="text" matInput [formControl]="totalTrabalhado" placeholder="Ex: 4 horas ou 2 dias">
+                </mat-form-field>
+
+                <app-select-meus-contatos [multiplo]="false" [reservadorEspaco]="'Usuario responsável pelo trabalho'"
+                    [controladorFormulario]="usuarioResposavelServicoPrestado"></app-select-meus-contatos>
+
+                <app-select-area-atuacao [multiplo]="false" [controladorFormulario]="expertiseExercida"
+                    [reservadorEspaco]="'Expertises exercida no trabalho.'"></app-select-area-atuacao>
+            </form>
+        </div>
+    </div>
+    <div mat-dialog-actions class="mt-1" fxLayoutAlign="center center"
+        style="position: absolute; bottom: 0; width: 100%;">
+        <button [disabled]="!formGroup.valid" (click)="cria()" fxFlex
+            class="botao-cadastrar fonte-texto background-primary" mat-button>GERAR CERTIFICADO</button>
+    </div>
+</div>

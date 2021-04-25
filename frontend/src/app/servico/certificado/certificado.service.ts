@@ -8,7 +8,8 @@ import { Certificado, ICertificado } from './certificado';
 
 @Injectable({ providedIn: 'root' })
 export class CertificadoService {
-    private url = configuracao.rotaBackendPrivado + '/certificado';
+    private urlPrivada = configuracao.rotaBackendPrivado + '/certificado';
+    private urlPublica = configuracao.rotaBackendPublico + '/certificado';
     private httpHeader = new HttpHeaders();
 
     constructor(
@@ -18,7 +19,7 @@ export class CertificadoService {
     }
 
     public cria(certificado: Certificado): Observable<Certificado> {
-        return this.httpCliente.post<Certificado>(this.url + '/cria',
+        return this.httpCliente.post<Certificado>(this.urlPrivada + '/cria',
             certificado.paraBackend(), { headers: this.httpHeader })
             .pipe(map(certificadoCriada => Certificado.doBackend(certificadoCriada)));
 
@@ -33,8 +34,18 @@ export class CertificadoService {
             httpParams = httpParams.append(configuracao.parametroUsuarioCriador, usuarioCriador);
         }
 
-        return this.httpCliente.get<IPagina<ICertificado, Certificado>>(this.url + '/lista', { params: httpParams })
+        return this.httpCliente.get<IPagina<ICertificado, Certificado>>(this.urlPrivada + '/lista', { params: httpParams })
             .pipe(map((pagina => this.obtemPagina(pagina))));
+    }
+
+    public obtem(id: string): Observable<Certificado> {
+
+        let httpParams = new HttpParams();
+
+        httpParams = httpParams.append(configuracao.parametroId, id);
+
+        return this.httpCliente.get<Certificado>(this.urlPublica + '/obtem', { params: httpParams })
+            .pipe(map((certificado => Certificado.doBackend(certificado))));
     }
 
     private obtemPagina(pagina: IPagina<ICertificado, Certificado>): IPagina<ICertificado, Certificado> {

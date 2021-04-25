@@ -5,6 +5,7 @@ import br.com.ishare.core.validacao.IShareExcessao;
 import br.com.ishare.dto.usuario.UsuarioDto;
 import br.com.ishare.dto.usuario.UsuarioSaidaDto;
 import br.com.ishare.entidade.usuario.Usuario;
+import br.com.ishare.mapeador.TipoUsuarioMapeador;
 import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class AutenticacaoPublicoControlador {
     private TokenService tokenService;
 
     @Autowired
+    private TipoUsuarioMapeador tipoUsuarioMapeador;
+
+    @Autowired
     private UsuarioJpaRepository usuarioJpaRepository;
 
     @PostMapping(path = "/login")
@@ -47,6 +51,7 @@ public class AutenticacaoPublicoControlador {
             usuarioSaidaDto.setUf(usuarioLogado.getUf());
             usuarioSaidaDto.setCidade(usuarioLogado.getCidade());
             usuarioSaidaDto.setEmail(usuarioLogado.getEmail());
+            usuarioSaidaDto.setTipoUsuario(tipoUsuarioMapeador.paraDto(usuarioLogado.getTipoUsuario()));
             usuarioJpaRepository.save(usuarioLogado);
             return ResponseEntity.ok(usuarioSaidaDto);
         } catch (AuthenticationException e){

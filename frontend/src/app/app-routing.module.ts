@@ -1,3 +1,4 @@
+import { TelaVisualizaCertificadoComponent } from './componente/tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
 import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certificados.component';
 import { TelaListaContatosComponent } from './tela/tela-lista-contatos/tela-lista-contatos.component';
 import { TelaListaPublicacaoComponent } from './tela/tela-lista-publicacao/tela-lista-publicacao.component';
@@ -21,8 +22,10 @@ const routes: Routes = [
   }, {
     path: configuracao.rotaCadastro,
     component: TelaCadastroComponent
-  },
-  {
+  }, {
+    path: configuracao.rotaVisualizaCertificado + '/:' + configuracao.parametroId,
+    component: TelaVisualizaCertificadoComponent
+  }, {
     path: configuracao.rotaInterno,
     component: TelaInicioComponent,
     canActivate: [AuthGuardTelaInicio],

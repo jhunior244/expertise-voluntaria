@@ -69,6 +69,22 @@ import { CriaCertificadoComponent } from './componente/certificados/cria-certifi
 import { CertificadoService } from './servico/certificado/certificado.service';
 import { CardCertificadoComponent } from './componente/certificados/card-certificado/card-certificado.component';
 import { TelaPesquisaUsuariosComponent } from './tela/tela-pesquisa-usuarios/tela-pesquisa-usuarios.component';
+import { SelectMeusContatosComponent } from './componente/select-meus-contatos/select-meus-contatos.component';
+
+import { ShareButtonsConfig, ShareModule } from "ngx-sharebuttons";
+import { ShareButtonsModule } from "ngx-sharebuttons/buttons";
+import { ShareIconsModule } from "ngx-sharebuttons/icons";
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TelaVisualizaCertificadoComponent } from './componente/tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
+
+const customConfig: ShareButtonsConfig = {
+  include: [
+    'linkedin',
+  ],
+  gaTracking: true,
+  theme: "default"
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,7 +116,9 @@ import { TelaPesquisaUsuariosComponent } from './tela/tela-pesquisa-usuarios/tel
     ListaCertificadosComponent,
     CriaCertificadoComponent,
     CardCertificadoComponent,
-    TelaPesquisaUsuariosComponent
+    TelaPesquisaUsuariosComponent,
+    SelectMeusContatosComponent,
+    TelaVisualizaCertificadoComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +144,11 @@ import { TelaPesquisaUsuariosComponent } from './tela/tela-pesquisa-usuarios/tel
     MatChipsModule,
     MomentModule,
     NgChatModule,
-    MatBadgeModule
+    MatBadgeModule,
+    ShareButtonsModule,
+    ShareIconsModule,
+    ShareModule.withConfig(customConfig),
+    FontAwesomeModule
   ],
   providers: [
     {

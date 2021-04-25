@@ -37,14 +37,14 @@ public class CertificadoProtegidoControlador {
     private CertificadoMapeador certificadoMapeador;
 
     @PostMapping(path = "/cria")
-    public Certificado cria(@RequestHeader(name="Authorization") String token, @RequestBody CertificadoDto certificadoDto) throws IOException, OfficeException {
+    public CertificadoDto cria(@RequestHeader(name="Authorization") String token, @RequestBody CertificadoDto certificadoDto) throws IOException, OfficeException {
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
         if(ObjectUtils.isEmpty(usuario)){
             throw new IShareExcessao("Usuário não encontrado", HttpStatus.BAD_REQUEST);
         }
 
-        return certificadoServico.cria(certificadoMapeador.doDto(certificadoDto), usuario);
+        return certificadoMapeador.paraDto(certificadoServico.cria(certificadoMapeador.doDto(certificadoDto), usuario));
     }
 
     @GetMapping(path = "/lista")

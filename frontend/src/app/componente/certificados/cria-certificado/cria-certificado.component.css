@@ -1,0 +1,21 @@
+.botao-cadastrar {
+    color: #ffffff;
+    border-radius: 0.6em;
+    border: 1px solid white;
+    margin-top: 1em;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .botao-cadastrar:focus {
+    outline: none;
+  }
+  .botao-cadastrar:disabled {
+    background-color: darkgrey;
+  }
+  
+  .botao-fechar {
+    color: #58af9c;
+  }
+  .botao-fechar:focus {
+    outline: none;
+  }
