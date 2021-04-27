@@ -1,4 +1,4 @@
-import { TelaVisualizaCertificadoComponent } from './componente/tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
+import { TelaVisualizaCertificadoComponent } from './tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
 import { TelaCertificadosComponent } from './tela/tela-certificados/tela-certificados.component';
 import { TelaListaContatosComponent } from './tela/tela-lista-contatos/tela-lista-contatos.component';
 import { TelaListaPublicacaoComponent } from './tela/tela-lista-publicacao/tela-lista-publicacao.component';

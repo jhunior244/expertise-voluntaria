@@ -1,7 +1,24 @@
 <mat-card class="mb-2">
     <div fxLayoutAlign="space-between center" fxLayout="row wrap">
         <div *ngIf="certificado?.imagem">
-            <img width="100%" [src]="certificado.imagem.conteudo">
+            <img width="100%" [src]="certificado.imagem?.conteudo">
+        </div>
+        <div fxLayoutAlign="space-around center" style="padding-top: 1rem;" fxFlex>
+            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Linkedin" shareButton="linkedin" class="botao-enviar"
+                fxFlex="45" mat-button
+                [url]="url">
+                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
+                </mat-icon>
+                <span>Linkedin</span>
+            </button>
+
+            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Facebook" shareButton="facebook" class="botao-enviar"
+                fxFlex="45" mat-button
+                [url]="url">
+                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
+                </mat-icon>
+                <span>Facebook</span>
+            </button>
         </div>
     </div>
 </mat-card>

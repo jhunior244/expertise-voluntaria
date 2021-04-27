@@ -7,6 +7,7 @@ import { Certificado } from 'src/app/servico/certificado/certificado';
 import { MatDialog } from '@angular/material/dialog';
 import { CriaCertificadoComponent } from '../cria-certificado/cria-certificado.component';
 import { DialogoAguardeComponent } from '../../dialogo-aguarde/dialogo-aguarde.component';
+import { TelaInicioService } from 'src/app/tela/tela-inicio/tela-inicio.service';
 
 @Component({
   selector: 'app-lista-certificados',
@@ -20,12 +21,14 @@ export class ListaCertificadosComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private certificadoService: CertificadoService,
-    private sessaoService: SessaoService
+    private sessaoService: SessaoService,
+    private telaInicioService: TelaInicioService
   ) {
-      this.tipoUsuarioLogado = Number.parseInt(this.sessaoService.getTipoUsuario(), 2);
+      this.tipoUsuarioLogado = Number.parseInt(this.sessaoService.getTipoUsuario());
+      this.telaInicioService.anunciaExibeFiltroTodasPublicacoes(false);
    }
 
-  get usuarioEhOngOsc(): boolean { return this.tipoUsuarioLogado === configuracao.tipoUsuario.ONG_OSC;}
+  get usuarioEhOngOsc(): boolean { return true;}
 
   ngOnInit(): void {
     this.certificadoService.lista(null).subscribe(retorno => {
@@ -46,7 +49,6 @@ export class ListaCertificadosComponent implements OnInit {
       if (dialogRef.componentInstance.certificado?.id){
         this.listaCertificado.unshift(dialogRef.componentInstance.certificado);
       }
-      console.log(dialogRef.componentInstance.certificado);
       this.dialog.closeAll();
     });
   }

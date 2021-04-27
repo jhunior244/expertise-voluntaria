@@ -76,14 +76,14 @@ import { ShareButtonsModule } from "ngx-sharebuttons/buttons";
 import { ShareIconsModule } from "ngx-sharebuttons/icons";
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TelaVisualizaCertificadoComponent } from './componente/tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
+import { TelaVisualizaCertificadoComponent } from './tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
 
 const customConfig: ShareButtonsConfig = {
   include: [
     'linkedin',
   ],
   gaTracking: true,
-  theme: "default"
+  // theme: "default"
 };
 @NgModule({
   declarations: [

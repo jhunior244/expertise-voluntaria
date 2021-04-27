@@ -1,5 +1,5 @@
 import { ActivatedRoute } from '@angular/router';
-import { CertificadoService } from './../../../servico/certificado/certificado.service';
+import { CertificadoService } from '../../servico/certificado/certificado.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { configuracao } from 'src/app/configuracao';
