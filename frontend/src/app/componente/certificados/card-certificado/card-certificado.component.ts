@@ -19,7 +19,6 @@ export class CardCertificadoComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges){
     if (changes.certificado.currentValue){
       this.url += '/' + this.certificado.id;
-      console.log(this.url);
     }
   }
 
