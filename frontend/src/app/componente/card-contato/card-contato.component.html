@@ -27,10 +27,10 @@
             </mat-icon>
             Enviar mensagem
         </button>
-        <button class="botao-enviar" fxFlex="46" mat-button fxLayoutAlign="center center">
+        <a [href]="'mailto:' + usuario?.email" style="text-decoration: none;" class="botao-enviar" fxFlex="46" mat-button fxLayoutAlign="center center">
             <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">email
             </mat-icon>
             <span>Enviar e-mail</span>
-        </button>
+        </a>
     </div>
 </mat-card>

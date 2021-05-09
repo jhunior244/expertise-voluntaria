@@ -59,4 +59,9 @@ public class PublicacaoServico implements IPublicacaoServico {
     public Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, Long mostrarApenasMinhasPublicacoes, UUID idUsuarioLogado, Pageable pagina){
         return publicacaoJpaRepository.lista(listaIdEstado, listaIdCidade, listaIdAreaAtuacao, listaIdTipoUsuario, mostrarApenasMinhasPublicacoes, idUsuarioLogado, pagina);
     }
+
+    @Override
+    public Page<Publicacao> listaParaSelect(UUID idUsuarioLogado, UUID idContato, Pageable pagina){
+        return publicacaoJpaRepository.listaParaSelect(idUsuarioLogado, idContato, pagina);
+    }
 }

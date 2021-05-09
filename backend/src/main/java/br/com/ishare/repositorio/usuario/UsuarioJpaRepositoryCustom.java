@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface UsuarioJpaRepositoryCustom {
     List<Usuario> listaPorExpertisesPublicacao(List<UUID> listaIdAreaAtuacao);
 
-    Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina);
+    Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, String nome, Pageable pagina);
 
     Boolean usuarioEhContato(UUID usuario, UUID possivelContato);
 }

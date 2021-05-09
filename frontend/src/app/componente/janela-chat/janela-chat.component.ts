@@ -62,7 +62,7 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.dialog.closeAll();
-          this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     }, 5000);
@@ -75,7 +75,7 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
       }, (erro: HttpErrorResponse) => {
         console.log(erro);
         this.dialog.closeAll();
-        this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+        this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
       });
 
 
@@ -87,7 +87,7 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
       }, (erro: HttpErrorResponse) => {
         console.log(erro);
         this.dialog.closeAll();
-        this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+        this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
       });
     }
   }
@@ -105,7 +105,7 @@ export class JanelaChatComponent implements OnInit, AfterViewInit, OnChanges, On
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.dialog.closeAll();
-      this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
   }
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { TelaInicioService } from 'src/app/tela/tela-inicio/tela-inicio.service';
 import { ConversaService } from './../../servico/usuario/conversa.service';
 import { UsuarioService } from './../../servico/usuario/usuario.service';
@@ -25,7 +26,8 @@ export class CardContatoComponent implements OnInit, OnChanges {
     private erroService: ErroService,
     private toaster: Toaster,
     private conversaService: ConversaService,
-    private telaInicioService: TelaInicioService
+    private telaInicioService: TelaInicioService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class CardContatoComponent implements OnInit, OnChanges {
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.dialog.closeAll();
-      this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
   }
 
@@ -55,5 +57,4 @@ export class CardContatoComponent implements OnInit, OnChanges {
       this.telaInicioService.abreNovaJanelaChat(conversaRetornada);
     });
   }
-
 }

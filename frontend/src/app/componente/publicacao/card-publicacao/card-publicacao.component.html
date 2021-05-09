@@ -4,7 +4,12 @@
             <mat-card-title style="font-size: 18px;">{{publicacao?.usuario?.nome}}, &nbsp;{{publicacao?.usuario?.cidade}},
                 &nbsp;{{publicacao?.usuario?.uf}}
             </mat-card-title>
-            <span>{{publicacao.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+            <div fxLayout="column">
+                <span>{{publicacao.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+                <div class="py-1">
+                    <a (click)="expertises()">Expertises necessárias</a>
+                </div>
+            </div>
         </div>
         <div fxFlex fxLayout="row wrap" fxLayoutAlign="end center">
             <mat-chip-list *ngIf="publicacao?.tipoPublicacao">
@@ -25,14 +30,14 @@
             </div>
         </div>
     </mat-card-content>
-    <div *ngIf="!publicacaoPertenceUsuarioLogado">
+    <div *ngIf="!publicacaoPertenceUsuarioLogado && exibeAcoes">
         <mat-divider></mat-divider>
         <div fxLayoutAlign="space-around center" style="padding-top: 1rem;">
          
             <button class="botao-enviar" fxFlex="45" mat-button fxLayoutAlign="center center" (click)="entrarEmContato(publicacao?.usuario?.id)">
                 <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">how_to_reg
                 </mat-icon>
-                <span>Entrar em contato</span>
+                <span>Ver perfil</span>
             </button>
 
             <button class="botao-enviar" fxFlex="45" mat-button fxLayoutAlign="center center" (click)="enviarMensagem(publicacao?.usuario)">

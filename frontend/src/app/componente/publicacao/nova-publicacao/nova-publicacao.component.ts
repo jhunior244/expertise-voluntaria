@@ -1,3 +1,4 @@
+import { SessaoService } from './../../../core/sessao/sessao.service';
 import { AreaAtuacao } from './../../../servico/area-atuacao/area-atuacao';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -10,6 +11,7 @@ import { Imagem } from 'src/app/servico/imagem/imagem';
 import { ImagemService } from 'src/app/servico/imagem/imagem.service';
 import { Publicacao } from 'src/app/servico/publicacao/publicacao';
 import { PublicacaoService } from 'src/app/servico/publicacao/publicacao.service';
+import { configuracao } from 'src/app/configuracao';
 
 @Component({
   selector: 'app-nova-publicacao',
@@ -17,6 +19,8 @@ import { PublicacaoService } from 'src/app/servico/publicacao/publicacao.service
   styleUrls: ['./nova-publicacao.component.css']
 })
 export class NovaPublicacaoComponent implements OnInit {
+
+  public tipoUsuarioLogado = 0;
 
   public imagemCarregada: Imagem;
   public publicacao = new Publicacao();
@@ -30,17 +34,22 @@ export class NovaPublicacaoComponent implements OnInit {
     private erroService: ErroService,
     private imagemService: ImagemService,
     private toaster: Toaster,
-    private publicacaoService: PublicacaoService
+    private publicacaoService: PublicacaoService,
+    private sessaoService: SessaoService
   ) {
     this.formGroup = this.formBuilder.group({
       descricao: [null, Validators.required],
       tipoPublicacao: [null, Validators.required],
       listaAreaAtuacao: [null]
     });
+
+    this.tipoUsuarioLogado = Number.parseInt(this.sessaoService.getTipoUsuario());
   }
   get descricao(): FormControl { return this.formGroup.controls.descricao as FormControl; }
   get listaAreaAtuacao(): FormControl { return this.formGroup.controls.listaAreaAtuacao as FormControl; }
   get tipoPublicacao(): FormControl { return this.formGroup.controls.tipoPublicacao as FormControl; }
+
+  get usuarioEhOngOsc(): boolean { return this.tipoUsuarioLogado === configuracao.tipoUsuario.ONG_OSC; }
 
   ngOnInit(): void {
   }
@@ -75,7 +84,7 @@ export class NovaPublicacaoComponent implements OnInit {
       this.dialogRef.close();
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
-      this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
   }
 

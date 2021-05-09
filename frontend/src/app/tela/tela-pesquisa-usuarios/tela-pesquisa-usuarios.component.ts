@@ -31,6 +31,9 @@ export class TelaPesquisaUsuariosComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute
   ) {
     this.telaInicioService.anunciaexibeFiltro(true);
+    this.telaInicioService.anunciaExibeFiltroTipoUsuario(true);
+    this.telaInicioService.anunciaExibeFiltroEstado(true);
+    this.telaInicioService.anunciaExibeFiltroCidade(true);
     this.telaInicioService.anunciaExibeFiltroTodasPublicacoes(false);
   }
 
@@ -43,6 +46,7 @@ export class TelaPesquisaUsuariosComponent implements OnInit, OnDestroy {
           this.telaInicioService.listaEstado,
           this.telaInicioService.listaCidade,
           this.telaInicioService.listaAreaAtuacao,
+          this.telaInicioService.listaTipoPessoa,
           this.nome.value
         ).subscribe(pagina => {
           this.dialog.closeAll();
@@ -50,7 +54,7 @@ export class TelaPesquisaUsuariosComponent implements OnInit, OnDestroy {
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.dialog.closeAll();
-          this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     }));

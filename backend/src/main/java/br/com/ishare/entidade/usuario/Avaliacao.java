@@ -18,7 +18,7 @@ public class Avaliacao {
     private UUID id;
 
     @Column(nullable = false)
-    private byte nota;
+    private Long nota;
 
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -26,4 +26,6 @@ public class Avaliacao {
     @ManyToOne(optional = false)
     private Usuario usuarioAvaliador;
 
+    @OneToOne(mappedBy = "avaliacao")
+    private Certificado certificado;
 }

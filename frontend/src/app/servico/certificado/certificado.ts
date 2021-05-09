@@ -1,3 +1,5 @@
+import { Avaliacao, IAvaliacao } from './../avaliacao/avaliacao';
+import { IPublicacao, Publicacao } from './../publicacao/publicacao';
 import { AreaAtuacao, IAreaAtuacao } from './../area-atuacao/area-atuacao';
 import * as moment from 'moment';
 import { IImagem, Imagem } from '../imagem/imagem';
@@ -11,6 +13,8 @@ export class ICertificado {
     imagem: IImagem;
     usuario: IUsuario;
     usuarioResponsavelCriacao: IUsuario;
+    publicacao: IPublicacao;
+    avaliacao: IAvaliacao;
 }
 
 export class Certificado {
@@ -21,10 +25,12 @@ export class Certificado {
     imagem: Imagem;
     usuario: Usuario;
     usuarioResponsavelCriacao: Usuario;
+    publicacao: Publicacao;
+    avaliacao: Avaliacao;
 
     static listaDoBackend(response: ICertificado[]): Certificado[] {
         const lista: Certificado[] = [];
-
+        
         for (const json of response) {
             lista.push(this.doBackend(json));
         }
@@ -43,6 +49,8 @@ export class Certificado {
             imagem: (response.imagem) ? Imagem.doBackend(response.imagem) : null,
             usuario: (response.usuario) ? Usuario.doBackend(response.usuario) : null,
             usuarioResponsavelCriacao: (response.usuarioResponsavelCriacao) ? Usuario.doBackend(response.usuarioResponsavelCriacao) : null,
+            publicacao: (response.publicacao) ? Publicacao.doBackend(response.publicacao) : null,
+            avaliacao: (response.avaliacao) ? Avaliacao.doBackend(response.avaliacao) : null,
         });
         return usuario;
     }
@@ -54,6 +62,8 @@ export class Certificado {
             imagem: (this.imagem) ? this.imagem.paraBackend() : null,
             usuario: (this.usuario) ? this.usuario.paraBackend() : null,
             usuarioResponsavelCriacao: (this.usuarioResponsavelCriacao) ? this.usuarioResponsavelCriacao.paraBackend() : null,
+            publicacao: (this.publicacao) ? this.publicacao.paraBackend() : null,
+            avaliacao: (this.avaliacao) ? this.avaliacao.paraBackend() : null,
         });
         return certificado;
     }

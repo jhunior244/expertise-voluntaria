@@ -1,24 +1,33 @@
 .azul {
-    background-color: #588daf5e;
+  background-color: #588daf5e;
 }
 .vermelho {
-    background-color: #58af9c26;
+  background-color: #58af9c26;
 }
 .button-enviar {
-    /* box-shadow: 0px 0px 4px #444444; */
-    color: black;
-    /* background-color: rgb(199 199 199 / 28%); */
-    
+  /* box-shadow: 0px 0px 4px #444444; */
+  color: black;
+  /* background-color: rgb(199 199 199 / 28%); */
 }
 
 .button-enviar:focus {
-    background-color: #e4e2e2;
-    box-shadow: 0px 0px 4px #444444;
-    outline: none;
+  background-color: #e4e2e2;
+  box-shadow: 0px 0px 4px #444444;
+  outline: none;
 }
 
-.botao-add{
-    background-color: transparent;
-    color: #58af9c;
-    box-shadow: none;
+.botao-add {
+  background-color: transparent;
+  color: #58af9c;
+  box-shadow: none;
+}
+
+a {
+  cursor: pointer;
+  font-size: 16px;
+  color: #58af9c !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
 }

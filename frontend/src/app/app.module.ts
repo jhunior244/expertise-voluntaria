@@ -55,7 +55,6 @@ import {MatChipsModule} from '@angular/material/chips';
 import { TelaVisualizaPerfilUsuarioComponent } from './tela/tela-visualiza-perfil-usuario/tela-visualiza-perfil-usuario.component';
 import { MomentModule } from 'ngx-moment';
 import { SelectSimNaoComponent } from './componente/select-sim-nao/select-sim-nao.component';
-import { NgChatModule } from 'ng-chat';
 import { ChatContatosComponent } from './componente/chat-contatos/chat-contatos.component';
 import { ConversaService } from './servico/usuario/conversa.service';
 import { ChatJanelasConversasComponent } from './componente/chat-janelas-conversas/chat-janelas-conversas.component';
@@ -77,6 +76,12 @@ import { ShareIconsModule } from "ngx-sharebuttons/icons";
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TelaVisualizaCertificadoComponent } from './tela/tela-visualiza-certificado/tela-visualiza-certificado.component';
+import { SelectPublicacaoComponent } from './componente/select-publicacao/select-publicacao.component';
+import { TelaVisualizaPublicacaoComponent } from './tela/tela-visualiza-publicacao/tela-visualiza-publicacao.component';
+import { ExpertisesPublicacaoComponent } from './componente/publicacao/expertises-publicacao/expertises-publicacao.component';
+import { ListaExpertiseComponent } from './componente/publicacao/expertises-publicacao/lista-expertise/lista-expertise.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { AvaliacaoService } from './servico/avaliacao/avaliacao.service';
 
 const customConfig: ShareButtonsConfig = {
   include: [
@@ -118,7 +123,11 @@ const customConfig: ShareButtonsConfig = {
     CardCertificadoComponent,
     TelaPesquisaUsuariosComponent,
     SelectMeusContatosComponent,
-    TelaVisualizaCertificadoComponent
+    TelaVisualizaCertificadoComponent,
+    SelectPublicacaoComponent,
+    TelaVisualizaPublicacaoComponent,
+    ExpertisesPublicacaoComponent,
+    ListaExpertiseComponent
   ],
   imports: [
     BrowserModule,
@@ -143,12 +152,12 @@ const customConfig: ShareButtonsConfig = {
     MatDividerModule,
     MatChipsModule,
     MomentModule,
-    NgChatModule,
     MatBadgeModule,
     ShareButtonsModule,
     ShareIconsModule,
     ShareModule.withConfig(customConfig),
-    FontAwesomeModule
+    FontAwesomeModule,
+    StarRatingModule.forRoot()
   ],
   providers: [
     {
@@ -161,6 +170,7 @@ const customConfig: ShareButtonsConfig = {
       multi: true
     },
     AuthService,
+    AvaliacaoService,
     EstadoService,
     TokenService,
     ErroService,

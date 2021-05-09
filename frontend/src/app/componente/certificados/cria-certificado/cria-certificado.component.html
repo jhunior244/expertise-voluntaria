@@ -13,18 +13,26 @@
                 <mat-form-field style="width: 100%;">
                     <mat-label>Tempo trabalhado</mat-label>
                     <input type="text" matInput [formControl]="totalTrabalhado" placeholder="Ex: 4 horas ou 2 dias">
+                    <mat-hint>Campo obrigatório</mat-hint>
+                    <mat-error *ngIf="totalTrabalhado.hasError('required')">Campo obrigatório</mat-error>
                 </mat-form-field>
 
-                <app-select-meus-contatos [multiplo]="false" [reservadorEspaco]="'Usuario responsável pelo trabalho'"
+                <app-select-meus-contatos [obrigatorio]="true" [multiplo]="false" [reservadorEspaco]="'Usuario responsável pelo trabalho'"
                     [controladorFormulario]="usuarioResposavelServicoPrestado"></app-select-meus-contatos>
 
-                <app-select-area-atuacao [multiplo]="false" [controladorFormulario]="expertiseExercida"
+                <app-select-area-atuacao [obrigatorio]="true" [multiplo]="false" [controladorFormulario]="expertiseExercida"
                     [reservadorEspaco]="'Expertises exercida no trabalho.'"></app-select-area-atuacao>
+
+                <div *ngIf="exibeSelectPublicacao">
+                    <app-select-publicacao [obrigatorio]="true" [multiplo]="false" [controladorFormulario]="publicacao"
+                        [reservadorEspaco]="'Publicação referente ao trabalho.'"
+                        [idContato]="usuarioResposavelServicoPrestado.value?.id"></app-select-publicacao>
+                </div>
             </form>
         </div>
     </div>
     <div mat-dialog-actions class="mt-1" fxLayoutAlign="center center"
-        style="position: absolute; bottom: 0; width: 100%;">
+        style="width: 100%;">
         <button [disabled]="!formGroup.valid" (click)="cria()" fxFlex
             class="botao-cadastrar fonte-texto background-primary" mat-button>GERAR CERTIFICADO</button>
     </div>

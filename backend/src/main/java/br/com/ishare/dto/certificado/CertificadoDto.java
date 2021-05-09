@@ -1,6 +1,8 @@
 package br.com.ishare.dto.certificado;
 
+import br.com.ishare.dto.avaliacao.AvaliacaoDto;
 import br.com.ishare.dto.publicacao.ImagemDto;
+import br.com.ishare.dto.publicacao.PublicacaoDto;
 import br.com.ishare.dto.usuario.AreaAtuacaoDto;
 import br.com.ishare.dto.usuario.UsuarioSimplesDto;
 import lombok.Data;
@@ -27,4 +29,8 @@ public class CertificadoDto implements Serializable {
     private AreaAtuacaoDto areaAtuacao;
 
     private ImagemDto imagem;
+
+    private PublicacaoDto publicacao;
+
+    private AvaliacaoDto avaliacao;
 }

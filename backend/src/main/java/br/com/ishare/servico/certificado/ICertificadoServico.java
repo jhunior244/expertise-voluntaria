@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ICertificadoServico {
-    Page<Certificado> lista(Boolean ehOngOsc, String usuarioCriador, Usuario usuarioLogado, Pageable pagina);
+    Page<Certificado> lista(Boolean ehOngOsc, List<UUID> lista, Long[] listaIdTipoUsuario, Usuario usuarioLogado, Pageable pagina);
 
     Certificado cria(Certificado certificado, Usuario usuario) throws IOException, OfficeException;
 

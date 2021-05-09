@@ -48,6 +48,7 @@ public class UsuarioProtegidoControlador {
                                              Long[] listaIdEstado,
                                              Long[] listaIdCidade,
                                              String[] listaIdAreaAtuacao,
+                                             Long[] listaIdTipoUsuario,
                                              String nome,
                                              Long numeroPagina,
                                              Long tamanhoPagina){
@@ -64,12 +65,14 @@ public class UsuarioProtegidoControlador {
         }
         List<UUID> lista = new ArrayList<>();
         if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
-            lista = Arrays.stream(listaIdAreaAtuacao).map(id -> UUID.fromString(id)).collect(Collectors.toList());
+            lista = Arrays.stream(listaIdAreaAtuacao).map(UUID::fromString).collect(Collectors.toList());
         }
 
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
 
-        Page<UsuarioTelaContatoDto> page = usuarioServico.paraUsuarioTelaConsultaDto(usuarioServico.lista(somenteMeusContatos,true, usuario.getEmail(), listaIdEstado, listaIdCidade, lista, nome, pagina), usuario);
+        Page<UsuarioTelaContatoDto> page = usuarioServico.paraUsuarioTelaConsultaDto(usuarioServico.lista(
+                somenteMeusContatos,true, usuario.getEmail(), listaIdEstado, listaIdCidade, lista, listaIdTipoUsuario, nome, pagina
+        ), usuario);
 
         return page;
     }

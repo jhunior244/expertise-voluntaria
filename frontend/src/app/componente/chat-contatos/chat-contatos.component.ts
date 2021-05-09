@@ -42,7 +42,7 @@ export class ChatContatosComponent implements OnInit, OnDestroy {
       this.telaInicioServico.anunciaListaConversaChat(pagina.conteudo);
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
-      this.erroService.exibeMensagemErro(erro.message, this.toaster);
+      // this.erroService.exibeMensagemErro(erro.message, this.toaster);
     });
   }
 

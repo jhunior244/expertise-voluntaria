@@ -31,7 +31,7 @@ export class ChatJanelasConversasComponent implements OnInit, OnDestroy {
       this.listaConversa = lista;
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
-      this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     }));
   }
 

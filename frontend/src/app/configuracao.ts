@@ -1,6 +1,6 @@
 export const configuracao = {
-    rotaBackendPublico: 'http://187.1.179.75:8080/api/public',
-    rotaBackendPrivado: 'http://187.1.179.75:8080/api/private',
+    rotaBackendPublico: 'http://localhost:8080/api/public',
+    rotaBackendPrivado: 'http://localhost:8080/api/private',
     hostFrontend: 'http://187.1.179.75:3000',
 
     rotaInicio: 'inicio',
@@ -16,6 +16,7 @@ export const configuracao = {
     rotaInterno: 'minha-conta',
     rotaPesquisaUsuarios: 'busca-contatos',
     rotaVisualizaCertificado: 'certificado',
+    rotaPublicacao: 'publicacao',
 
     parametroId: 'id',
     parametroToken: 'token',
@@ -31,6 +32,7 @@ export const configuracao = {
     parametroIdConversa: 'idConversa',
     parametroIdMensagem: 'idMensagem',
     parametroUsuarioCriador: 'usuarioCriador',
+    parametroIdContato: 'idContato',
 
     parametroNumeroPagina: 'numeroPagina',
     parametroTamanhoPagina: 'tamanhoPagina',
@@ -39,5 +41,10 @@ export const configuracao = {
         PESSOA_FISICA: 1,
         PESSOA_JURIDICA: 2,
         ONG_OSC: 3
+    },
+
+    tipoPublicacao: {
+        PROCURA_POR_VOLUNTARIO: 1,
+        DISPONIBILIZACAO_MAO_DE_OBRA_VOLUNTARIA: 2,
     },
 };

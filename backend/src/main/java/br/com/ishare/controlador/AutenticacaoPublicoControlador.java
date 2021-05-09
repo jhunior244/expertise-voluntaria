@@ -61,10 +61,6 @@ public class AutenticacaoPublicoControlador {
 
     @GetMapping(path = "/autenticado")
     public boolean autenticado(@RequestHeader(name="Authorization") String token){
-        if(!StringUtils.hasLength(token) || token.length() < 7 || !tokenService.isTokenValido(token.substring(7))){
-            return false;
-        }
-
-        return true;
+        return StringUtils.hasLength(token) && token.length() >= 7 && tokenService.isTokenValido(token.substring(7));
     }
 }

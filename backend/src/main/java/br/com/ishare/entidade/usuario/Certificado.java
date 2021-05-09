@@ -1,6 +1,8 @@
 package br.com.ishare.entidade.usuario;
 
 import br.com.ishare.entidade.publicacao.Imagem;
+import br.com.ishare.entidade.publicacao.Publicacao;
+import com.querydsl.core.annotations.QueryInit;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -32,8 +34,15 @@ public class Certificado {
     private Imagem imagem;
 
     @ManyToOne(optional = false)
+    @QueryInit("tipoUsuario")
     private Usuario usuario;
 
     @ManyToOne(optional = false)
     private Usuario usuarioResponsavelCriacao;
+
+    @OneToOne
+    private Publicacao publicacao;
+
+    @OneToOne
+    private Avaliacao avaliacao;
 }

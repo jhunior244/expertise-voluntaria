@@ -43,7 +43,7 @@ public class UsuarioJpaRepositoryCustomImpl implements UsuarioJpaRepositoryCusto
     }
 
     @Override
-    public Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, String nome, Pageable pagina){
+    public Page<Usuario> lista(Boolean somenteMeusContatos, boolean ignoraUsuarioLogado, String emailUsuarioLogado, Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, String nome, Pageable pagina){
 
         QUsuario usuario = QUsuario.usuario;
 
@@ -67,6 +67,10 @@ public class UsuarioJpaRepositoryCustomImpl implements UsuarioJpaRepositoryCusto
 
         if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
             predicado = predicado.and(usuario.listaAreaAtuacao.any().id.in(listaIdAreaAtuacao));
+        }
+
+        if(!ObjectUtils.isEmpty(listaIdTipoUsuario)){
+            predicado = predicado.and(usuario.tipoUsuario.id.in(listaIdTipoUsuario));
         }
 
         if(StringUtils.hasLength(nome)){

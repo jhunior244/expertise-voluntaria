@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequestScope
 @RestController
@@ -37,7 +42,7 @@ public class CertificadoProtegidoControlador {
     private CertificadoMapeador certificadoMapeador;
 
     @PostMapping(path = "/cria")
-    public CertificadoDto cria(@RequestHeader(name="Authorization") String token, @RequestBody CertificadoDto certificadoDto) throws IOException, OfficeException {
+    public CertificadoDto cria(@RequestHeader(name="Authorization") String token, @RequestBody CertificadoDto certificadoDto) throws IOException, OfficeException, IShareExcessao {
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
         if(ObjectUtils.isEmpty(usuario)){
@@ -49,9 +54,10 @@ public class CertificadoProtegidoControlador {
 
     @GetMapping(path = "/lista")
     public Page<CertificadoDto> lista(@RequestHeader(name="Authorization") String token,
-                                             String usuarioCriador,
-                                             Long numeroPagina,
-                                             Long tamanhoPagina){
+                                      String[] listaIdAreaAtuacao,
+                                      Long[] listaIdTipoUsuario,
+                                      Long numeroPagina,
+                                      Long tamanhoPagina){
 
         Usuario usuario = usuarioServico.obtemPorToken(token);
 
@@ -64,9 +70,14 @@ public class CertificadoProtegidoControlador {
             tamanhoPagina = 10L;
         }
 
+        List<UUID> lista = new ArrayList<>();
+        if(!ObjectUtils.isEmpty(listaIdAreaAtuacao)){
+            lista = Arrays.stream(listaIdAreaAtuacao).map(UUID::fromString).collect(Collectors.toList());
+        }
+
         Pageable pagina = PageRequest.of(numeroPagina.intValue(), tamanhoPagina.intValue());
 
-        Page<CertificadoDto> page = certificadoMapeador.paraDto(certificadoServico.lista(usuario.ehOngOsc(), usuarioCriador, usuario, pagina));
+        Page<CertificadoDto> page = certificadoMapeador.paraDto(certificadoServico.lista(usuario.ehOngOsc(), lista, listaIdTipoUsuario, usuario, pagina));
 
         return page;
     }

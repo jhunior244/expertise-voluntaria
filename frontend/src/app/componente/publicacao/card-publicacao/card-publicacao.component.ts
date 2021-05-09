@@ -7,6 +7,8 @@ import { UsuarioService } from './../../../servico/usuario/usuario.service';
 import { Publicacao } from './../../../servico/publicacao/publicacao';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/servico/usuario/usuario';
+import { ExpertisesPublicacaoComponent } from '../expertises-publicacao/expertises-publicacao.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-card-publicacao',
@@ -18,13 +20,15 @@ export class CardPublicacaoComponent implements OnInit, OnChanges {
   @Input() publicacao: Publicacao;
 
   public usuarioEhContato = false;
+  @Input() exibeAcoes = true;
   private emailUsuarioLogado;
 
   constructor(
     private router: Router,
     private usuarioService: UsuarioService,
     private telaInicioService: TelaInicioService,
-    private conversaService: ConversaService 
+    private conversaService: ConversaService,
+    public dialog: MatDialog,
   ) { 
     this.emailUsuarioLogado = this.usuarioService.getEmail();
   }
@@ -49,6 +53,13 @@ export class CardPublicacaoComponent implements OnInit, OnChanges {
     });
   }
 
-
-
+  expertises(): void {
+    const dialogRef = this.dialog.open(ExpertisesPublicacaoComponent, {
+      width: '30vw',
+      height: '40vh',
+      hasBackdrop: true,
+      disableClose: false,
+      data: this.publicacao.listaAreaAtuacao
+    });
+  }
 }

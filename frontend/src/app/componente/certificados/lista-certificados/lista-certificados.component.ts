@@ -1,3 +1,5 @@
+import { ErroService } from 'src/app/core/erro/erro.service';
+import { Toaster } from 'ngx-toast-notifications';
 import { configuracao } from './../../../configuracao';
 import { SessaoService } from './../../../core/sessao/sessao.service';
 import { Usuario } from './../../../servico/usuario/usuario';
@@ -8,6 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CriaCertificadoComponent } from '../cria-certificado/cria-certificado.component';
 import { DialogoAguardeComponent } from '../../dialogo-aguarde/dialogo-aguarde.component';
 import { TelaInicioService } from 'src/app/tela/tela-inicio/tela-inicio.service';
+import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-lista-certificados',
@@ -18,28 +22,50 @@ export class ListaCertificadosComponent implements OnInit {
 
   public listaCertificado: Certificado[];
   public tipoUsuarioLogado = 0;
+  private subscricao = new Subscription();
+  
   constructor(
     public dialog: MatDialog,
     private certificadoService: CertificadoService,
     private sessaoService: SessaoService,
-    private telaInicioService: TelaInicioService
+    private telaInicioService: TelaInicioService,
+    private toaster: Toaster,
+    private erroService: ErroService
   ) {
       this.tipoUsuarioLogado = Number.parseInt(this.sessaoService.getTipoUsuario());
+      this.telaInicioService.anunciaexibeFiltro(true);
+      this.telaInicioService.anunciaExibeFiltroTipoUsuario(this.usuarioEhOngOsc);
+      this.telaInicioService.anunciaExibeFiltroEstado(false);
+      this.telaInicioService.anunciaExibeFiltroCidade(false);
+
       this.telaInicioService.anunciaExibeFiltroTodasPublicacoes(false);
    }
 
-  get usuarioEhOngOsc(): boolean { return true;}
+  get usuarioEhOngOsc(): boolean { return this.tipoUsuarioLogado === configuracao.tipoUsuario.ONG_OSC;}
 
   ngOnInit(): void {
-    this.certificadoService.lista(null).subscribe(retorno => {
-      this.listaCertificado = retorno.conteudo;
-    });
+    this.subscricao.add(this.telaInicioService.botaoPesquisarClicado$.subscribe(busca => {
+      if (busca) {
+        this.dialog.open(DialogoAguardeComponent, DialogoAguardeComponent.configProgressSpinner);
+        this.certificadoService.lista(
+          this.telaInicioService.listaAreaAtuacao,
+          this.telaInicioService.listaTipoPessoa
+        ).subscribe(pagina => {
+          this.dialog.closeAll();
+          this.listaCertificado = pagina.conteudo;
+        }, (erro: HttpErrorResponse) => {
+          console.log(erro);
+          this.dialog.closeAll();
+          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
+        });
+      }
+    }));
   }
 
   novoCertificado(): void {
     const dialogRef = this.dialog.open(CriaCertificadoComponent, {
       width: '50vw',
-      height: '50vh',
+      height: '60vh',
       hasBackdrop: true,
       disableClose: true
     });

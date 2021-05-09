@@ -4,20 +4,31 @@
             <img width="100%" [src]="certificado.imagem?.conteudo">
         </div>
         <div fxLayoutAlign="space-around center" style="padding-top: 1rem;" fxFlex>
-            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Linkedin" shareButton="linkedin" class="botao-enviar"
-                fxFlex="45" mat-button
-                [url]="url">
+            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Linkedin" shareButton="linkedin"
+                class="botao-enviar" fxFlex="45" mat-button [url]="url">
                 <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
                 </mat-icon>
                 <span>Linkedin</span>
             </button>
 
-            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Facebook" shareButton="facebook" class="botao-enviar"
-                fxFlex="45" mat-button
-                [url]="url">
+            <button fxLayoutAlign="center center" matTooltip="Compartilhar no Facebook" shareButton="facebook"
+                class="botao-enviar" fxFlex="45" mat-button [url]="url">
                 <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
                 </mat-icon>
                 <span>Facebook</span>
+            </button>
+        </div>
+    </div>
+    <div fxLayoutAlign="center center" class="py-2" fxLayout="column">
+        <span *ngIf="!habilitaAvaliacao" class="mat-text-mutted">Sua avaliação</span>
+        <div style="width: 100%;" fxLayoutAlign="center center">
+            <star-rating [readOnly]="!habilitaAvaliacao" style="cursor: pointer;" [starType]="'svg'"
+                (ratingChange)="setAvaliacao($event)" [rating]="avaliacao">
+            </star-rating>
+            <button *ngIf="habilitaAvaliacao" [disabled]="!habilitaAvaliacao" fxLayoutAlign="center center" fxFlex="20"
+                (click)="cria()"
+                style="background-color: #58af9c; color: white; letter-spacing: 1px; line-height: 30px;" mat-button>
+                <span>Avaliar voluntário</span>
             </button>
         </div>
     </div>

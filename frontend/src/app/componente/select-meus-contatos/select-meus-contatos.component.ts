@@ -38,6 +38,7 @@ export class SelectMeusContatosComponent implements OnInit {
       null,
       null,
       null,
+      null,
       null
     ).subscribe(page => {
       this.lista = page.conteudo;

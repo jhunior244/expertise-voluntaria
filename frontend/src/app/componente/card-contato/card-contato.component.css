@@ -3,3 +3,7 @@
     color: #58af9c;
     box-shadow: none;
 }
+
+a:hover {
+    color: black;
+}

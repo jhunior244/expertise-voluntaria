@@ -2,7 +2,7 @@
     <mat-select style="width:100%;" id="{{idSelect}}" placeholder="Tipo Publicação"
         [formControl]="controladorFormulario" [compareWith]="compara" multiple={{multiplo}}
         [errorStateMatcher]="exibeErro">
-        <mat-option *ngFor=" let tipo of lista" [value]="tipo">
+        <mat-option *ngFor=" let tipo of listaFiltrada" [value]="tipo">
             {{tipo.nome}}</mat-option>
     </mat-select>
     <mat-hint *ngIf="obrigatorio">Campo obrigátorio</mat-hint>

@@ -45,7 +45,10 @@ export class TelaInicioComponent implements OnInit {
   public cidadeUsuarioLogado: string;
   public configuracao = configuracao;
   public exibeFiltro = true;
-  public exibeTodosUsuario = false;
+  public exibeFiltroTodosUsuario = false;
+  public exibeFiltroEstado = false;
+  public exibeFiltroCidade = false;
+  public exibeFiltroTipoUsuario = false;
   private subscricao = new Subscription();
   public exibeSubBotoesRede = false;
 
@@ -91,13 +94,25 @@ export class TelaInicioComponent implements OnInit {
       this.dialog.closeAll();
     });
 
-    this.telaInicioService.exibeFiltroAnunciado$.subscribe(exibe => {
+    this.subscricao.add(this.telaInicioService.exibeFiltroAnunciado$.subscribe(exibe => {
       this.exibeFiltro = exibe;
-    });
+    }));
 
-    this.telaInicioService.exibeFiltroTodasPublicacoes$.subscribe(exibe => {
-      this.exibeTodosUsuario = exibe;
-    });
+    this.subscricao.add(this.telaInicioService.exibeFiltroTodasPublicacoes$.subscribe(exibe => {
+      this.exibeFiltroTodosUsuario = exibe;
+    }));
+
+    this.subscricao.add(this.telaInicioService.exibeFiltroTipoUsuario$.subscribe(exibe => {
+      this.exibeFiltroTipoUsuario = exibe;
+    }));
+
+    this.subscricao.add(this.telaInicioService.exibeFiltroTodasEstado$.subscribe(exibe => {
+      this.exibeFiltroEstado = exibe;
+    }));
+
+    this.subscricao.add(this.telaInicioService.exibeFiltroTodasCidade$.subscribe(exibe => {
+      this.exibeFiltroCidade = exibe;
+    }));
 
     this.subscricao.add(this.tipoPessoa.valueChanges.subscribe(() => {
       this.telaInicioService.anunciaListaTipoPessoa(this.tipoPessoa.value);
@@ -106,7 +121,6 @@ export class TelaInicioComponent implements OnInit {
     this.subscricao.add(this.todosUsuarios.valueChanges.subscribe((value) => {
       this.telaInicioService.alteraListarApenasMinhasPublicacoes(value);
     }));
-
   }
 
   anunciaClickPesquisar(): void {

@@ -40,7 +40,7 @@ export class TelaVisualizaPerfilUsuarioComponent implements OnInit {
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.dialog.closeAll();
-          this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     }));

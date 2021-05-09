@@ -41,7 +41,7 @@ export class SelectCidadeComponent implements OnInit, OnChanges {
       this.filtraCidade();
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
-      this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+      this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
 
     this.controladorFormulario.valueChanges.subscribe((lista: Cidade[]) => {

@@ -1,5 +1,6 @@
+import { configuracao } from 'src/app/configuracao';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Toaster } from 'ngx-toast-notifications';
@@ -12,7 +13,7 @@ import { TipoPublicacaoService } from './../../servico/publicacao/tipo-publicaca
   templateUrl: './select-tipo-publicacao.component.html',
   styleUrls: ['./select-tipo-publicacao.component.css']
 })
-export class SelectTipoPublicacaoComponent implements OnInit {
+export class SelectTipoPublicacaoComponent implements OnChanges {
 
   @Input() controladorFormulario: FormControl;
   @Input() obrigatorio = false;
@@ -20,8 +21,10 @@ export class SelectTipoPublicacaoComponent implements OnInit {
   @Input() reservadorEspaco: string;
   @Input() exibeErro: ErrorStateMatcher;
   @Input() idSelect: string;
+  @Input() ehOngOsc = false;
 
   public lista: TipoPublicacao[] = [];
+  public listaFiltrada: TipoPublicacao[] = [];
 
   constructor(
     private tipoPublicacaoService: TipoPublicacaoService,
@@ -32,13 +35,22 @@ export class SelectTipoPublicacaoComponent implements OnInit {
     return this.reservadorEspaco && this.reservadorEspaco !== '';
   }
 
-  ngOnInit() {
+  ngOnChanges(): void {
     this.tipoPublicacaoService.lista().subscribe(lista => {
       this.lista = lista;
+      this.filtraLista();
     }, (erro: HttpErrorResponse) => {
       console.log(erro);
       this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
     });
+  }
+
+  filtraLista(): void {
+    if (this.lista?.length) {
+      this.listaFiltrada = this.lista.filter((tipo: TipoPublicacao) =>
+        this.ehOngOsc ? tipo : tipo.id !== configuracao.tipoPublicacao.PROCURA_POR_VOLUNTARIO
+      );
+    }
   }
 
 

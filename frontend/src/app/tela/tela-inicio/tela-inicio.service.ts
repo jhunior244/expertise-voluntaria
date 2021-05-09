@@ -22,6 +22,9 @@ export class TelaInicioService {
     private exibeFiltroSubject = new BehaviorSubject<boolean>(true);
     private todasPublicacoesSubject = new BehaviorSubject<boolean>(true);
     private exibeFiltroTodasPublicacoesSubject = new BehaviorSubject<boolean>(false);
+    private exibeFiltroTodasEstadoSubject = new BehaviorSubject<boolean>(false);
+    private exibeFiltroTodasCidadeSubject = new BehaviorSubject<boolean>(false);
+    private exibeFiltroTipoUsuarioSubject = new BehaviorSubject<boolean>(false);
 
 
     public listaEstadoAnunciado$ = this.listaEstadoSubject.asObservable();
@@ -37,6 +40,9 @@ export class TelaInicioService {
 
     public todasPublicacoesAnunciado$ = this.todasPublicacoesSubject.asObservable();
     public exibeFiltroTodasPublicacoes$ = this.exibeFiltroTodasPublicacoesSubject.asObservable();
+    public exibeFiltroTodasEstado$ = this.exibeFiltroTodasEstadoSubject.asObservable();
+    public exibeFiltroTodasCidade$ = this.exibeFiltroTodasCidadeSubject.asObservable();
+    public exibeFiltroTipoUsuario$ = this.exibeFiltroTipoUsuarioSubject.asObservable();
 
     public listaEstado: Estado[] = [];
     public listaCidade: Cidade[] = [];
@@ -64,6 +70,18 @@ export class TelaInicioService {
 
     public anunciaExibeFiltroTodasPublicacoes(exibe: boolean): void {
         this.exibeFiltroTodasPublicacoesSubject.next(exibe);
+    }
+
+    public anunciaExibeFiltroEstado(exibe: boolean): void {
+        this.exibeFiltroTodasEstadoSubject.next(exibe);
+    }
+
+    public anunciaExibeFiltroTipoUsuario(exibe: boolean): void {
+        this.exibeFiltroTipoUsuarioSubject.next(exibe);
+    }
+
+    public anunciaExibeFiltroCidade(exibe: boolean): void {
+        this.exibeFiltroTodasCidadeSubject.next(exibe);
     }
 
     public anunciaNovaPesquisa(novaPesquisa: boolean): void {

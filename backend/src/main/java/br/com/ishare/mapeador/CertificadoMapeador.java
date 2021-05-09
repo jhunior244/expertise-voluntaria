@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 @Mapper(componentModel = "spring",uses =
-        {ImagemMapeador.class, UsuarioMapeador.class},
+        {ImagemMapeador.class, UsuarioMapeador.class, AvaliacaoMapeador.class, AreaAtuacaoMapeador.class},
         unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CertificadoMapeador {
 

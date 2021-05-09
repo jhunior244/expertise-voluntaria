@@ -1,6 +1,7 @@
 package br.com.ishare.entidade.publicacao;
 
 import br.com.ishare.entidade.usuario.AreaAtuacao;
+import br.com.ishare.entidade.usuario.Certificado;
 import br.com.ishare.entidade.usuario.Usuario;
 import com.querydsl.core.annotations.QueryInit;
 import lombok.Data;
@@ -32,6 +33,9 @@ public class Publicacao {
     @ManyToOne
     @QueryInit({"endereco.cidade.estado", "tipoUsuario"})
     private Usuario usuario;
+
+    @OneToOne(mappedBy = "publicacao")
+    private Certificado certificado;
 
     @OneToMany(mappedBy = "publicacao")
     private List<Imagem> listaImagem;

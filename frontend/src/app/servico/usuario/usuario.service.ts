@@ -9,6 +9,7 @@ import { AreaAtuacao } from '../area-atuacao/area-atuacao';
 import { IPagina } from '../pagina/pagina';
 import { IUsuario, Usuario } from './usuario';
 import { Cidade } from './cidade';
+import { TipoUsuario } from './tipo-usuario';
 
 const usuarioLogadoSistema = 'usuarioLogadoSistema';
 const idCarrinhoUsuarioLogado = 'idCarrinhoUsuarioLogado';
@@ -135,6 +136,7 @@ export class UsuarioService {
         listaEstado: Estado[],
         listaCidade: Cidade[],
         listaAreaAtuacao: AreaAtuacao[],
+        listaTipoUsuario: TipoUsuario[],
         nomeUsuario: string
     ): Observable<IPagina<IUsuario, Usuario>> {
         let httpParams = new HttpParams();
@@ -173,6 +175,16 @@ export class UsuarioService {
             httpParams = httpParams.append(configuracao.parametroListaIdAreaAtuacao, idArea);
         }
 
+        const listaIdTipoUsuario = new Array<string>();
+        if (listaTipoUsuario?.length) {
+            for (const tipo of listaTipoUsuario) {
+                listaIdTipoUsuario.push(tipo.id.toString());
+            }
+        }
+        for (const idTipo of listaIdTipoUsuario) {
+            httpParams = httpParams.append(configuracao.parametroListaIdTipoUsuario, idTipo);
+        }
+        
         if (nomeUsuario) {
             httpParams = httpParams.append(configuracao.parametroNome, nomeUsuario);
         }

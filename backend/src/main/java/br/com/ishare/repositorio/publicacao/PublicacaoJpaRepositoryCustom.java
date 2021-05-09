@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface PublicacaoJpaRepositoryCustom {
 
     Page<Publicacao> lista(Long[] listaIdEstado, Long[] listaIdCidade, List<UUID> listaIdAreaAtuacao, Long[] listaIdTipoUsuario, Long mostrarApenasMinhasPublicacoes, UUID idUsuarioLogado, Pageable pagina);
+
+    Page<Publicacao> listaParaSelect(UUID idUsuarioLogado, UUID idContato, Pageable pagina);
 }

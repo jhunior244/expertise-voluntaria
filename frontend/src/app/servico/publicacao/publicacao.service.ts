@@ -84,6 +84,31 @@ export class PublicacaoService {
             .pipe(map((pagina => this.obtemPagina(pagina))));
     }
 
+    public obtem(id: string): Observable<Publicacao> {
+
+        let httpParams = new HttpParams();
+
+        httpParams = httpParams.append(configuracao.parametroId, id);
+
+        return this.httpCliente.get<Publicacao>(this.url + '/obtem', { params: httpParams })
+            .pipe(map((publicacao => Publicacao.doBackend(publicacao))));
+    }
+
+    public listaParaSelect(
+        idUsuario: string
+    ): Observable<IPagina<IPublicacao, Publicacao>> {
+
+        let httpParams = new HttpParams();
+        const listaIdEstado = new Array<string>();
+
+        if (idUsuario != null) {
+            httpParams = httpParams.append(configuracao.parametroIdContato, idUsuario);
+        }
+
+        return this.httpCliente.get<IPagina<IPublicacao, Publicacao>>(this.url + '/listaParaSelect', { params: httpParams })
+            .pipe(map((pagina => this.obtemPagina(pagina))));
+    }
+
     private obtemPagina(pagina: IPagina<IPublicacao, Publicacao>): IPagina<IPublicacao, Publicacao> {
         pagina.conteudo = Publicacao.listaDoBackend(pagina.content);
         return pagina;

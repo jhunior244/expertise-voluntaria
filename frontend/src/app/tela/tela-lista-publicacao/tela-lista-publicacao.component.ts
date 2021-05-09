@@ -28,6 +28,9 @@ export class TelaListaPublicacaoComponent implements OnInit, OnDestroy {
     private toaster: Toaster,
     private telaInicioService: TelaInicioService) {
       this.telaInicioService.anunciaexibeFiltro(true);
+      this.telaInicioService.anunciaExibeFiltroTipoUsuario(true);
+      this.telaInicioService.anunciaExibeFiltroEstado(true);
+      this.telaInicioService.anunciaExibeFiltroCidade(true);
       this.telaInicioService.anunciaExibeFiltroTodasPublicacoes(true);
      }
 
@@ -48,7 +51,7 @@ export class TelaListaPublicacaoComponent implements OnInit, OnDestroy {
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.dialog.closeAll();
-          this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     }));
@@ -80,7 +83,7 @@ export class TelaListaPublicacaoComponent implements OnInit, OnDestroy {
       }, (erro: HttpErrorResponse) => {
         console.log(erro);
         this.dialog.closeAll();
-        this.erroService.exibeMensagemErro(erro.error.erro, this.toaster);
+        this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
       });
     });
   }

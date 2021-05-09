@@ -15,9 +15,11 @@
                     <mat-label>Descrição</mat-label>
                     <textarea [matAutosizeMaxRows]="10" matInput rows="3" [matTextareaAutosize]="true"
                         style="overflow-y: scroll; max-height: 100%;" [formControl]="descricao"></textarea>
+                    <mat-hint>Campo obrigatório</mat-hint>    
+                    <mat-error *ngIf="descricao.hasError('required')">Campo obrigatório</mat-error>
                 </mat-form-field>
 
-                <app-select-tipo-publicacao [controladorFormulario]="tipoPublicacao" [obrigatorio]="true"></app-select-tipo-publicacao>
+                <app-select-tipo-publicacao [ehOngOsc]="usuarioEhOngOsc" [controladorFormulario]="tipoPublicacao" [obrigatorio]="true"></app-select-tipo-publicacao>
 
                 <app-select-area-atuacao 
                 [multiplo]="true"

@@ -10,8 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class CertificadoJpaRepositoryCustomImpl implements CertificadoJpaRepositoryCustom {
 
@@ -19,7 +23,7 @@ public class CertificadoJpaRepositoryCustomImpl implements CertificadoJpaReposit
     private JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<Certificado> lista(Boolean ehOngOsc, String usuarioCriador, Usuario usuarioLogado, Pageable pagina){
+    public Page<Certificado> lista(Boolean ehOngOsc, List<UUID> listaAreaAtuacao, Long[] listaIdTipoUsuario, Usuario usuarioLogado, Pageable pagina){
 
         QCertificado certificado = QCertificado.certificado;
 
@@ -27,8 +31,20 @@ public class CertificadoJpaRepositoryCustomImpl implements CertificadoJpaReposit
 
         BooleanExpression predicado = certificado.id.isNotNull();
 
-        if(!ObjectUtils.isEmpty(ehOngOsc) && ehOngOsc){
-            predicado = predicado.and(certificado.usuarioResponsavelCriacao.id.eq(usuarioLogado.getId()));
+        if (!CollectionUtils.isEmpty(listaAreaAtuacao)){
+            predicado = predicado.and(certificado.areaAtuacao.id.in(listaAreaAtuacao));
+        }
+
+        if (!ObjectUtils.isEmpty(listaIdTipoUsuario)){
+            predicado = predicado.and(certificado.usuario.tipoUsuario.id.in(listaIdTipoUsuario));
+        }
+
+        if(!ObjectUtils.isEmpty(ehOngOsc)){
+            if (ehOngOsc){
+                predicado = predicado.and(certificado.usuarioResponsavelCriacao.id.eq(usuarioLogado.getId()));
+            } else {
+                predicado = predicado.and(certificado.usuario.id.eq(usuarioLogado.getId()));
+            }
 
             query.where(predicado).orderBy(certificado.dataCriacao.desc());
 
@@ -38,19 +54,32 @@ public class CertificadoJpaRepositoryCustomImpl implements CertificadoJpaReposit
 
             return new PageImpl<>(query.fetch(), pagina, query.fetchCount());
         }
+        return new PageImpl<>(new ArrayList<>(), pagina, 0);
+    }
 
-        if(StringUtils.hasLength(usuarioCriador)){
-            predicado = predicado.and(certificado.usuarioResponsavelCriacao.nome.containsIgnoreCase(usuarioCriador));
+    @Override
+    public Certificado obtem(UUID idPublicacao, UUID idAreaAtuacao, UUID idUsuarioVoluntario){
+
+        QCertificado certificado = QCertificado.certificado;
+
+        JPAQuery<Certificado> query = jpaQueryFactory.selectFrom(certificado);
+
+        BooleanExpression predicado = certificado.id.isNotNull();
+
+        if(idPublicacao != null){
+            predicado = predicado.and(certificado.publicacao.id.eq(idPublicacao));
         }
 
-        predicado = predicado.and(certificado.usuario.id.eq(usuarioLogado.getId()));
+        if (idAreaAtuacao != null){
+            predicado = predicado.and(certificado.areaAtuacao.id.eq(idAreaAtuacao));
+        }
 
-        query.where(predicado).orderBy(certificado.dataCriacao.desc());
+        if (idUsuarioVoluntario != null){
+            predicado = predicado.and(certificado.usuario.id.eq(idUsuarioVoluntario));
+        }
 
-        query.limit(pagina.getPageSize());
+        query.where(predicado);
 
-        query.offset(pagina.getOffset());
-
-        return new PageImpl<>(query.fetch(), pagina, query.fetchCount());
+        return query.fetchFirst();
     }
 }
