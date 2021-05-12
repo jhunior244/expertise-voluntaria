@@ -32,6 +32,9 @@ public class Usuario implements UserDetails {
     private String email;
 
     @Column
+    private String telefone;
+
+    @Column
     private String token;
 
     @Column(nullable = false)

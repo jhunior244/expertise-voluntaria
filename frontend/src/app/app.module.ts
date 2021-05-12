@@ -82,6 +82,10 @@ import { ExpertisesPublicacaoComponent } from './componente/publicacao/expertise
 import { ListaExpertiseComponent } from './componente/publicacao/expertises-publicacao/lista-expertise/lista-expertise.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { AvaliacaoService } from './servico/avaliacao/avaliacao.service';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 const customConfig: ShareButtonsConfig = {
   include: [
@@ -89,6 +93,10 @@ const customConfig: ShareButtonsConfig = {
   ],
   gaTracking: true,
   // theme: "default"
+};
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
 };
 @NgModule({
   declarations: [
@@ -157,7 +165,10 @@ const customConfig: ShareButtonsConfig = {
     ShareIconsModule,
     ShareModule.withConfig(customConfig),
     FontAwesomeModule,
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    NgxMaskModule.forRoot(maskConfig),
+    MatSlideToggleModule,
+    MatMenuModule
   ],
   providers: [
     {

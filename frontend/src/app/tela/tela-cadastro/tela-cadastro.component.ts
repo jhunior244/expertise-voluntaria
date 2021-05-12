@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { AreaAtuacao } from './../../servico/area-atuacao/area-atuacao';
 import { SessaoService } from './../../core/sessao/sessao.service';
 import { CidadeService } from './../../servico/usuario/cidade.service';
@@ -30,6 +31,7 @@ export class TelaCadastroComponent implements OnInit {
   public senhaMatcher = new SenhaCrosFieldValidator();
   private usuario: Usuario;
   private endereco: Endereco;
+  private subscricao = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +46,8 @@ export class TelaCadastroComponent implements OnInit {
   ) {
     this.formGroup = this.formBuilder.group({
       nome: [null, Validators.required],
+      telefone: [null, Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(11)])],
+      tipoTelefone: [true],
       tipoUsuario: [null, Validators.required],
       areaAtuacao: [null],
       email: [null, Validators.compose([Validators.required, Validators.email])],
@@ -64,13 +68,15 @@ export class TelaCadastroComponent implements OnInit {
       asyncValidators: [
         emailExisteNaBaseValidator(this.usuarioService)
       ],
-      updateOn: 'blur'
+      updateOn: 'change'
     });
   }
 
   get email(): FormControl { return this.formGroup.controls.email as FormControl; }
   get validacaoEmail(): FormControl { return this.formGroup.controls.validacaoEmail as FormControl; }
   get nome(): FormControl { return this.formGroup.controls.nome as FormControl; }
+  get telefone(): FormControl { return this.formGroup.controls.telefone as FormControl; }
+  get tipoTelefone(): FormControl { return this.formGroup.controls.tipoTelefone as FormControl; }
   get tipoUsuario(): FormControl { return this.formGroup.controls.tipoUsuario as FormControl; }
   get setorEmpresa(): FormControl { return this.formGroup.controls.setorEmpresa as FormControl; }
   get areaAtuacao(): FormControl { return this.formGroup.controls.areaAtuacao as FormControl; }
@@ -89,7 +95,7 @@ export class TelaCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.sessaoService.deslogar();
-    this.cep.valueChanges.subscribe((cepEscrito: string) => {
+    this.subscricao.add(this.cep.valueChanges.subscribe((cepEscrito: string) => {
       if (cepEscrito.length === 8) {
         this.enderecoPorCepService.obtemEndereco(this.cep.value).subscribe(enderecoRetornado => {
           if (enderecoRetornado?.localidade) {
@@ -109,7 +115,7 @@ export class TelaCadastroComponent implements OnInit {
           this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
-    });
+    }));
   }
 
   enderecoIntegracaoParaFormulario(endereco: Endereco) {
@@ -139,6 +145,7 @@ export class TelaCadastroComponent implements OnInit {
     this.usuario.endereco = new Endereco();
     this.usuario.endereco.cidade = new Cidade();
     this.usuario.nome = this.nome.value;
+    this.usuario.telefone = this.telefone.value;
     this.usuario.tipoUsuario = this.tipoUsuario.value;
     this.usuario.email = this.email.value;
     this.usuario.endereco.rua = this.rua.value;

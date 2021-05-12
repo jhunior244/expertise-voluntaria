@@ -15,6 +15,8 @@ public class UsuarioDto {
 
     private String email;
 
+    private String telefone;
+
     private String token;
 
     private String senha;

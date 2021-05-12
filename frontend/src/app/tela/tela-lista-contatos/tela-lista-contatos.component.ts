@@ -56,7 +56,6 @@ export class TelaListaContatosComponent implements OnInit, OnDestroy {
         }, (erro: HttpErrorResponse) => {
           console.log(erro);
           this.dialog.closeAll();
-          this.erroService.exibeMensagemErro(erro.error.message, this.toaster);
         });
       }
     }));

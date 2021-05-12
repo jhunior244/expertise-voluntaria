@@ -6,6 +6,7 @@ import { forkJoin, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { configuracao } from 'src/app/configuracao';
 import { Cidade } from 'src/app/servico/usuario/cidade';
+import { Usuario } from 'src/app/servico/usuario/usuario';
 import { DialogoAguardeComponent } from './../../componente/dialogo-aguarde/dialogo-aguarde.component';
 import { AuthService } from './../../core/auth/auth.service';
 import { SessaoService } from './../../core/sessao/sessao.service';
@@ -38,7 +39,7 @@ export class AuthGuardTelaInicio implements CanActivate {
   styleUrls: ['./tela-inicio.component.css']
 })
 export class TelaInicioComponent implements OnInit {
-
+  public usuarioLogado$: Observable<Usuario>;
 
   public formGroup: FormGroup;
   public ufUsuarioLogado: string;
@@ -58,6 +59,7 @@ export class TelaInicioComponent implements OnInit {
     private sessaoService: SessaoService,
     private estadoService: EstadoService,
     private cidadeService: CidadeService,
+    private router: Router,
     private telaInicioService: TelaInicioService
   ) {
     this.formGroup = this.formBuilder.group({
@@ -68,8 +70,14 @@ export class TelaInicioComponent implements OnInit {
       todosUsuarios: [0]
     });
 
+    this.usuarioLogado$ = this.sessaoService.getUsuarioLogado();
     this.ufUsuarioLogado = this.sessaoService.getUf();
     this.cidadeUsuarioLogado = this.sessaoService.getCidade();
+  }
+
+  deslogar(){
+    this.sessaoService.deslogar();
+    this.router.navigate([configuracao.rotaInicio]);
   }
 
   get expertiseNecessaria(): FormControl { return this.formGroup.controls.expertiseNecessaria as FormControl; }

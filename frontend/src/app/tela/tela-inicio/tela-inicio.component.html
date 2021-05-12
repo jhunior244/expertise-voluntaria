@@ -1,54 +1,90 @@
-<div style="height: 94vh; width: 100%; position: relative;" fxLayoutAlign="space-between">
-    <div fxFlex="17" fxLayout="column" fxLayoutGap="10px" class="py-2" style="height: 100%;" fxLayoutAlign="space-between">
-        <div  fxLayout="column" fxLayoutGap="10px">
-            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaPublicacao" (click)="minimizaSubBotoes()">Publicações</button>
-            <button class="background-primary botao-menu-lateral" mat-raised-button (click)="calculaExibeSubBotoesRede()">
-                <div fxFlex fxLayoutAlign="space-between center">
-                    Rede
-                    <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;" *ngIf="!exibeSubBotoesRede">expand_more</mat-icon>
-                    <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;" *ngIf="exibeSubBotoesRede">expand_less</mat-icon>
-                </div>
+<div fxLayout="column">
+    <header style="width: 100%; height: 6vh; position: fixed; z-index: 1000;">
+        <nav fxFill class="background-primary" fxLayoutAlign="start center" style="padding: 0 30px;">
+            <button *ngIf="(usuarioLogado$ | async) as usuario;" mat-icon-button>
+                <mat-icon style="color: #ffffff;" [matMenuTriggerFor]="menu">account_circle</mat-icon>
             </button>
-            <div class="ml-2" fxLayout="column" fxLayoutGap="5px" *ngIf="exibeSubBotoesRede">
-                <button style="color: #58af9c; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaListaContatos">Meus contatos</button>
-                <button style="color: #58af9c; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaPesquisaUsuarios">Buscar novos</button>
+            <div>
+                <span *ngIf="(usuarioLogado$ | async) as usuario; else login"
+                    style="margin: 10px; color: rgb(255, 255, 255);">{{usuario.nome}}</span>
             </div>
-            <button class="background-primary botao-menu-lateral" mat-raised-button [routerLink]="configuracao.rotaCertificados" (click)="minimizaSubBotoes()">Certificados</button>
+            <ng-template #login>
+                <span style="margin: 10px;">
+                    <a style="color: #ffffff;" [routerLink]="['login']">Fazer login</a>
+                </span>
+            </ng-template>
+        </nav>
+    </header>
+    <main class="container" style="height: 94vh; width: 100%; position: relative; margin-top: 6vh"
+        fxLayoutAlign="space-between">
+        <div fxFlex="17" fxLayout="column" fxLayoutGap="10px" class="py-2" style="height: 100%;"
+            fxLayoutAlign="space-between">
+            <div fxLayout="column" fxLayoutGap="10px">
+                <button class="background-primary botao-menu-lateral" mat-raised-button
+                    [routerLink]="configuracao.rotaListaPublicacao" (click)="minimizaSubBotoes()">Publicações</button>
+                <button class="background-primary botao-menu-lateral" mat-raised-button
+                    (click)="calculaExibeSubBotoesRede()">
+                    <div fxFlex fxLayoutAlign="space-between center">
+                        Rede
+                        <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;"
+                            *ngIf="!exibeSubBotoesRede">expand_more</mat-icon>
+                        <mat-icon class="ml-1" style="color: #ffffff; font-size: 18px; max-width: 18px; max-height: 18px;"
+                            *ngIf="exibeSubBotoesRede">expand_less</mat-icon>
+                    </div>
+                </button>
+                <div class="ml-2" fxLayout="column" fxLayoutGap="5px" *ngIf="exibeSubBotoesRede">
+                    <button style="color: #00B19D; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral"
+                        mat-raised-button [routerLink]="configuracao.rotaListaContatos">Meus contatos</button>
+                    <button style="color: #00B19D; font-size: 12px; line-height: 28px;" class="sub-botao-menu-lateral"
+                        mat-raised-button [routerLink]="configuracao.rotaPesquisaUsuarios">Buscar novos</button>
+                </div>
+                <button class="background-primary botao-menu-lateral" mat-raised-button
+                    [routerLink]="configuracao.rotaCertificados" (click)="minimizaSubBotoes()">Certificados</button>
+            </div>
+            <div>
+                <app-chat-contatos></app-chat-contatos>
+            </div>
         </div>
-        <div>
-            <app-chat-contatos></app-chat-contatos>
+        <div fxLayoutAlign="center" fxFlex class="px-2">
+            <div style="position: relative;">
+                <app-chat-janelas-conversas></app-chat-janelas-conversas>
+            </div>
+            <router-outlet></router-outlet>
         </div>
-    </div>
-    <div fxLayoutAlign="center" fxFlex class="px-2">
-        <div style="position: relative;">
-            <app-chat-janelas-conversas></app-chat-janelas-conversas>
-        </div>
-        <router-outlet></router-outlet>
-    </div>
     
-    <div fxFlex="17" class="px-2 py-2" *ngIf="exibeFiltro">
-        <div style="width: 100%; height: 100%;" fxLayout="column">
-            <app-select-estado *ngIf="exibeFiltroEstado"
-            [exibeApenasUf]="false" 
-            [controladorFormulario]="uf" 
-            [multiplo]="true"></app-select-estado>
-            
-            <app-select-cidade *ngIf="exibeFiltroCidade"
-             [controladorFormulario]="cidade" [estado]="ufUsuarioLogado" [multiplo]="true"></app-select-cidade>
-            
-            <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="expertiseNecessaria">
-            </app-select-area-atuacao>
-            
-            <app-select-tipo-usuario *ngIf="exibeFiltroTipoUsuario" [controladorFormulario]="tipoPessoa" [multiplo]="true"></app-select-tipo-usuario>
-            
-            <app-select-sim-nao *ngIf="exibeFiltroTodosUsuario" 
-            [controladorFormulario]="todosUsuarios"
-            [reservadorEspaco]="'Exibir publicações'"
-            [reservadorEspacoSim]="'Minhas publicações'"
-            [reservadorEspacoNao]="'Outros usuários'"
-            [reservadorEspacoTodos]="'Todas publicações'"></app-select-sim-nao>
-            
-            <button class="background-primary botao-pesquisar" (click)="anunciaClickPesquisar()" mat-raised-button>Pesquisar</button>
+        <div fxFlex="17" class="px-2 py-2" *ngIf="exibeFiltro">
+            <div style="width: 100%; height: 100%;" fxLayout="column">
+                <app-select-estado *ngIf="exibeFiltroEstado" [exibeApenasUf]="false" [controladorFormulario]="uf"
+                    [multiplo]="true"></app-select-estado>
+    
+                <app-select-cidade *ngIf="exibeFiltroCidade" [controladorFormulario]="cidade" [estado]="ufUsuarioLogado"
+                    [multiplo]="true"></app-select-cidade>
+    
+                <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="expertiseNecessaria">
+                </app-select-area-atuacao>
+    
+                <app-select-tipo-usuario *ngIf="exibeFiltroTipoUsuario" [controladorFormulario]="tipoPessoa"
+                    [multiplo]="true"></app-select-tipo-usuario>
+    
+                <app-select-sim-nao *ngIf="exibeFiltroTodosUsuario" [controladorFormulario]="todosUsuarios"
+                    [reservadorEspaco]="'Exibir publicações'" [reservadorEspacoSim]="'Minhas publicações'"
+                    [reservadorEspacoNao]="'Outros usuários'" [reservadorEspacoTodos]="'Todas publicações'">
+                </app-select-sim-nao>
+    
+                <button class="background-primary botao-pesquisar" (click)="anunciaClickPesquisar()"
+                    mat-raised-button>Pesquisar</button>
+            </div>
         </div>
-    </div>
+    </main>
 </div>
+
+<mat-menu #menu="matMenu" class="mb-1">
+    <!-- <button mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Meu perfil</span>
+    </button> -->
+    <button mat-menu-item (click)="deslogar()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sair</span>
+    </button>
+</mat-menu>

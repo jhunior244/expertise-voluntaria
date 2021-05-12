@@ -56,7 +56,7 @@ public class PublicacaoJpaRepositoryCustomImpl implements PublicacaoJpaRepositor
             }
         }
 
-        query.where(predicado);
+        query.where(predicado).orderBy(publicacao.data.desc());
 
         query.limit(pagina.getPageSize());
 

@@ -1,8 +1,6 @@
 package br.com.ishare.repositorio.avaliacao;
 
-import br.com.ishare.entidade.usuario.Certificado;
-import br.com.ishare.entidade.usuario.QCertificado;
-import br.com.ishare.entidade.usuario.Usuario;
+import br.com.ishare.entidade.usuario.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -81,5 +79,25 @@ public class AvaliacaoJpaRepositoryCustomImpl implements AvaliacaoJpaRepositoryC
         query.where(predicado);
 
         return query.fetchFirst();
+    }
+
+    @Override
+    public List<Avaliacao> lista(UUID idUsuario){
+
+        QAvaliacao avaliacao = QAvaliacao.avaliacao;
+
+        JPAQuery<Avaliacao> query = jpaQueryFactory.selectFrom(avaliacao);
+
+        BooleanExpression predicado = avaliacao.id.isNotNull();
+
+        if(idUsuario == null){
+            return new ArrayList<>();
+        }
+
+        predicado = predicado.and(avaliacao.usuario.id.eq(idUsuario));
+
+        query.where(predicado);
+
+        return query.fetch();
     }
 }

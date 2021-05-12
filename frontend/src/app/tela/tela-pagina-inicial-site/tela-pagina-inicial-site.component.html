@@ -1,3 +1,36 @@
-<div fxLayoutAlign="center center">
-    <h1>Em Breve!!!</h1>
+<div fxLayout="column">
+    <header style="width: 100%; height: 6vh; position: fixed; z-index: 1000;;">
+        <nav fxFill class="background-primary" style="padding: 0 50px" fxLayoutAlign="space-between center">
+            <div fxFlex="30">
+                <img height="40vh" src="../../../assets/icones/logo TCC.png">
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <a class="mr-4 px-2 py-1">INICIO</a>
+                <a class="mr-4 px-2 py-1">VANTAGENS</a>
+                <a class="mr-4 px-2 py-1">SOBRE</a>
+                <div style="color: white;" class="px-6">|</div>
+                <a id="entrar" (click)="entrar()" class="ml-4 px-2 py-1" fxLayoutAlign="center center">
+                    <mat-icon style="color: #ffffff;">person_outline</mat-icon>
+                    ENTRAR
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main style="height: 94vh; width: 100%; position: relative; margin-top: 6vh">
+        <div style="height: 100%;" class="container">
+            <section fxFill fxLayout="row" id="apresentacao" style="height: 100%;" fxLayoutAlign="space-around center">
+                <div fxFlex="76">
+                </div>
+                <div fxFill fxFlex="30" fxLayoutAlign="center center" fxLayout="column">
+                    <h1 style="color: #00B19D; font-weight: 800; font-size: 1.8rem;">Expertise voluntária</h1>
+                    <div style="text-align: center;">
+                        <span style="color: #00B19D; font-size: 1.1rem; letter-spacing: 1px; font-weight: 500;">
+                            Uma plataforma criada para conectar pessoas de alma voluntária à instituições que
+                            trabalham para tornar a sociedade melhor.</span>
+                    </div>
+                    <button class="botao-cadastrar fonte-texto sombra-suave" (click)="cadastrar()" mat-button>CADASTRAR</button>
+                </div>
+            </section>
+        </div>
+    </main>
 </div>

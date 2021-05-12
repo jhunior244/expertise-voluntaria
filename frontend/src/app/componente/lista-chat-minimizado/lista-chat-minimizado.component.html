@@ -1,6 +1,6 @@
 <div *ngIf="listaConversa?.length > 0" style="max-height: 340px; width: 50px;" fxLayoutAlign="end end" fxLayout="column" fxLayoutGap="5px">
     
-    <div style="width: 50px; height: 50px; background-color: #58af9c; border-radius: 50%; overflow-y: auto;"  fxLayoutAlign="center center"  *ngFor="let conversa of listaConversa" >
+    <div style="width: 50px; height: 50px; background-color: #00B19D; border-radius: 50%; overflow-y: auto;"  fxLayoutAlign="center center"  *ngFor="let conversa of listaConversa" >
         <a style="font-size: 18px; cursor: pointer;  border-bottom: 5px; font-weight: 500; letter-spacing: 0.03rem; color: white" (click)="maximinizar(conversa)">{{calculaAbreviacao(conversa)}}</a>
     </div>
 

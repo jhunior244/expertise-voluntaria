@@ -5,6 +5,7 @@ import br.com.ishare.dto.usuario.TipoUsuarioDto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -13,6 +14,8 @@ public class UsuarioTelaContatoDto implements Serializable {
     private String id;
 
     private String nome;
+
+    private String telefone;
 
     private String email;
 
@@ -25,6 +28,10 @@ public class UsuarioTelaContatoDto implements Serializable {
     private String tipoUsuarioNome;
 
     private Boolean ehContatoAdicionado;
+
+    private BigDecimal mediaAvaliacao;
+
+    private Integer totalAvaliacoes;
 
     private List<AreaAtuacaoDto> listaAreaAtuacao;
 }

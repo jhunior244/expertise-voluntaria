@@ -146,7 +146,7 @@ export class UsuarioService {
         }
 
         const listaIdEstado = new Array<string>();
-        if (listaEstado) {
+        if (listaEstado?.length) {
             for (const estado of listaEstado) {
                 listaIdEstado.push(estado.id.toString());
             }
@@ -156,7 +156,7 @@ export class UsuarioService {
         }
 
         const listaIdCidade = new Array<string>();
-        if (listaCidade) {
+        if (listaCidade?.length) {
             for (const cidade of listaCidade) {
                 listaIdCidade.push(cidade.id.toString());
             }
@@ -166,7 +166,7 @@ export class UsuarioService {
         }
 
         const listaIdAreaAtuacao = new Array<string>();
-        if (listaAreaAtuacao) {
+        if (listaAreaAtuacao?.length) {
             for (const area of listaAreaAtuacao) {
                 listaIdAreaAtuacao.push(area.id.toString());
             }

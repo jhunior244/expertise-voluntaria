@@ -1,3 +1,6 @@
+import { configuracao } from './../../configuracao';
+import { Router } from '@angular/router';
+import { SessaoService } from './../../core/sessao/sessao.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TelaPaginaInicialSiteComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private sessaoService: SessaoService,
+    private router: Router
+  ) { 
+    this.sessaoService.deslogar();
+  }
 
   ngOnInit(): void {
+  }
+
+  entrar(){
+    this.router.navigate([configuracao.rotaLogin]);
+  }
+  
+  cadastrar(){
+    this.router.navigate([configuracao.rotaCadastro]);
   }
 
 }

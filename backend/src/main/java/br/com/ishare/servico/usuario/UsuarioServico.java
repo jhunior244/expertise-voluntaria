@@ -6,6 +6,7 @@ import br.com.ishare.dto.usuario.UsuarioDto;
 import br.com.ishare.entidade.usuario.*;
 import br.com.ishare.mapeador.AreaAtuacaoMapeador;
 import br.com.ishare.mapeador.UsuarioMapeador;
+import br.com.ishare.repositorio.avaliacao.AvaliacaoJpaRepository;
 import br.com.ishare.repositorio.usuario.CidadeJpaRepository;
 import br.com.ishare.repositorio.usuario.EnderecoJpaRepository;
 import br.com.ishare.repositorio.usuario.TipoUsuarioJpaRepository;
@@ -24,10 +25,12 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -51,6 +54,9 @@ public class UsuarioServico implements IUsuarioServico {
 
     @Autowired
     private AreaAtuacaoMapeador areaAtuacaoMapeador;
+
+    @Autowired
+    private AvaliacaoJpaRepository avaliacaoJpaRepository;
 
     @Override
     public boolean existeUsuarioCadastradoComEmail(String email){
@@ -135,6 +141,7 @@ public class UsuarioServico implements IUsuarioServico {
 
         usuarioTelaContatoDto.setId(usuario.getId().toString());
         usuarioTelaContatoDto.setNome(usuario.getNome());
+        usuarioTelaContatoDto.setTelefone(usuario.getTelefone());
         usuarioTelaContatoDto.setEmail(usuario.getEmail());
         usuarioTelaContatoDto.setBairro(usuario.getEndereco().getBairro());
         usuarioTelaContatoDto.setCidade(usuario.getCidade());
@@ -142,6 +149,16 @@ public class UsuarioServico implements IUsuarioServico {
         usuarioTelaContatoDto.setTipoUsuarioNome(usuario.getTipoUsuario().getNome());
         usuarioTelaContatoDto.setEhContatoAdicionado(usuarioJpaRepository.usuarioEhContato(usuarioLogado.getId(), usuario.getId()));
         usuarioTelaContatoDto.setListaAreaAtuacao(areaAtuacaoMapeador.paraDto(usuario.getListaAreaAtuacao()));
+
+        List<Avaliacao> lista = avaliacaoJpaRepository.lista(usuario.getId());
+        BigDecimal nota;
+
+        usuarioTelaContatoDto.setTotalAvaliacoes(lista.size());
+
+        if (!CollectionUtils.isEmpty(lista)){
+            nota = new BigDecimal(lista.stream().map(Avaliacao::getNota).mapToLong(Long::longValue).sum()).divide(BigDecimal.valueOf(lista.size()));
+            usuarioTelaContatoDto.setMediaAvaliacao(nota);
+        }
 
         return usuarioTelaContatoDto;
     }

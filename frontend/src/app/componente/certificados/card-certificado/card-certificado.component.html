@@ -6,14 +6,14 @@
         <div fxLayoutAlign="space-around center" style="padding-top: 1rem;" fxFlex>
             <button fxLayoutAlign="center center" matTooltip="Compartilhar no Linkedin" shareButton="linkedin"
                 class="botao-enviar" fxFlex="45" mat-button [url]="url">
-                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">reply
                 </mat-icon>
                 <span>Linkedin</span>
             </button>
 
             <button fxLayoutAlign="center center" matTooltip="Compartilhar no Facebook" shareButton="facebook"
                 class="botao-enviar" fxFlex="45" mat-button [url]="url">
-                <mat-icon class="mr-1" style="color: #58af9c; font-size: 18px; max-width: 18px; max-height: 18px;">reply
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">reply
                 </mat-icon>
                 <span>Facebook</span>
             </button>
@@ -27,7 +27,7 @@
             </star-rating>
             <button *ngIf="habilitaAvaliacao" [disabled]="!habilitaAvaliacao" fxLayoutAlign="center center" fxFlex="20"
                 (click)="cria()"
-                style="background-color: #58af9c; color: white; letter-spacing: 1px; line-height: 30px;" mat-button>
+                style="background-color: #00B19D; color: white; letter-spacing: 1px; line-height: 30px;" mat-button>
                 <span>Avaliar voluntário</span>
             </button>
         </div>

@@ -4,8 +4,9 @@
         <div style="width: 60%;" class="mb-3" fxLayout="column">
             <form [formGroup]="formGroup" fxLayout="column">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <mat-form-field fxFlex>
-                        <mat-label *ngIf="tipoUsuario.value == null || tipoUsuario.value == ''">Nome completo / Razão social</mat-label>
+                    <mat-form-field fxFlex="55">
+                        <mat-label *ngIf="tipoUsuario.value == null || tipoUsuario.value == ''">Nome completo / Razão
+                            social</mat-label>
                         <mat-label *ngIf="pessoaFisicaSelecionado">Nome completo</mat-label>
                         <mat-label *ngIf="pessoaJuridicaSelecionado || ongOscSelecionado">Razão social</mat-label>
                         <input type="text" matInput [formControl]="nome">
@@ -14,6 +15,31 @@
                             Campo obrigatório
                         </mat-error>
                     </mat-form-field>
+
+
+                    <mat-form-field fxFlex="28">
+                        <mat-label *ngIf="!tipoTelefone.value">Tel. Fixo</mat-label>
+                        <input *ngIf="!tipoTelefone.value" mask="(00) 0000-0000" type="text" matInput [formControl]="telefone">
+
+                        <mat-label *ngIf="tipoTelefone.value">Celular</mat-label>
+                        <input *ngIf="tipoTelefone.value" mask="(00) 0 0000-0000" type="text" matInput [formControl]="telefone">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="telefone.hasError('minlength')">
+                            Tamanho mínimo é 10 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="telefone.hasError('maxlength')">
+                            Tamanho máximo é 11 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="telefone.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+                    <div fxLayout="column" fxFlex="13" fxLayoutAlign="end center">
+                        <mat-label *ngIf="tipoTelefone.value">Celular</mat-label>
+                        <mat-label *ngIf="!tipoTelefone.value">Tel. Fixo</mat-label>
+                        <mat-slide-toggle [formControl]="tipoTelefone" >
+                        </mat-slide-toggle>
+                    </div>
                 </div>
 
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
@@ -22,7 +48,8 @@
                         </app-select-tipo-usuario>
                     </div>
                     <div fxFlex="48" fxFlex.lt-md="100">
-                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao" [tipoUsuario]="tipoUsuario.value">
+                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao"
+                            [tipoUsuario]="tipoUsuario.value">
                         </app-select-area-atuacao>
                     </div>
                 </div>

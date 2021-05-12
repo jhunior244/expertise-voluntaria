@@ -2,7 +2,7 @@
   background-color: #588daf5e;
 }
 .vermelho {
-  background-color: #58af9c26;
+  background-color: #00B19D26;
 }
 .button-enviar {
   /* box-shadow: 0px 0px 4px #444444; */
@@ -18,14 +18,14 @@
 
 .botao-add {
   background-color: transparent;
-  color: #58af9c;
+  color: #00B19D;
   box-shadow: none;
 }
 
 a {
   cursor: pointer;
   font-size: 16px;
-  color: #58af9c !important;
+  color: #00B19D !important;
 }
 
 a:hover {

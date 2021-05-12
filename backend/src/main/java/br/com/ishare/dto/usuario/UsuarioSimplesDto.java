@@ -14,6 +14,8 @@ public class UsuarioSimplesDto {
 
     private String email;
 
+    private String telefone;
+
     private String cidade;
 
     private String uf;
