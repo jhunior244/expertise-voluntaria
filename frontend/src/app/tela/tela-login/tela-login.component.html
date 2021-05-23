@@ -1,20 +1,28 @@
 <div style="height: 100%;" class="container py-5">
     <div style="height: 100%;" class="sombra-padrao arredondamento-padrao">
+                    
+        <button [routerLink]="rotasSistema.rotaInicio" style="position: absolute; margin: 15px;" mat-mini-fab>
+            <mat-icon style="color: #ffffff;">home</mat-icon>
+        </button>
+
         <div fxFlex="50" fxLayoutAlign="center center" fxLayout="column" class="background-primary"
             style="border-radius: 15px 0 0 15px; color: white;">
             <div style="height: 50%; width: 60%;" fxLayoutAlign="center center" fxLayout="column">
                 <h2 style="font-size: 35px;">Bem vindo
                 </h2>
-                <span style="text-align: center;" class="fonte-texto">Junte-se ao Expertise voluntária e encontre pessoas solidárias e
+                <span style="text-align: center;" class="fonte-texto">Junte-se ao Expertise voluntária e encontre
+                    pessoas solidárias e
                     instituições a procura de solidários próximo a você</span>
                 <div class="mt-1" style="width: 60%;">
-                    <button (click)="cadastro()" class="botao-cadastrar fonte-texto sombra-suave" mat-button>CADASTRAR</button>
+                    <button (click)="cadastro()" class="botao-cadastrar fonte-texto sombra-suave"
+                        mat-button>CADASTRAR</button>
                 </div>
             </div>
         </div>
+
         <div fxFlex="50" fxLayoutAlign="center center" style="background-color: #ffffff; border-radius: 0 15px 15px 0;">
-            <div style="height: 50%; width: 60%;"  fxLayoutAlign="center center">
-                <form fxFill [formGroup]="formGroup" fxLayout="column"  fxLayoutAlign="center center">
+            <div style="height: 50%; width: 60%;" fxLayoutAlign="center center">
+                <form fxFill [formGroup]="formGroup" fxLayout="column" fxLayoutAlign="center center">
                     <mat-form-field style="width: 100%;">
                         <mat-label>Email</mat-label>
                         <input type="email" matInput [formControl]="email" [errorStateMatcher]="emailMatcher"
@@ -38,7 +46,7 @@
                     </mat-form-field>
                     <div style="width: 60%;" class="mt-1">
                         <button [disabled]="!formGroup.valid" (click)="logar()"
-                        class="botao-entrar background-primary fonte-texto sombra-suave" mat-button>ENTRAR</button>
+                            class="botao-entrar background-primary fonte-texto sombra-suave" mat-button>ENTRAR</button>
                     </div>
                 </form>
             </div>

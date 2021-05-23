@@ -85,6 +85,7 @@ import { AvaliacaoService } from './servico/avaliacao/avaliacao.service';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatMenuModule} from '@angular/material/menu';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const customConfig: ShareButtonsConfig = {
@@ -168,7 +169,8 @@ const maskConfig: Partial<IConfig> = {
     StarRatingModule.forRoot(),
     NgxMaskModule.forRoot(maskConfig),
     MatSlideToggleModule,
-    MatMenuModule
+    MatMenuModule,
+    NgbModule
   ],
   providers: [
     {

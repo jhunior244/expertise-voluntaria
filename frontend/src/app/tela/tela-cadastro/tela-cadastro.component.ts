@@ -32,6 +32,7 @@ export class TelaCadastroComponent implements OnInit {
   private usuario: Usuario;
   private endereco: Endereco;
   private subscricao = new Subscription();
+  public configuracao = configuracao;
 
   constructor(
     private formBuilder: FormBuilder,
