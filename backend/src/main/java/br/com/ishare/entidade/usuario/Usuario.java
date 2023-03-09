@@ -1,6 +1,7 @@
 package br.com.ishare.entidade.usuario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryInit;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
@@ -31,6 +32,9 @@ public class Usuario implements UserDetails {
     private String email;
 
     @Column
+    private String telefone;
+
+    @Column
     private String token;
 
     @Column(nullable = false)
@@ -38,10 +42,45 @@ public class Usuario implements UserDetails {
     private String senha;
 
     @ManyToOne
+    @QueryInit("cidade.estado")
     private Endereco endereco;
 
     @ManyToOne
     private TipoUsuario tipoUsuario;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Avaliacao> listaAvaliacao;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Certificado> listaCertificado;
+
+    @OneToMany(mappedBy = "usuarioUm")
+    private List<Conversa> listaConversa;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuarioListaAtuacao",
+            joinColumns = {
+                    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "area_atuacao_id", nullable = false, referencedColumnName = "id")
+            }
+    )
+    private List<AreaAtuacao> listaAreaAtuacao;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usuarioListaContato",
+            joinColumns = {
+                    @JoinColumn(name = "usuario_id", nullable = false, referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "contato_id", nullable = false, referencedColumnName = "id")
+            }
+    )
+    private List<Usuario> listaContato;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> listaPerfil = new ArrayList<Perfil>();
@@ -79,5 +118,30 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUf() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null || this.getEndereco().getCidade().getEstado() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getEstado().getUf();
+    }
+
+    public String getCidade() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getNome();
+    }
+
+    public String getEstado() {
+        if(this.getEndereco() == null || this.getEndereco().getCidade() == null || this.getEndereco().getCidade().getEstado() == null){
+            return null;
+        }
+        return this.getEndereco().getCidade().getEstado().getNome();
+    }
+
+    public Boolean ehOngOsc() {
+        return getTipoUsuario() != null && getTipoUsuario().ehOngOsc();
     }
 }

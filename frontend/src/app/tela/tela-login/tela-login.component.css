@@ -1,19 +1,23 @@
 .botao-cadastrar {
-        color: #ffffff;
-        border-radius: 3em;
-        width: 100%;
-        border: 1px solid white;
-        margin-top: 1em;
+  color: #ffffff;
+  border-radius: 1em;
+  width: 100%;
+  border: 1px solid white;
+  margin-top: 1em;
 }
-.botao-cadastrar:focus{
-    outline: none;
+.botao-cadastrar:focus {
+  outline: none;
 }
+.botao-cadastrar:disabled {
+  background-color: darkgrey;
+}
+
 .botao-entrar {
-    color: #ffffff;
-    border-radius: 3em;
-    width: 100%;
-    margin-top: 1em;
+  color: #ffffff;
+  border-radius: 1em;
+  width: 100%;
+  margin-top: 1em;
 }
-.botao-entrar:focus{
-    outline: none;
+.botao-entrar:focus {
+  outline: none;
 }

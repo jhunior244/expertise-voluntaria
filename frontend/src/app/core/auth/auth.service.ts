@@ -27,6 +27,14 @@ export class AuthService {
       .pipe(tap(usuarioRetornado => {
         this.sessaoService.setToken(usuarioRetornado.token);
         this.sessaoService.setUsuarioLogadoSistema(usuarioRetornado.nome);
+        this.sessaoService.setUf(usuarioRetornado.uf);
+        this.sessaoService.setCidade(usuarioRetornado.cidade);
+        this.sessaoService.setEmail(usuarioRetornado.email);
+        this.sessaoService.setTipoUsuario(usuarioRetornado.tipoUsuario?.id);
       }));
+  }
+
+  autenticado(): Observable<boolean>{
+    return this.http.get<boolean>(this.url + '/autenticado');
   }
 }

@@ -7,9 +7,11 @@ import javax.persistence.*;
 @Entity
 @Data
 public class TipoUsuario {
+
     public enum Valores {
         PESSOA_FISICA(1, "Pessoa física"),
-        PESSOA_JURIDICA(2, "Pessoa jurídica");
+        PESSOA_JURIDICA(2, "Pessoa jurídica"),
+        ONG_OSC(3, "ONG / OSC");
 
         private long id;
         private String nome;
@@ -31,4 +33,7 @@ public class TipoUsuario {
 
     @Column(nullable = false, unique = true)
     private String nome;
+    public boolean ehOngOsc() {
+        return this.id == Valores.ONG_OSC.id;
+    }
 }

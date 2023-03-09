@@ -14,5 +14,13 @@ public class UsuarioSaidaDto implements Serializable {
 
     private String email;
 
+    private String telefone;
+
     private String token;
+
+    private String uf;
+
+    private String cidade;
+
+    private TipoUsuarioDto tipoUsuario;
 }

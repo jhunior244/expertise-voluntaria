@@ -1,7 +1,7 @@
 package br.com.ishare.core.autenticacao;
 
 import br.com.ishare.entidade.usuario.Usuario;
-import br.com.ishare.repositorio.UsuarioJpaRepository;
+import br.com.ishare.repositorio.usuario.UsuarioJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,0 +1,60 @@
+<div  *ngIf="!minimizado" style=" width: 220px; border: 1px solid #00B19D;  border-radius: 5px 5px 0 0; background-color: white;  bottom: 0;"
+    fxLayout="column">
+    <div style="width: 100%; height: 30px; background-color: rgb(255, 255, 255); border-radius: 5px 5px 0 0;"
+        fxLayoutAlign="space-between center">
+        <div class="ml-1">
+            <span style="font-weight: 500; letter-spacing: 1;">{{conversa?.contato?.nome}}</span>
+        </div>
+        <div>
+            <button *ngIf="!minimizado" mat-icon-button style="width: 25px;" (click)="minimizaMaximinizaChat()">
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">
+                    keyboard_arrow_down</mat-icon>
+            </button>
+            <button *ngIf="minimizado" mat-icon-button style="width: 25px;" (click)="minimizaMaximinizaChat()">
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">
+                    keyboard_arrow_up</mat-icon>
+            </button>
+            <button mat-icon-button (click)="fecha(conversa)">
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">
+                    close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div style="width: 100%; height: 309px; background-color: rgb(255, 255, 255); overflow-y: auto;"
+        fxLayout="column" #historicoMensagem>
+        <div *ngFor="let mensagem of listaMensagem">
+            <div style="width: 100%; padding: 2px 10px;" *ngIf="mensagem?.usuario?.email !== emaillUsuarioLogado">
+                <div style="width: 80%; background-color: #7e7e7e; padding: 10px; border-radius: 0px 25px 25px 0;"  fxLayout="column">
+                    <span
+                        style="word-wrap: break-word; word-break: break-word; font-weight: 500; letter-spacing: 0.03rem; color: white;">
+                        {{mensagem.texto}}</span>
+                        <span style="font-size: 7px;">{{mensagem.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+                </div>
+            </div>
+    
+            <div style="width: 100%; padding: 2px 10px;" fxLayoutAlign="end end" *ngIf="mensagem?.usuario?.email === emaillUsuarioLogado">
+                <div style="width: 80%; background-color: #00B19D; padding: 10px; border-radius: 25px 0px 0px 25px;" fxLayout="column">
+                    <span
+                        style="word-wrap: break-word; word-break: break-word; font-weight: 500; letter-spacing: 0.03rem; color: white;">
+                        {{mensagem.texto}}</span>
+                        <span style="font-size: 7px;">{{mensagem.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+                </div>
+            </div>
+        </div>
+
+
+        
+    </div>
+    <div *ngIf="!minimizado" style="width: 100%; padding: 2px 3px;" fxLayoutAlign="space-between center">
+        <input
+            style="width: calc(100% - 30px);; border-radius: 9999em; border: 1px solid #00B19D; padding: 7px; outline: none;"
+            type="text" placeholder="Digite uma mensagem" [formControl]="mensagem">
+        <button mat-icon-button [disabled]="!habilitaBotaoEnviar" (click)="enviarMensagem()">
+            <mat-icon style="left: 15px; cursor: pointer; color: #00B19D;" aria-hidden="false" aria-label="Enviar">send
+            </mat-icon>
+        </button>
+    </div>
+
+</div>
+

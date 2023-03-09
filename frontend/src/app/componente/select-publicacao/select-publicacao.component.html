@@ -1,0 +1,21 @@
+<mat-form-field style="width:100%;">
+    <mat-select #selectPublicacao style="width:100%;" id="{{idSelect}}" [placeholder]="calculaPlaceholder()"
+        [formControl]="controladorFormulario" [compareWith]="compara" multiple={{multiplo}}
+        [errorStateMatcher]="exibeErro">
+        <div *ngFor=" let publicacao of lista" fxLayoutAlign="space-between center">
+            <mat-option [value]="publicacao" fxFlex>
+                <span>{{publicacao.usuario?.nome}}</span>&nbsp;-&nbsp;
+                <span>{{publicacao.descricao | slice:0:40}}</span>
+                <span *ngIf="publicacao.descricao.length > 40">...</span>
+            </mat-option>
+            <div *ngIf="selectPublicacao.panelOpen">
+                <button class="background-primary botao-publicacao" mat-button
+                    (click)="irParaPublicacao(publicacao?.id)">Ver publicação</button>
+            </div>
+        </div>
+    </mat-select>
+    <mat-hint *ngIf="obrigatorio">Campo obrigátorio</mat-hint>
+    <mat-error *ngIf="controladorFormulario.hasError('required')">
+        Campo obrigatório
+    </mat-error>
+</mat-form-field>

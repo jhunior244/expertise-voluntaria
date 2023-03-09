@@ -41,6 +41,8 @@ export class SelectTipoUsuarioComponent implements OnInit {
     });
   }
 
+
+
   compara(tipo1: TipoUsuario, tipo2: TipoUsuario): boolean {
     return tipo1 && tipo2 && tipo1.id === tipo2.id;
   }

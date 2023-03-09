@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~css-star-rating/css/star-rating.css";
 @import url("https://fonts.googleapis.com/css2?family=Domine&display=swap");
 
 html,
@@ -12,11 +13,11 @@ body {
 }
 
 .color-primary {
-  color: #58af9c;
+  color: #00B19D;
 }
 
 .background-primary {
-  background-color: #58af9c;
+  background-color: #00B19D;
 }
 
 .sombra-padrao {
@@ -40,25 +41,114 @@ body {
   font-size: 14px;
 }
 
+/*estilo campo selecionado mat-option*/
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #00B19D !important;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+  background: #00B19D !important;
+}
+
+
+/*estilo mat-form-field inicio*/
 .mat-focused .mat-form-field-label {
   /*change color of label*/
-  color: #58af9c !important;
+  color: #00B19D !important;
 }
 
 .mat-form-field-underline {
   /*change color of underline*/
-  background-color: #58af9c !important;
+  background-color: #00B19D !important;
 }
 
 .mat-form-field-ripple {
   /*change color of underline when focused*/
-  background-color: #58af9c !important;
+  background-color: #00B19D !important;
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-label {
-    color: #58af9c;
+    color: #00B19D;
 }
 
 mat-hint {
-    color: #58af9c !important; 
+    color: #00B19D !important; 
 }
+/*estilo mat-form-field fim*/
+
+/*estilo mat button inicio*/
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+  background-color: #00B19D;
+}
+
+.mat-mini-fab:focus{
+  outline: none;
+}
+/*estilo mat button fim*/
+
+/*estilo mat-slide inicio*/
+.mat-slider-thumb-label {
+  transform: rotate(45deg) !important;
+  border-radius: 200% 100% 0 !important;
+  background-color: #00B19D;
+}
+
+.mat-slider-thumb {
+  transform: scale(0) !important;
+}
+
+.mat-slider-thumb-label-text {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  opacity: 1 !important;
+}
+
+.mat-accent .mat-slider-track-fill, .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {
+  background-color: #00B19D !important;
+}
+
+.mat-slider-horizontal {
+  height: 30px !important;
+  width: 100%;
+}
+.mat-slider-horizontal .mat-slider-wrapper {
+  height: 2px;
+  top: 23px;
+  left: 0px !important;
+  right: 0px !important;
+}
+.mat-slider-horizontal .mat-slider-track-wrapper {
+  height: 1px !important;
+  width: 100%;
+}
+/*estilo mat-slide fim*/
+
+/* tirar cor do fundo dialogo */
+.dialogo-aguarde .mat-dialog-container {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* cor do spinner */
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #00B19D;
+}
+
+mat-divider {
+  background-color: #00B19D;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #5ed0b7;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: #00B19D;
+}
+
+

@@ -1,0 +1,33 @@
+a {
+  color: white;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+#entrar {
+  border-radius: 0.5em;
+  border: 1px solid white;
+  text-decoration: none;
+}
+
+main {
+  background: url(../../../assets/principal_tcc.jpg) no-repeat;
+  background-size: cover;
+  background-position: top center;
+}
+
+.botao-cadastrar {
+  color: #ffffff;
+  border-radius: 0.6em;
+  /* border: 1px solid #00B19D; */
+  background-color: #00b19d;
+  margin-top: 1em;
+  font-size: 18px;
+  font-weight: 500;
+}
+.botao-cadastrar:focus {
+  outline: none;
+}
+
+

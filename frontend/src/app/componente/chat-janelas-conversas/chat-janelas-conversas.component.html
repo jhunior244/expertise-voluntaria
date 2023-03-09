@@ -1,0 +1,6 @@
+<div style="position: fixed !important; bottom: 0; z-index: 1000;" class="ml-1" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
+  <app-lista-chat-minimizado></app-lista-chat-minimizado>
+  <div *ngFor="let conversa of listaConversa"> 
+    <app-janela-chat [conversa]="conversa"></app-janela-chat>
+  </div>
+</div>

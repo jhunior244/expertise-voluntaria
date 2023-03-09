@@ -25,7 +25,7 @@ public class TokenService {
         Date now = new Date();
         Date dataExpiracao = new Date(now.getTime() + Long.parseLong(expiration));
         return Jwts.builder()
-                .setIssuer("StudyManager")
+                .setIssuer("IShare")
                 .setSubject(usuarioLogado.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(dataExpiracao)

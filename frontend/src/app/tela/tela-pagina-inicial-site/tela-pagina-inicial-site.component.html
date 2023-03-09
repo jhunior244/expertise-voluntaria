@@ -1,3 +1,77 @@
-<div fxLayoutAlign="center center">
-    <h1>Em Breve!!!</h1>
+<div fxLayout="column">
+    <header style="width: 100%; height: 6vh; position: fixed; z-index: 1000;;">
+        <nav fxFill class="background-primary" style="padding: 0 50px" fxLayoutAlign="space-between center">
+            <div fxFlex="30">
+                <img height="40vh" src="../../../assets/icones/logo TCC.png">
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <a (click)="irParaInicio()" class="mr-4 px-2 py-1">INICIO</a>
+                <a (click)="irParaVangagem()" class="mr-4 px-2 py-1">VANTAGENS</a>
+                <a (click)="irParaSobre()" class="mr-4 px-2 py-1">SOBRE</a>
+                <div style="color: white;" class="px-6">|</div>
+                <a id="entrar" (click)="entrar()" class="ml-4 px-2 py-1" fxLayoutAlign="center center">
+                    <mat-icon style="color: #ffffff;">person_outline</mat-icon>
+                    ENTRAR
+                </a>
+            </div>
+        </nav>
+    </header>
+    <main style="height: 94vh; width: 100%; position: relative; margin-top: 6vh">
+        <section style="height: 100%;" class="container" id="inicio">
+            <div fxFill fxLayout="row" id="apresentacao" style="height: 100%;" fxLayoutAlign="space-around center">
+                <div fxFlex="76">
+                </div>
+                <div fxFill fxFlex="30" fxLayoutAlign="center center" fxLayout="column">
+                    <h1 style="color: #00B19D; font-weight: 800; font-size: 1.8rem;">Expertise voluntária</h1>
+                    <div style="text-align: center;">
+                        <span style="color: #00B19D; font-size: 1.1rem; letter-spacing: 1px; font-weight: 500;">
+                            Uma plataforma criada para conectar pessoas de alma voluntária à instituições que
+                            trabalham para tornar a sociedade melhor.</span>
+                    </div>
+                    <button class="botao-cadastrar fonte-texto sombra-suave" (click)="cadastrar()" mat-button>CADASTRAR</button>
+                </div>
+            </div>
+        </section>
+        <section style="height: 100%;" class="container mt-3" #vantagem>
+            <ngb-carousel  *ngIf="images">
+                <ng-template ngbSlide>
+                  <div fxLayout="column"  fxLayoutAlign="center center" class="py-1">
+                    <span style="color: rgb(0, 0, 0); font-weight: 500;">Publicações</span>
+                    <span style="color: rgb(0, 0, 0);"> Faça publicações indicando que você procura voluntários para um serviço especifico ou disponibilizando-se para efetuar trabalhos em instituições.</span>
+                  </div>
+                  <div class="wrapper" fxLayoutAlign="center center">
+                    <img style="width: 80%; height: 40%;" [src]="images[0]" alt="Publicação">
+                  </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                  <div fxLayout="column"  fxLayoutAlign="center center" class="py-1">
+                    <span style="color: rgb(0, 0, 0); font-weight: 500">Contatos</span>
+                    <span style="color: rgb(0, 0, 0);"> Encontre voluntários e instituições de acordo com as expertises e demandas de trabalho que deseja.</span>
+                  </div>
+                  <div class="wrapper" fxLayoutAlign="center center">
+                    <img style="width: 80%; height: 40%;"[src]="images[1]" alt="Contato">
+                  </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                  <div fxLayout="column"  fxLayoutAlign="center center" class="py-1">
+                    <span style="color: rgb(0, 0, 0); font-weight: 500">Certificados</span>
+                    <span style="color: rgb(0, 0, 0);">Emita certificados para valorizar o trabalho do voluntário.</span>
+                  </div>
+                  <div class="wrapper"  fxLayoutAlign="center center">
+                    <img style="width: 80%; height: 40%;" [src]="images[2]"  alt="Certificado">
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+        </section>
+        <section fxLayout="column" fxLayoutAlign="center center" style="height: 100%;" class="container mt-3" #sobre>
+          <div fxLayout="column" fxLayoutAlign="center center" style="text-align: center;">
+            <h2>Sobre o Expertise Voluntária</h2>
+            <span>O Expertise Voluntária é uma ideia de sistema que tem por objetivo facilitar a conexão entre pessoas que tem disponibilidade, conhecimento técnico em alguma área
+              e muita vontade de compartilhar esse conhecimento de forma voluntária, de modo que possa ajudar instituições que trabalham para tornar o Brasil um lugar melhor. Esta 
+              é uma versão com as funcionalidades essenciais necessárias construído em conjunto com uma monografia para obtenção do título de Bacharel em Sistemas de Informação
+              na Pontifícia Universidade Católica de Minas Gerais. 
+            </span>
+          </div>
+        </section>
+    </main>
 </div>

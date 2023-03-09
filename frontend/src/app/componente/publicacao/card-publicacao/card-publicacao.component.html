@@ -1,0 +1,50 @@
+<mat-card class="mb-2">
+    <div fxLayoutAlign="space-between center" fxLayout="row wrap">
+        <div>
+            <mat-card-title style="font-size: 18px;">{{publicacao?.usuario?.nome}}, &nbsp;{{publicacao?.usuario?.cidade}},
+                &nbsp;{{publicacao?.usuario?.uf}}
+            </mat-card-title>
+            <div fxLayout="column">
+                <span>{{publicacao.data | amDateFormat:'DD/MM/YYYY HH:mm'}}</span>
+                <div class="py-1">
+                    <a (click)="expertises()">Expertises necessárias</a>
+                </div>
+            </div>
+        </div>
+        <div fxFlex fxLayout="row wrap" fxLayoutAlign="end center">
+            <mat-chip-list *ngIf="publicacao?.tipoPublicacao">
+                <mat-chip
+                    [ngClass]="{ 'azul': publicacao.tipoPublicacao.id === 1, 'vermelho' : publicacao.tipoPublicacao.id === 2 }">
+                    {{publicacao?.tipoPublicacao?.nome}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+    </div>
+    <mat-card-content>
+        <div class="my-2">
+            <span style=" white-space: pre-wrap;">{{publicacao.descricao}}</span>
+        </div>
+        <div *ngIf="publicacao.listaImagem">
+            <div *ngFor="let imagem of publicacao.listaImagem">
+                <img width="100%" [src]="imagem.conteudo">
+            </div>
+        </div>
+    </mat-card-content>
+    <div *ngIf="!publicacaoPertenceUsuarioLogado && exibeAcoes">
+        <mat-divider></mat-divider>
+        <div fxLayoutAlign="space-around center" style="padding-top: 1rem;">
+         
+            <button class="botao-enviar" fxFlex="45" mat-button fxLayoutAlign="center center" (click)="entrarEmContato(publicacao?.usuario?.id)">
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">how_to_reg
+                </mat-icon>
+                <span>Ver perfil</span>
+            </button>
+
+            <button class="botao-enviar" fxFlex="45" mat-button fxLayoutAlign="center center" (click)="enviarMensagem(publicacao?.usuario)">
+                <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">message
+                </mat-icon>
+                <span>Enviar mensagem</span>
+            </button>
+        </div>
+    </div>
+</mat-card>

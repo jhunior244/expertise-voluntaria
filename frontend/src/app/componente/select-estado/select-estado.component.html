@@ -2,8 +2,10 @@
     <mat-select style="width:100%;" id="{{idSelect}}" placeholder="Estado"
         [formControl]="controladorFormulario" [compareWith]="compara" multiple={{multiplo}}
         [errorStateMatcher]="exibeErro" >
-        <mat-option *ngFor=" let tipo of lista" [value]="tipo">
-            {{tipo.nome}}</mat-option>
+        <mat-option *ngFor=" let estado of lista" [value]="estado">
+            <span *ngIf="!exibeApenasUf; else uf;">{{estado.nome}}</span>
+            <ng-template #uf>{{estado.uf}}</ng-template>
+        </mat-option>
     </mat-select>
     <mat-hint *ngIf="obrigatorio">Campo obrigátorio</mat-hint>
     <mat-error *ngIf="controladorFormulario.hasError('required')">

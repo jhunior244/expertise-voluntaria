@@ -1,0 +1,51 @@
+<mat-card *ngIf="usuario" class="mb-2">
+    <div>
+        <div fxFlex>
+            <mat-card-title>{{usuario.nome}}</mat-card-title>
+            <mat-card-subtitle class="mt-1">{{usuario.bairro}}, &nbsp;{{usuario.cidade}}, &nbsp;{{usuario.estado}}
+            </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="usuario.telefone?.length === 11" class="mt-1">{{usuario.telefone | mask: '(00) 0 0000-0000'}}
+            </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="usuario.telefone?.length === 10" class="mt-1">{{usuario.telefone | mask: '(00) 0000-0000'}}
+            </mat-card-subtitle>
+        </div>
+        <div>
+            <button class="botao-add" mat-fab (click)="adicionaContato()" *ngIf="!usuario.ehContatoAdicionado">
+                <mat-icon>
+                    person_add_alt_1
+                </mat-icon>
+            </button>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-card-content fxLayout="column" style="padding-top: 1rem;">
+        <span *ngIf="usuario?.listaAreaAtuacao?.length > 0" style="font-weight: 500;">Áreas de atuação</span>
+        <li *ngFor="let area of usuario?.listaAreaAtuacao">
+            <span>{{area.nome}}</span>
+        </li>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <div fxLayoutAlign="space-between center" style="padding-top: 1rem;">
+        <button class="botao-enviar" fxFlex="46" mat-button (click)="enviarMensagem(usuario)">
+            <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">message
+            </mat-icon>
+            Enviar mensagem
+        </button>
+        <a [href]="'mailto:' + usuario?.email" style="text-decoration: none;" class="botao-enviar" fxFlex="46"
+            mat-button fxLayoutAlign="center center">
+            <mat-icon class="mr-1" style="color: #00B19D; font-size: 18px; max-width: 18px; max-height: 18px;">email
+            </mat-icon>
+            <span>Enviar e-mail</span>
+        </a>
+    </div>
+    <mat-divider></mat-divider>
+    <div *ngIf="usuario.totalAvaliacoes > 0; else naoPossui" fxLayout="column" fxLayoutAlign="center center" style="padding-top: 1rem;" fxLayoutGap="3px">
+        <span style="font-size: 1.3rem; font-weight: 600;">{{usuario.mediaAvaliacao}}/5</span>
+        <span class="mat-small">{{usuario.totalAvaliacoes}}&nbsp;{{usuario.totalAvaliacoes > 1 ? 'avaliações' : 'avaliação'}}</span>
+    </div>
+    <ng-template #naoPossui>
+        <div fxLayout="column" fxLayoutAlign="center center" style="padding-top: 1rem;" fxLayoutGap="3px">
+            <span class="mat-small">Usuário não possui avaliações.</span>
+        </div>
+    </ng-template>
+</mat-card>

@@ -2,7 +2,7 @@ package br.com.ishare.controlador;
 
 import br.com.ishare.dto.usuario.EstadoDto;
 import br.com.ishare.mapeador.EstadoMapeador;
-import br.com.ishare.servico.IEstadoServico;
+import br.com.ishare.servico.usuario.IEstadoServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +23,8 @@ public class EstadoPublicoControlador {
     private EstadoMapeador estadoMapeador;
 
     @GetMapping(path = "/lista")
-    public List<EstadoDto> lista(){
-        return estadoMapeador.paraDto(estadoServico.lista());
+    public List<EstadoDto> lista(String uf){
+        return estadoMapeador.paraDto(estadoServico.lista(uf));
     }
 
     @GetMapping(path = "/obtem")

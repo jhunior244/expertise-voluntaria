@@ -26,5 +26,10 @@ export class CidadeService {
         return this.httpClient.get<Cidade>(this.url + '/obtem', { params: httpParams })
             .pipe(map((cidade => Cidade.doBackend(cidade))));
     }
+
+    public lista(): Observable<Cidade[]> {
+        return this.httpClient.get<ICidade[]>(this.url + '/lista').pipe(map((lista => Cidade.listaDoBackend(lista))));
+
+    }
 }
 

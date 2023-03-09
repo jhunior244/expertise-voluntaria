@@ -1,0 +1,9 @@
+.botao-add{
+    background-color: transparent;
+    color: #00B19D;
+    box-shadow: none;
+}
+
+a:hover {
+    color: black;
+}

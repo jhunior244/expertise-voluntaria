@@ -1,27 +1,67 @@
 <div style="height: 100%;" class="container py-5">
-    <div style="height: 100%; background-color: #ffffff;" class="sombra-padrao arredondamento-padrao" 
-    fxLayoutAlign="center center" fxLayout="column">
-        <div style="width: 60%;" class="mb-3 teste" fxLayout="column">
-            <form  [formGroup]="formGroup" fxLayout="column">
+
+    <button [routerLink]="configuracao.rotaInicio" style="position: absolute; margin: 15px; background-color: #ffffff;" mat-mini-fab>
+        <mat-icon style="color: #00B19D;">home</mat-icon>
+    </button>
+
+    <div style="height: 100%; background-color: #ffffff;" class="sombra-padrao arredondamento-padrao"
+        fxLayoutAlign="center center" fxLayout="column">
+        <div style="width: 60%;" class="mb-3" fxLayout="column">
+            <form [formGroup]="formGroup" fxLayout="column">
                 <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-                    <mat-form-field fxFlex="58" fxFlex.lt-md="100">
-                        <mat-label>Nome completo</mat-label>
-                        <input type="text" matInput [formControl]="nome" >
+                    <mat-form-field fxFlex="55">
+                        <mat-label *ngIf="tipoUsuario.value == null || tipoUsuario.value == ''">Nome completo / Razão
+                            social</mat-label>
+                        <mat-label *ngIf="pessoaFisicaSelecionado">Nome completo</mat-label>
+                        <mat-label *ngIf="pessoaJuridicaSelecionado || ongOscSelecionado">Razão social</mat-label>
+                        <input type="text" matInput [formControl]="nome">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="nome.hasError('required')">
                             Campo obrigatório
                         </mat-error>
                     </mat-form-field>
-    
-                    <div fxFlex="38" fxFlex.lt-md="100">
-                        <!-- <mat-label>Tipo pessoa</mat-label> -->
-                        <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true"></app-select-tipo-usuario>
+
+
+                    <mat-form-field fxFlex="28">
+                        <mat-label *ngIf="!tipoTelefone.value">Tel. Fixo</mat-label>
+                        <input *ngIf="!tipoTelefone.value" mask="(00) 0000-0000" type="text" matInput [formControl]="telefone">
+
+                        <mat-label *ngIf="tipoTelefone.value">Celular</mat-label>
+                        <input *ngIf="tipoTelefone.value" mask="(00) 0 0000-0000" type="text" matInput [formControl]="telefone">
+                        <mat-hint>Campo obrigatório</mat-hint>
+                        <mat-error *ngIf="telefone.hasError('minlength')">
+                            Tamanho mínimo é 10 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="telefone.hasError('maxlength')">
+                            Tamanho máximo é 11 caracteres
+                        </mat-error>
+                        <mat-error *ngIf="telefone.hasError('required')">
+                            Campo obrigatório
+                        </mat-error>
+                    </mat-form-field>
+                    <div fxLayout="column" fxFlex="13" fxLayoutAlign="end center">
+                        <mat-label *ngIf="tipoTelefone.value">Celular</mat-label>
+                        <mat-label *ngIf="!tipoTelefone.value">Tel. Fixo</mat-label>
+                        <mat-slide-toggle [formControl]="tipoTelefone" >
+                        </mat-slide-toggle>
                     </div>
                 </div>
 
-                <div  class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                    <div fxFlex="48" fxFlex.lt-md="100">
+                        <app-select-tipo-usuario [controladorFormulario]="tipoUsuario" [obrigatorio]="true">
+                        </app-select-tipo-usuario>
+                    </div>
+                    <div fxFlex="48" fxFlex.lt-md="100">
+                        <app-select-area-atuacao [multiplo]="true" [controladorFormulario]="areaAtuacao"
+                            [tipoUsuario]="tipoUsuario.value">
+                        </app-select-area-atuacao>
+                    </div>
+                </div>
+
+                <div class="mt-1" fxLayout="row wrap" fxLayoutAlign="space-between center">
                     <mat-form-field fxFlex="48" fxFlex.lt-md="100">
-                        <mat-label>Email</mat-label>
+                        <mat-label>E-mail</mat-label>
                         <input type="email" matInput [formControl]="email" [errorStateMatcher]="emailMatcher"
                             placeholder="Ex. ishare@exemplo.com">
                         <mat-hint>Campo obrigatório</mat-hint>
@@ -40,7 +80,7 @@
                     </mat-form-field>
 
                     <mat-form-field fxFlex="48" fxFlex.lt-md="100">
-                        <mat-label>Email</mat-label>
+                        <mat-label>Repita o e-mail</mat-label>
                         <input type="email" matInput [formControl]="validacaoEmail" [errorStateMatcher]="emailMatcher">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="validacaoEmail.hasError('email') && !email.hasError('required')">
@@ -70,7 +110,7 @@
 
                     <mat-form-field fxFlex="55" fxFlex.lt-md="100">
                         <mat-label>Rua</mat-label>
-                        <input type="text" matInput [formControl]="rua" >
+                        <input type="text" matInput [formControl]="rua">
                         <mat-hint>Campo obrigatório</mat-hint>
                         <mat-error *ngIf="rua.hasError('required')">
                             Campo obrigatório
@@ -150,8 +190,9 @@
                 </div>
             </form>
             <div class="mt-1" fxLayoutAlign="center center">
-                <button (click)="cadastrar()" fxFlex="30" fxFlex.lt-sm="80" fxFlex.lt-md="50" [disabled]="!formGroup.valid" 
-                class="botao-cadastrar fonte-texto sombra-suave  background-primary" mat-button>CADASTRAR</button>
+                <button (click)="cadastrar()" fxFlex="30" fxFlex.lt-sm="80" fxFlex.lt-md="50"
+                    [disabled]="!formGroup.valid" class="botao-cadastrar fonte-texto sombra-suave  background-primary"
+                    mat-button>CADASTRAR</button>
             </div>
         </div>
     </div>
